@@ -77,7 +77,7 @@ const AppShowcase = () => {
                   Visit Live Site ↗
                 </a>
                 {/* 🚨 UPDATE YOUR GITHUB LINK HERE 🚨 */}
-                <a href="https://github.com/Mr-Elegant/YOUR_DEVNET_REPO" target="_blank" rel="noreferrer" className="inline-block text-white underline hover:text-[#4cc9f0]">
+                <a href="https://github.com/Mr-Elegant/DevNet" target="_blank" rel="noreferrer" className="inline-block text-white underline hover:text-[#4cc9f0]">
                   GitHub Repo ↗
                 </a>
               </div>
