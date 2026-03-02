@@ -106,7 +106,7 @@ const Hero = () => {
         </header>
 
         {/* DESKTOP PHOTO: Draggable Outer, Floating Inner */}
-        <div className="hidden xl:block absolute left-[45%] top-[60%] -translate-x-1/2 -translate-y-1/2 z-50 draggable-photo cursor-grab active:cursor-grabbing pointer-events-auto">
+        <div className="hidden xl:block absolute left-[50%] top-[60%] -translate-x-1/2 -translate-y-1/2 z-50 draggable-photo cursor-grab active:cursor-grabbing pointer-events-auto">
             <div className="floating-anim w-64 h-64 relative">
               <div className="absolute inset-0 bg-[#4cc9f0]/30 blur-3xl rounded-full pointer-events-none"></div>
               {/* UPDATE THIS PATH TO YOUR PHOTO */}

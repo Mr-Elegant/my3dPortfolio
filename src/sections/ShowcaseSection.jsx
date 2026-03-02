@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import GlowingBorderCard from "../components/GlowingBorderCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,8 +50,10 @@ const AppShowcase = () => {
         <div className="showcaselayout">
           
           {/* ----- PROJECT 1: DevNet ----- */}
+          
           <div ref={rydeRef} className="first-project-wrapper">
             {/* Clickable Image Wrapper */}
+            <GlowingBorderCard>
             <a 
               href="https://devnet.co.in" 
               target="_blank" 
@@ -59,7 +62,7 @@ const AppShowcase = () => {
             >
               <img src="/images/dnimage.jpg" alt="DevNet App Interface" />
             </a>
-            
+            </GlowingBorderCard>
             <div className="text-content">
               <h2>
                 DevNet - The Ultimate Developer Networking Platform
@@ -83,9 +86,11 @@ const AppShowcase = () => {
               </div>
             </div>
           </div>
-
+          
+          
           <div className="project-list-wrapper overflow-hidden">
             
+            <GlowingBorderCard>
             {/* ----- PROJECT 2: React Showcase ----- */}
             <div className="project" ref={libraryRef}>
               {/* Clickable Image Wrapper */}
@@ -96,21 +101,23 @@ const AppShowcase = () => {
                 className="image-wrapper bg-[#000000] block cursor-pointer hover:opacity-80 transition-opacity duration-300"
               >
                 <img
-                  src="/images/otk.png"
+                  src="/images/ani.png"
                   alt="React Showcase Platform"
                 />
               </a>
-              <h2 className="mt-4">React Showcase website</h2>
-              <p className="text-sm text-white-50 mt-2">A Single Page Fun Site for Anime Weebs</p>
+              <h2 className="mt-4 pl-[8%]">React Showcase website</h2>
+              <p className="text-sm text-white-50 mt-2 pl-[8%]">A Single Page Fun Site for Anime Weebs</p>
               
               {/* Side-by-side Links */}
-              <div className="flex gap-4 mt-3">
+              <div className="flex gap-4 mt-3 pl-[8%]">
                 <a href="https://otaku-react.netlify.app/" target="_blank" rel="noreferrer" className="text-[#4cc9f0] text-sm underline hover:text-white">View Project ↗</a>
                 {/* 🚨 UPDATE YOUR GITHUB LINK HERE 🚨 */}
                 <a href="https://github.com/Mr-Elegant/Otaku-react-fun-website-" target="_blank" rel="noreferrer" className="text-[#4cc9f0] text-sm underline hover:text-white">GitHub ↗</a>
               </div>
             </div>
+            </GlowingBorderCard>
 
+            <GlowingBorderCard>
             {/* ----- PROJECT 3: MovieGuider ----- */}
             <div className="project" ref={ycDirectoryRef}>
               {/* Clickable Image Wrapper */}
@@ -120,19 +127,19 @@ const AppShowcase = () => {
                 rel="noreferrer" 
                 className="image-wrapper block cursor-pointer hover:opacity-80 transition-opacity duration-300"
               >
-                <img src="/images/mg2.jpg" alt="MovieGuider App" />
+                <img src="/images/mgt.png" alt="MovieGuider App" />
               </a>
-              <h2 className="mt-4">MovieGuider</h2>
-              <p className="text-sm text-white-50 mt-2">An IMDb and Crunchyroll inspired search and browse application for exploring detailed movie , actors, leads and series overviews.</p>
+              <h2 className="mt-4 pl-[8%]">MovieGuider</h2>
+              <p className="text-sm text-white-50 mt-2 pl-[8%]">An IMDb and Crunchyroll inspired search and browse application for exploring detailed movie , actors, leads and series overviews.</p>
               
               {/* Side-by-side Links */}
-              <div className="flex gap-4 mt-3">
+              <div className="flex gap-4 mt-3 pl-[8%]">
                 <a href="https://movieguider2.vercel.app/" target="_blank" rel="noreferrer" className="text-[#4cc9f0] text-sm underline hover:text-white">View Project ↗</a>
                 {/* 🚨 UPDATE YOUR GITHUB LINK HERE 🚨 */}
                 <a href="https://github.com/Mr-Elegant/MovieGuider2res" target="_blank" rel="noreferrer" className="text-[#4cc9f0] text-sm underline hover:text-white">GitHub ↗</a>
               </div>
             </div>
-            
+            </GlowingBorderCard>
           </div>
         </div>
       </div>

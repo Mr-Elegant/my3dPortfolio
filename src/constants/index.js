@@ -252,12 +252,12 @@ const socialImgs = [
   },
   {
     name: "github",
-    imgPath: "/images/github.png", // Ensure this icon exists
+    imgPath: "/images/gith.png", 
     link: "https://github.com/Mr-Elegant"
   },
   {
     name: "linkedin",
-    imgPath: "/images/linkedin.png", // Ensure this icon exists
+    imgPath: "/images/linkedin.png",
     link: "https://www.linkedin.com/in/preetkarwal/"
   }
 ];
