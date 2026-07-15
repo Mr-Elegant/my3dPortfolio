@@ -68,7 +68,9 @@ const Hero = () => {
                           alt="person"
                           className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full bg-white-50"
                         />
-                        <span>{word.text}</span>
+                        <span className="bg-gradient-to-r from-[#4cc9f0] to-[#7209b7] bg-clip-text text-transparent">
+                          {word.text}
+                        </span>
                       </span>
                     ))}
                   </span>
@@ -79,8 +81,8 @@ const Hero = () => {
             </div>
 
             <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-              Hi, I’m Preet Karwal, Full-Stack Software Engineer, <br />
-              Proficient in | MERN Stack | Automation | System Design
+              Hi, I’m Preet Karwal, Full-Stack & Agentic Software Engineer, <br />
+              Proficient in | MERN Stack | AI Automation | REST APIs | System Design
             </p>
 
             <Button

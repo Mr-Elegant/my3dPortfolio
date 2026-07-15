@@ -142,34 +142,38 @@ const techStackIcons = [
 const expCards = [
   {
     title: "Software Engineer",
-    date: "May 2025 - Present",
-    logoPath: "/images/logos/shree-vishnu-logo.png", // Add a logo for Shree Vishnu Finance to your public folder
+    company: "Shree Vishnupriya Finance and Leasing Limited",
+    date: "May 2025 - Apr 2026",
+    logoPath: "/images/logos/shree-vishnu-logo.png",
     responsibilities: [
-      "Implemented NBFC software workflows and internal systems according to financial company operations.",
-      "Built WhatsApp automation integrated with Zoho CRM for lead and customer management.",
-      "Developed and deployed company websites including Shree Vishnu Finance, Beniss Foundation, and Beniss Global.",
-      "Managed and coordinated the backend development team for the Beniss Global investment platform."
+      "Architected and delivered a full-cycle Loan Origination & Management System (LOMS) — covering application intake, automated credit assessment workflows, loan sanction, disbursement management, and EMI repayment tracking, fully aligned with RBI-compliant NBFC operational standards.",
+      "Designed and deployed an agentic automation layer using function/tool calling and workflow orchestration — enabling LOMS to autonomously trigger Zoho CRM updates, Zoho Books ledger entries, and WhatsApp borrower notifications based on loan lifecycle events, eliminating manual data entry across departments.",
+      "Built a WhatsApp Business API automation pipeline integrated with Zoho CRM to trigger contextual borrower notifications, EMI payment reminders, and lead nurturing sequences — reducing operational overhead significantly.",
+      "Deployed and configured production server infrastructure on Linux using Nginx (reverse proxy) and PM2 (process management); delivered three full-stack company platforms: shreevishnufinance.com, benissglobal.com, benissfoundation.org.",
+      "Led the backend development team for the Beniss Global investment platform — overseeing code reviews, sprint planning, and deployment pipelines.",
+      "Leveraged AI-assisted development (GitHub Copilot, Claude, Cursor IDE) to accelerate feature delivery by ~35%, improve code review cycles, and auto-generate boilerplate for LOMS modules."
     ],
   },
   {
     title: "Full-Stack Developer",
+    company: "MindGeeks Tech LLP",
     date: "Mar 2022 - Aug 2024",
-    logoPath: "/images/logos/mindgeeks-logo.jpg", // Add a logo for Mindgeeks to your public folder
+    logoPath: "/images/logos/mindgeeks-logo.jpg",
     responsibilities: [
-      "Developed scalable full-stack web applications using the MERN stack (MongoDB, Express, React, Node.js).",
-      "Integrated secure authentication systems using JWT access and refresh tokens.",
-      "Optimized application performance and backend queries for better scalability.",
-      "Maintained network infrastructure ensuring high uptime and performance."
+      "Developed and maintained 5+ scalable full-stack web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js), serving production traffic with high availability.",
+      "Designed and implemented secure RESTful APIs with JWT-based access/refresh token authentication, role-based access control (RBAC), and bcrypt password hashing.",
+      "Improved API response times and MongoDB query performance through indexing strategies, aggregation pipeline optimization, and efficient Mongoose schema design.",
+      "Collaborated in Agile/Scrum sprint cycles — contributing to system architecture decisions, technical documentation, and feature planning across cross-functional teams."
     ],
   },
   {
-    title: "Web Developer Intern",
-    date: "Internship",
-    logoPath: "/images/logos/ams-logo.png", // Add a logo for AMS Web Solutions to your public folder
+    title: "Software Developer Intern",
+    company: "AMS Web Solutions Pvt. Ltd.",
+    date: "Jan 2021 - Jun 2021",
+    logoPath: "/images/logos/ams-logo.png",
     responsibilities: [
-      "Completed intensive bootcamp on advanced PHP and MVC architecture.",
-      "Developed dynamic web applications using OOP PHP principles.",
-      "Implemented security best practices and performance optimizations."
+      "Built dynamic, data-driven web applications in PHP (OOP/MVC architecture) with input validation, SQL injection prevention, and session management best practices.",
+      "Gained hands-on experience with database design, server-side rendering, and client-server communication in a professional environment."
     ],
   }
 ];
