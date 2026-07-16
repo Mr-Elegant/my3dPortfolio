@@ -219,7 +219,7 @@ const ResumeModal = ({ onClose }) => {
             <h3 className="text-lg font-bold text-[#4cc9f0] uppercase tracking-wider print:text-black border-b border-white-50/10 pb-1 print:border-black/20">Professional Experience</h3>
             <div className="flex flex-col gap-6 mt-4">
               {experiences.map((exp, i) => (
-                <div key={i} className="flex flex-col gap-1 text-sm md:text-base">
+                <div key={i} className={`flex flex-col gap-1 text-sm md:text-base ${i === 1 ? "print-page-break" : ""}`}>
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center font-bold text-white print:text-black">
                     <span>{exp.title} <span className="text-white-50 font-normal text-sm md:text-base">| {exp.company}</span></span>
                     <span className="text-sm font-semibold text-blue-50/90 print:text-black/80">{exp.date}</span>

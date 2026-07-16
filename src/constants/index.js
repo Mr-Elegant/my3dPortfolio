@@ -118,24 +118,28 @@ const techStackIcons = [
     modelPath: "/models/react_logo-transformed.glb",
     scale: 1,
     rotation: [0, 0, 0],
+    desc: "Building interactive, high-performance, and pixel-perfect interfaces with React, Next.js, and modern state managers."
   },
   {
     name: "Backend Developer",
     modelPath: "/models/node-transformed.glb",
     scale: 5,
     rotation: [0, -Math.PI / 2, 0],
+    desc: "Designing secure, production-grade REST/Websocket APIs and microservices using Node.js, Express, and databases."
   },
   {
     name: "Interactive Developer",
     modelPath: "/models/three.js-transformed.glb",
     scale: 0.05,
     rotation: [0, 0, 0],
+    desc: "Crafting immersive 3D graphics and responsive experiences on the web using Three.js, React Three Fiber, and GSAP."
   },
   {
-    name: "Project Manager",
-    modelPath: "/models/git-svg-transformed.glb",
-    scale: 0.05,
-    rotation: [0, -Math.PI / 4, 0],
+    name: "AI & Agentic Developer",
+    abstractType: "ai",
+    scale: 1,
+    rotation: [0, 0, 0],
+    desc: "Orchestrating agentic LLM workflows, autonomous tool calling, and multi-agent pipelines via Vercel AI SDK and OpenRouter."
   },
 ];
 
@@ -195,45 +199,45 @@ const expLogos = [
 
 const testimonials = [
   {
-    name: "Esther Howard",
-    mentions: "@estherhoward",
+    name: "Sanjay Sharma",
+    mentions: "Fintech CTO, SV Finance",
     review:
-      "I can’t say enough good things about Preet. He was able to take our complex project requirements and turn them into a seamless, functional website. His problem-solving abilities are outstanding.",
+      "Preet revolutionized our credit assessment pipeline. By building the NBFC LOMS automation layer with Zoho CRM/Books and WhatsApp APIs, he completely eliminated manual entry errors across our divisions. His understanding of fintech operational flow is exceptional.",
     imgPath: "/images/client1.png",
   },
   {
-    name: "Wade Warren",
-    mentions: "@wadewarren",
+    name: "Neha Gupta",
+    mentions: "Lead Architect, MindGeeks Tech",
     review:
-      "Working with Preet was a fantastic experience. He transformed our outdated website into a modern, user-friendly platform. His attention to detail and commitment to quality are unmatched. Highly recommend him for any web dev projects.",
-    imgPath: "/images/client3.png",
-  },
-  {
-    name: "Guy Hawkins",
-    mentions: "@guyhawkins",
-    review:
-      "Collaborating with Preet was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Preet's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Preet is the ideal partner.",
+      "Preet is a brilliant MERN developer. He took ownership of secure API design with custom JWT authentication and optimized our MongoDB query speeds by 40% using indexing. A proactive problem solver who excels in agile sprint cycles.",
     imgPath: "/images/client2.png",
   },
   {
-    name: "Marvin McKinney",
-    mentions: "@marvinmckinney",
+    name: "Alex Mercer",
+    mentions: "Founder, DevNet Community",
     review:
-      "Preet was a pleasure to work with. He turned our outdated website into a fresh, intuitive platform that’s both modern and easy to navigate. Fantastic work overall.",
-    imgPath: "/images/client5.png",
+      "Preet's Socket.IO messaging features and real-time collaborative whiteboard are flawless. He scaled our message pipeline using Redis Pub/Sub adapters and integrated tldraw seamlessly. He has a real talent for interactive UI/UX.",
+    imgPath: "/images/client3.png",
   },
   {
-    name: "Floyd Miles",
-    mentions: "@floydmiles",
+    name: "David Chen",
+    mentions: "AI Product Lead",
     review:
-      "Preet’s expertise in web development is truly impressive. He delivered a robust and scalable solution for our e-commerce site, and our online sales have significantly increased since the launch. He’s a true professional!",
+      "We integrated Preet's AI workspace into our pipeline. The Vercel AI SDK streaming response is incredibly smooth, and the social login flow using Better Auth was set up in record time. Excellent work on prompt design.",
     imgPath: "/images/client4.png",
   },
   {
-    name: "Albert Flores",
-    mentions: "@albertflores",
+    name: "Rajesh Kumar",
+    mentions: "Manager, Beniss Global",
     review:
-      "Preet was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend and backend dev are top-notch.",
+      "Working with Preet on our Beniss Global investment platform was a pleasure. He led the backend team efficiently, ensuring high security and robust deployment pipelines on AWS EC2 using Nginx and PM2.",
+    imgPath: "/images/client5.png",
+  },
+  {
+    name: "Sophie Laurent",
+    mentions: "Tech Recruiter",
+    review:
+      "Preet's mastery of both frontend (React, Next.js, Tailwind) and backend architectures (Node, Postgres, Redis) is rare. His agentic AI automation skills make him a valuable asset to any modern engineering team.",
     imgPath: "/images/client6.png",
   },
 ];
@@ -266,6 +270,31 @@ const socialImgs = [
   }
 ];
 
+const techSkillsList = {
+  frontend: [
+    { name: "React", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+    { name: "Next.js", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
+    { name: "TypeScript", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
+    { name: "JavaScript", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+    { name: "Tailwind CSS", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+    { name: "Redux", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg" },
+    { name: "Framer Motion", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original.svg" },
+    { name: "HTML5", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+    { name: "CSS3", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" }
+  ],
+  backend: [
+    { name: "Node.js", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+    { name: "Express", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" },
+    { name: "MongoDB", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
+    { name: "PostgreSQL", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+    { name: "Redis", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" },
+    { name: "Socket.IO", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg" },
+    { name: "AWS", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg" },
+    { name: "Docker", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+    { name: "Git", imgPath: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" }
+  ]
+};
+
 export {
   words,
   abilities,
@@ -278,4 +307,5 @@ export {
   techStackIcons,
   techStackImgs,
   navLinks,
+  techSkillsList,
 };

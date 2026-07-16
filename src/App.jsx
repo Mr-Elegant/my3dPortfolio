@@ -6,7 +6,7 @@ import TechStack from "./sections/TechStack";
 import Experience from "./sections/Experience";
 import Hero from "./sections/Hero";
 import ShowcaseSection from "./sections/ShowcaseSection";
-import LogoShowcase from "./sections/LogoShowcase";
+import TechShowcase from "./sections/TechShowcase";
 import FeatureCards from "./sections/FeatureCards";
 import Navbar from "./components/NavBar";
 import HeroPhoto from "./components/HeroPhoto";
@@ -21,7 +21,7 @@ const App = () => {
       <Hero onResumeClick={() => setIsResumeOpen(true)} />
       {/* <HeroPhoto /> */}
       <ShowcaseSection />
-      <LogoShowcase />
+      <TechShowcase />
       <FeatureCards />
       <Experience />
       <TechStack />

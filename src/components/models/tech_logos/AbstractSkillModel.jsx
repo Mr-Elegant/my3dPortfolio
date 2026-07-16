@@ -57,6 +57,40 @@ const AbstractShape = ({ type }) => {
             </mesh>
           </group>
         );
+      case "ai":
+        return (
+          <group ref={meshRef}>
+            {/* Core LLM sphere */}
+            <mesh>
+              <sphereGeometry args={[0.4, 32, 32]} />
+              <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={1.2} roughness={0.1} />
+            </mesh>
+            {/* Outer neural net structure */}
+            <mesh>
+              <icosahedronGeometry args={[1.0, 1]} />
+              <meshStandardMaterial color="#7209b7" wireframe emissive="#7209b7" emissiveIntensity={0.8} />
+            </mesh>
+            {/* Orbiting nodes/agents */}
+            <group ref={groupRef}>
+              <mesh position={[0.8, 0.4, 0.2]}>
+                <sphereGeometry args={[0.1, 16, 16]} />
+                <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.8} />
+              </mesh>
+              <mesh position={[-0.8, -0.4, -0.2]}>
+                <sphereGeometry args={[0.1, 16, 16]} />
+                <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.8} />
+              </mesh>
+              <mesh position={[0.2, -0.8, 0.4]}>
+                <sphereGeometry args={[0.1, 16, 16]} />
+                <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.8} />
+              </mesh>
+              <mesh position={[-0.2, 0.8, -0.4]}>
+                <sphereGeometry args={[0.1, 16, 16]} />
+                <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.8} />
+              </mesh>
+            </group>
+          </group>
+        );
       case "vibe":
       default:
         return (

@@ -3,6 +3,7 @@ import gsap from "gsap";
 
 import TitleHeader from "../components/TitleHeader";
 import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
+import AbstractSkillModel from "../components/models/tech_logos/AbstractSkillModel";
 import { techStackIcons } from "../constants";
 // import { techStackImgs } from "../constants";
 
@@ -43,29 +44,31 @@ const TechStack = () => {
           sub="🤝 What I Bring to the Table"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mt-10 w-full">
-          {/* Loop through the techStackIcons array and create a component for each item. 
-              The key is set to the name of the tech stack icon, and the classnames are set to 
-              card-border, tech-card, overflow-hidden, and group. The xl:rounded-full and rounded-lg 
-              classes are only applied on larger screens. */}
+          {/* Loop through the techStackIcons array and create a component for each item. */}
           {techStackIcons.map((techStackIcon) => (
             <div
               key={techStackIcon.name}
-              className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
+              className="card-border tech-card overflow-hidden group xl:rounded-3xl rounded-lg"
             >
               {/* The tech-card-animated-bg div is used to create a background animation when the 
                   component is hovered. */}
               <div className="tech-card-animated-bg" />
-              <div className="tech-card-content">
-                {/* The tech-icon-wrapper div contains the TechIconCardExperience component, 
-                    which renders the 3D model of the tech stack icon. */}
-                <div className="tech-icon-wrapper">
-                  <TechIconCardExperience model={techStackIcon} />
+              <div className="tech-card-content flex flex-col items-center justify-between h-full p-6 text-center">
+                {/* The tech-icon-wrapper contains either AbstractSkillModel or TechIconCardExperience */}
+                <div className="tech-icon-wrapper w-full h-48 flex justify-center items-center">
+                  {techStackIcon.abstractType ? (
+                    <AbstractSkillModel type={techStackIcon.abstractType} />
+                  ) : (
+                    <TechIconCardExperience model={techStackIcon} />
+                  )}
                 </div>
-                {/* The padding-x and w-full classes are used to add horizontal padding to the 
-                    text and make it take up the full width of the component. */}
-                <div className="padding-x w-full">
-                  {/* The p tag contains the name of the tech stack icon. */}
-                  <p>{techStackIcon.name}</p>
+                <div className="padding-x w-full mt-4 flex flex-col gap-2 relative z-20">
+                  <p className="font-bold text-lg text-white group-hover:text-white transition-colors">{techStackIcon.name}</p>
+                  {techStackIcon.desc && (
+                    <p className="text-sm text-[#839cb5] font-normal leading-relaxed group-hover:text-white/80 transition-colors">
+                      {techStackIcon.desc}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
