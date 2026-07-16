@@ -470,3 +470,70 @@ section {
 .card:hover::before {
   opacity: 1;
 }
+
+/* Resume Modal Keyframes & Print Styles */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media print {
+  /* Hide website content for clean printing */
+  #root > *:not(.fixed),
+  header, 
+  section, 
+  footer,
+  .print-hide {
+    display: none !important;
+  }
+
+  /* Reset body/html backgrounds */
+  html, body {
+    background-color: white !important;
+    background: white !important;
+    color: black !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  /* Ensure root wraps correctly without styling constraints */
+  #root {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Convert custom highlights and colored text to black/dark gray for printing */
+  h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+  }
+
+  p, span, li, strong, a, button {
+    color: black !important;
+    text-shadow: none !important;
+  }
+
+  /* Force background colors to print (useful for standard browser defaults) */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Clean up resume lines and lists */
+  .border-b {
+    border-bottom: 1.5px solid #bbb !important;
+  }
+
+  ul {
+    padding-left: 20px !important;
+  }
+}

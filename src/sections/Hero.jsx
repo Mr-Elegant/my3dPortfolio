@@ -10,7 +10,7 @@ import HeroExperience from "../components/models/hero_models/HeroExperience";
 // Register the Draggable plugin with GSAP
 gsap.registerPlugin(Draggable);
 
-const Hero = () => {
+const Hero = ({ onResumeClick }) => {
   useGSAP(() => {
     // 1. Existing Text Animation
     gsap.fromTo(
@@ -85,11 +85,18 @@ const Hero = () => {
               Proficient in | MERN Stack | AI Automation | REST APIs | System Design
             </p>
 
-            <Button
-              text="See My Work"
-              className="md:w-80 md:h-16 w-60 h-12"
-              id="counter"
-            />
+            <div className="flex flex-col sm:flex-row gap-4 items-center relative z-20">
+              <Button
+                text="See My Work"
+                className="md:w-60 md:h-16 w-full sm:w-60 h-12"
+                id="counter"
+              />
+              <Button
+                text="View Resume"
+                className="md:w-60 md:h-16 w-full sm:w-60 h-12"
+                onClick={onResumeClick}
+              />
+            </div>
 
             {/* MOBILE PHOTO: Draggable Outer, Floating Inner */}
             <div className="mt-10 block xl:hidden draggable-photo relative z-30 w-48 h-48 cursor-grab active:cursor-grabbing">
