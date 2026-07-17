@@ -54,21 +54,21 @@ const Hero = ({ onResumeClick }) => {
         <header className="flex flex-col justify-center md:w-full w-screen md:px-20 px-5 z-20">
           <div className="flex flex-col gap-7">
             <div className="hero-text">
-              <h1>
-                Shaping
+              <h1 className="flex items-center gap-1 md:gap-3 whitespace-nowrap">
+                <span>Shaping</span>
                 <span className="slide">
                   <span className="wrapper">
                     {words.map((word, index) => (
                       <span
                         key={index}
-                        className="flex items-center md:gap-3 gap-1 pb-2"
+                        className="flex items-center md:gap-3 gap-1 h-[40px] md:h-[78px]"
                       >
                         <img
                           src={word.imgPath}
                           alt="person"
                           className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full bg-white-50"
                         />
-                        <span className="bg-gradient-to-r from-[#4cc9f0] to-[#7209b7] bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-[#4cc9f0] to-[#7209b7] bg-clip-text text-transparent leading-none">
                           {word.text}
                         </span>
                       </span>
@@ -99,7 +99,7 @@ const Hero = ({ onResumeClick }) => {
             </div>
 
             {/* MOBILE PHOTO: Draggable Outer, Floating Inner */}
-            <div className="mt-10 block xl:hidden draggable-photo relative z-30 w-48 h-48 cursor-grab active:cursor-grabbing">
+            <div className="mt-10 block xl:hidden draggable-photo relative z-30 w-48 h-48 mx-auto cursor-grab active:cursor-grabbing">
               <div className="floating-anim w-full h-full relative">
                 <div className="absolute inset-0 bg-[#4cc9f0]/40 blur-2xl rounded-full pointer-events-none"></div>
                 {/* UPDATE THIS PATH TO YOUR PHOTO */}
@@ -129,7 +129,7 @@ const Hero = ({ onResumeClick }) => {
 
         {/* RIGHT: 3D Model or Visual */}
         {/* Added z-20 here to ensure the 3D canvas stays visible! */}
-        <figure className="relative z-20 w-full h-full mr-[10%]">
+        <figure className="relative z-20 w-full xl:h-full h-[45vh] min-h-[350px] xl:mr-[10%] mr-0">
           <div className="hero-3d-layout">
             <HeroExperience />
           </div>

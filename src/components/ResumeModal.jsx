@@ -24,9 +24,7 @@ const ResumeModal = ({ onClose }) => {
     setTimeout(() => setCopiedText(""), 2000);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+
 
   const skillsData = {
     Languages: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3"],
@@ -123,15 +121,17 @@ const ResumeModal = ({ onClose }) => {
         <div className="flex items-center justify-between sticky top-0 bg-black-100 py-3 border-b border-white-50/10 z-50 print:hidden">
           <h2 className="text-xl font-bold text-[#4cc9f0]">Curriculum Vitae</h2>
           <div className="flex items-center gap-3">
-            <button
-              onClick={handlePrint}
+            <a
+              href="/preet_karwal_resume.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-white text-black hover:bg-[#4cc9f0] hover:text-black transition-colors rounded-lg cursor-pointer"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Print / Save PDF
-            </button>
+            </a>
             <button
               onClick={onClose}
               className="p-2 text-white-50 hover:text-white bg-black-200 rounded-lg border border-white-50/10 cursor-pointer"
