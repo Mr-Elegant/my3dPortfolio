@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
+import { useMediaQuery } from "react-responsive";
 
 import AnimatedCounter from "../components/AnimatedCounter";
 import Button from "../components/Button";
@@ -11,6 +12,8 @@ import HeroExperience from "../components/models/hero_models/HeroExperience";
 gsap.registerPlugin(Draggable);
 
 const Hero = ({ onResumeClick }) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1280px)" });
+
   useGSAP(() => {
     // 1. Existing Text Animation
     gsap.fromTo(
@@ -129,11 +132,13 @@ const Hero = ({ onResumeClick }) => {
 
         {/* RIGHT: 3D Model or Visual */}
         {/* Added z-20 here to ensure the 3D canvas stays visible! */}
-        <figure className="relative z-20 w-full xl:h-full h-[45vh] min-h-[350px] xl:mr-[10%] mr-0">
-          <div className="hero-3d-layout">
-            <HeroExperience />
-          </div>
-        </figure>
+        {isDesktop && (
+          <figure className="relative z-20 w-full xl:h-full h-[45vh] min-h-[350px] xl:mr-[10%] mr-0">
+            <div className="hero-3d-layout">
+              <HeroExperience />
+            </div>
+          </figure>
+        )}
       </div>
 
       <AnimatedCounter />
