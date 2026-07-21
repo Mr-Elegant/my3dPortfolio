@@ -498,6 +498,63 @@ section {
   }
 }
 
+/* Custom UI/UX animations */
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.3;
+  }
+}
+
+.scroll-dot {
+  animation: scroll-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes node-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(131, 205, 41, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(131, 205, 41, 0.8));
+  }
+}
+
+.node-pulse-glow {
+  animation: node-glow 3s ease-in-out infinite;
+}
+
+@keyframes three-glow {
+  0%, 100% {
+    filter: invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+  }
+  50% {
+    filter: invert(1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+  }
+}
+
+.three-pulse-glow {
+  animation: three-glow 3s ease-in-out infinite;
+}
+
+@keyframes ai-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(162, 89, 255, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(162, 89, 255, 0.8));
+    transform: scale(1.05);
+  }
+}
+
+.ai-pulse-glow {
+  animation: ai-glow 3s ease-in-out infinite;
+}
+
 @media print {
   /* Hide website content for clean printing */
   #root > *:not(.fixed),

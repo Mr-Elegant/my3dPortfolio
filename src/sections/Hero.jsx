@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMediaQuery } from "react-responsive";
 
 import AnimatedCounter from "../components/AnimatedCounter";
@@ -8,8 +9,8 @@ import Button from "../components/Button";
 import { words } from "../constants";
 import HeroExperience from "../components/models/hero_models/HeroExperience";
 
-// Register the Draggable plugin with GSAP
-gsap.registerPlugin(Draggable);
+// Register plugins with GSAP
+gsap.registerPlugin(Draggable, ScrollTrigger);
 
 const Hero = ({ onResumeClick }) => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1280px)" });
@@ -42,6 +43,18 @@ const Hero = ({ onResumeClick }) => {
       onDragEnd: function () {
         // Smoothly returns to normal scale when you drop it
         gsap.to(this.target, { scale: 1, duration: 0.2, ease: "back.out(1.5)" }); 
+      },
+    });
+
+    // 4. Scroll Down Indicator Fade Out
+    gsap.to(".scroll-indicator", {
+      opacity: 0,
+      y: 30,
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "top -150px",
+        scrub: true,
       },
     });
   });
@@ -139,6 +152,14 @@ const Hero = ({ onResumeClick }) => {
             </div>
           </figure>
         )}
+      </div>
+
+      {/* Scroll Down Indicator */}
+      <div className="scroll-indicator absolute bottom-24 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-2 z-30 pointer-events-none">
+        <span className="text-white-50/50 text-[10px] uppercase tracking-[0.2em] font-bold">Scroll Down</span>
+        <div className="w-[24px] h-[42px] rounded-full border border-white/20 flex justify-center p-1.5">
+          <div className="w-1 h-2 bg-[#4cc9f0] rounded-full scroll-dot" />
+        </div>
       </div>
 
       <AnimatedCounter />

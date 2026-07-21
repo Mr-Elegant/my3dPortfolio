@@ -56,6 +56,30 @@ const Experience = () => {
         },
       });
     });
+
+    // 4. Timeline Logo activation scroll animation
+    gsap.utils.toArray(".exp-card-wrapper").forEach((wrapper) => {
+      const logo = wrapper.querySelector(".timeline-logo");
+      gsap.fromTo(logo, 
+        {
+          scale: 1,
+          borderColor: "rgba(255, 255, 255, 0.1)",
+          boxShadow: "0 0 0px rgba(76, 201, 240, 0)",
+        },
+        {
+          scale: 1.15,
+          borderColor: "#4cc9f0",
+          boxShadow: "0 0 20px rgba(76, 201, 240, 0.6)",
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 65%",
+            end: "bottom 65%",
+            toggleActions: "play reverse play reverse",
+          }
+        }
+      );
+    });
   }, []);
 
   return (
