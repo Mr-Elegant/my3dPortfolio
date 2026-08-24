@@ -248,6 +248,16 @@ const testimonials = [
 
 const socialImgs = [
   {
+    name: "linkedin",
+    imgPath: "/images/linkedin.png",
+    link: "https://www.linkedin.com/in/preetkarwal/"
+  },
+  {
+    name: "github",
+    imgPath: "/images/gith.png", 
+    link: "https://github.com/Mr-Elegant"
+  },
+  {
     name: "insta",
     imgPath: "/images/insta.png",
     link:"https://www.instagram.com/preet_karwal/"
@@ -256,21 +266,6 @@ const socialImgs = [
     name: "fb",
     imgPath: "/images/fb.png",
     link:"https://www.facebook.com/Preetkarwal365/"
-  },
-  {
-    name: "x",
-    imgPath: "/images/x.png",
-    link:"https://x.com/preet365"
-  },
-  {
-    name: "github",
-    imgPath: "/images/gith.png", 
-    link: "https://github.com/Mr-Elegant"
-  },
-  {
-    name: "linkedin",
-    imgPath: "/images/linkedin.png",
-    link: "https://www.linkedin.com/in/preetkarwal/"
   }
 ];
 
