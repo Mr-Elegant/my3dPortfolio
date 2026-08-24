@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Draggable } from "gsap/Draggable";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMediaQuery } from "react-responsive";
 
@@ -13,7 +12,7 @@ import HeroExperience from "../components/models/hero_models/HeroExperience";
 import { audioFX } from "../utils/audioFX";
 
 // Register plugins with GSAP
-gsap.registerPlugin(Draggable, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = ({ onResumeClick, onOpenCopilot }) => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1280px)" });
@@ -26,30 +25,7 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
       { y: 0, opacity: 1, stagger: 0.2, duration: 1, ease: "power2.inOut" }
     );
 
-    // 2. The Floating Animation (Targets the INNER div)
-    gsap.to(".floating-anim", {
-      y: -20, 
-      duration: 2.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut",
-    });
-
-    // 3. The Draggable Feature (Targets the OUTER wrapper)
-    Draggable.create(".draggable-photo", {
-      type: "x,y",
-      bounds: "#hero", // Keeps the photo from being dragged off the screen
-      onDragStart: function () {
-        // Pops the image up slightly when you grab it
-        gsap.to(this.target, { scale: 1.05, duration: 0.2 }); 
-      },
-      onDragEnd: function () {
-        // Smoothly returns to normal scale when you drop it
-        gsap.to(this.target, { scale: 1, duration: 0.2, ease: "back.out(1.5)" }); 
-      },
-    });
-
-    // 4. Scroll Down Indicator Fade Out
+    // 2. Scroll Down Indicator Fade Out
     gsap.to(".scroll-indicator", {
       opacity: 0,
       y: 30,
@@ -138,32 +114,8 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
               />
             </div>
 
-            {/* MOBILE PHOTO: Draggable Outer, Floating Inner */}
-            <div className="mt-10 block xl:hidden draggable-photo relative z-30 w-48 h-48 mx-auto cursor-grab active:cursor-grabbing">
-              <div className="floating-anim w-full h-full relative">
-                <div className="absolute inset-0 bg-[#4cc9f0]/40 blur-2xl rounded-full pointer-events-none"></div>
-                <img 
-                  src="/images/mpsl.png" 
-                  alt="Preet Karwal" 
-                  className="w-full h-full object-cover rounded-full border-2 border-white/20 shadow-2xl relative z-10 pointer-events-none"
-                />
-              </div>
-            </div>
-
           </div>
         </header>
-
-        {/* DESKTOP PHOTO: Draggable Outer, Floating Inner */}
-        <div className="hidden xl:block absolute left-[50%] top-[60%] -translate-x-1/2 -translate-y-1/2 z-50 draggable-photo cursor-grab active:cursor-grabbing pointer-events-auto">
-            <div className="floating-anim w-64 h-64 relative">
-              <div className="absolute inset-0 bg-[#4cc9f0]/30 blur-3xl rounded-full pointer-events-none"></div>
-              <img 
-                src="/images/mpsl.png" 
-                alt="Preet Karwal" 
-                className="w-full h-full object-cover rounded-full border-[3px] border-white/20 shadow-[0_0_30px_rgba(76,201,240,0.4)] relative z-10 pointer-events-none"
-              />
-            </div>
-        </div>
 
         {/* RIGHT: 3D Model or Visual */}
         {isDesktop && (

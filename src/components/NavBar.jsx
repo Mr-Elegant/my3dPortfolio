@@ -28,8 +28,15 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
   return (
     <header className={`navbar ${scrolled ? "scrolled" : "not-scrolled"}`}>
       <div className="inner relative">
-        <a href="#hero" className="logo" onClick={() => setMobileMenuOpen(false)}>
-          Mr_Elegant
+        <a href="#hero" className="logo flex items-center gap-2.5 group" onClick={() => setMobileMenuOpen(false)}>
+          <div className="size-8 md:size-9 rounded-full overflow-hidden border border-[#00f0ff]/50 shadow-[0_0_12px_rgba(0,240,255,0.3)] shrink-0 transition-transform duration-300 group-hover:scale-110">
+            <img 
+              src="/images/mpsl.png" 
+              alt="Preet Karwal" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <span className="font-semibold text-lg md:text-xl tracking-tight">Mr_Elegant</span>
         </a>
 
         {/* Desktop Navigation */}
