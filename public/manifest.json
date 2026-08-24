@@ -1,0 +1,21 @@
+{
+  "short_name": "Preet Karwal",
+  "name": "Preet Karwal — Full-Stack & AI Systems Engineer Portfolio",
+  "icons": [
+    {
+      "src": "/images/mpsl.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/mpsl.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#060709",
+  "theme_color": "#00f0ff",
+  "display": "standalone",
+  "orientation": "portrait"
+}

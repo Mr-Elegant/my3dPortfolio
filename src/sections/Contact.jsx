@@ -7,6 +7,7 @@ import ContactExperience from "../components/models/contact/ContactExperience";
 const Contact = () => {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: string }
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -20,7 +21,8 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loading state
+    setLoading(true);
+    setStatus(null);
 
     try {
       await emailjs.sendForm(
@@ -30,12 +32,24 @@ const Contact = () => {
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
       );
 
-      // Reset form and stop loading
+      setStatus({
+        type: "success",
+        message: "Thank you! Your message has been sent successfully. 🚀",
+      });
+      // Reset form on success
       setForm({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("EmailJS Error:", error); // Optional: show toast
+      console.error("EmailJS Error:", error);
+      setStatus({
+        type: "error",
+        message: "Oops! Something went wrong while sending. Please try again or reach out directly.",
+      });
     } finally {
-      setLoading(false); // Always stop loading, even on error
+      setLoading(false);
+      // Clear status message after 6 seconds
+      setTimeout(() => {
+        setStatus(null);
+      }, 6000);
     }
   };
 
@@ -43,66 +57,117 @@ const Contact = () => {
     <section id="contact" className="flex-center section-padding">
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
-          title="Get in Touch – Let’s Connect"
-          sub="💬 Have questions or ideas? Let’s talk! 🚀"
+          title="Encrypted Uplink – Let’s Connect"
+          sub="🛰️ Establish direct frequency connection for lead engineering & architecture opportunities 🚀"
         />
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">
-            <div className="flex-center card-border rounded-xl p-10">
+            <div className="relative flex-center bg-black-100/90 border border-white-50/10 rounded-2xl p-8 md:p-10 shadow-[0_0_30px_rgba(0,240,255,0.05)] backdrop-blur-xl">
+              
+              {/* HUD Corner Reticles */}
+              <span className="hud-corner-cross -top-1 -left-1 opacity-70" />
+              <span className="hud-corner-cross -top-1 -right-1 opacity-70" />
+              <span className="hud-corner-cross -bottom-1 -left-1 opacity-70" />
+              <span className="hud-corner-cross -bottom-1 -right-1 opacity-70" />
+
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="w-full flex flex-col gap-7"
+                className="w-full flex flex-col gap-6"
               >
+                {/* HUD Header Status */}
+                <div className="flex items-center justify-between text-[11px] font-mono text-white-50/60 pb-3 border-b border-white-50/10 uppercase tracking-wider">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-pulse inline-block" />
+                    <span className="text-[#00ff88]">UPLINK: ONLINE</span>
+                  </div>
+                  <span className="text-white-50/40">TLS 1.3 ENCRYPTED</span>
+                </div>
+
+                {status && (
+                  <div
+                    className={`p-4 rounded-xl text-sm font-medium border flex items-center gap-3 transition-all duration-300 animate-[fadeIn_0.3s_ease-out] ${
+                      status.type === "success"
+                        ? "bg-[#00ff88]/10 border-[#00ff88]/40 text-[#00ff88]"
+                        : "bg-[#ff003c]/10 border-[#ff003c]/40 text-[#ff4d4d]"
+                    }`}
+                  >
+                    <span>{status.type === "success" ? "✓" : "⚠"}</span>
+                    <span>{status.message}</span>
+                  </div>
+                )}
+
                 <div>
-                  <label htmlFor="name">Your name</label>
+                  <label htmlFor="name" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide">
+                    // SENDER_COORDINATE_NAME:
+                  </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="What’s your good name?"
+                    placeholder="Enter your name or organization..."
                     required
+                    disabled={loading}
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] font-mono placeholder:text-white-50/30"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email">Your Email</label>
+                  <label htmlFor="email" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide">
+                    // COMM_UPLINK_EMAIL:
+                  </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="What’s your email address?"
+                    placeholder="Enter your corporate/personal email..."
                     required
+                    disabled={loading}
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] font-mono placeholder:text-white-50/30"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message">Your Message</label>
+                  <label htmlFor="message" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide">
+                    // ENCRYPTED_PAYLOAD_MESSAGE:
+                  </label>
                   <textarea
                     id="message"
                     name="message"
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="How can I help you?"
-                    rows="5"
+                    placeholder="Describe project requirements, timeline, or engineering role..."
+                    rows="4"
                     required
+                    disabled={loading}
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] font-mono placeholder:text-white-50/30 resize-none"
                   />
                 </div>
 
-                <button type="submit">
-                  <div className="cta-button group">
-                    <div className="bg-circle" />
-                    <p className="text">
-                      {loading ? "Sending..." : "Send Message"}
-                    </p>
-                    <div className="arrow-wrapper">
-                      <img src="/images/arrow-down.svg" alt="arrow" />
-                    </div>
-                  </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full py-3.5 px-6 rounded-xl font-mono text-sm font-bold tracking-wide uppercase transition-all duration-300 cursor-pointer flex items-center justify-center gap-3 border ${
+                    loading
+                      ? "bg-[#00f0ff]/20 text-[#00f0ff] border-[#00f0ff]/40 cursor-not-allowed animate-pulse"
+                      : "bg-[#00f0ff] text-black hover:bg-[#00ff88] hover:shadow-[0_0_25px_rgba(0,255,136,0.4)] border-[#00f0ff]"
+                  }`}
+                >
+                  {loading ? (
+                    <>
+                      <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
+                      <span>TRANSMITTING ENCRYPTED PACKET...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>TRANSMIT FREQUENCY [ENCRYPT &amp; SEND]</span>
+                      <span>⚡</span>
+                    </>
+                  )}
                 </button>
               </form>
             </div>

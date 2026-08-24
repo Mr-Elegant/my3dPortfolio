@@ -8,8 +8,8 @@ const GlowingBorderCard = ({ children }) => {
              `animate-[spin_4s_linear_infinite]` controls the speed. */}
       <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#4cc9f0_30%,#7209b7_60%,transparent_100%)]" />
       
-      {/* 3. The Inner Card: Solid dark background that covers the middle of the gradient */}
-      <div className="relative h-full w-full rounded-xl bg-[#050505] p-6 z-10">
+      {/* 3. The Inner Card: Solid background that covers the middle of the gradient */}
+      <div className="relative h-full w-full rounded-xl bg-black-100 glowing-card-inner p-6 z-10">
         {children}
       </div>
     </div>

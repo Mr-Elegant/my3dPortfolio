@@ -44,7 +44,7 @@ const Experience = () => {
     gsap.utils.toArray(".reveal-bullet").forEach((bullet) => {
       const words = bullet.querySelectorAll(".reveal-word");
       gsap.to(words, {
-        color: "#ffffff",
+        opacity: 1,
         stagger: 0.02,
         duration: 0.5,
         ease: "none",
@@ -129,7 +129,7 @@ const Experience = () => {
                                 {responsibility.split(" ").map((word, wordIndex) => (
                                   <span
                                     key={wordIndex}
-                                    className="reveal-word inline-block mr-1 text-white/20"
+                                    className="reveal-word inline-block mr-1 opacity-25"
                                   >
                                     {word}
                                   </span>
