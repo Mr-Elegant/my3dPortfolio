@@ -1,5 +1,4 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import Testimonials from "./sections/Testimonials";
 import Footer from "./sections/Footer";
 import Contact from "./sections/Contact";
 import TechStack from "./sections/TechStack";
@@ -94,7 +93,6 @@ const App = () => {
       {/* Live GitHub Commit Matrix & Contribution Heatmap */}
       <GitHubActivityMatrix />
 
-      <Testimonials />
       <Contact />
       <Footer />
 

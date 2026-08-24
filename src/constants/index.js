@@ -20,8 +20,8 @@ const navLinks = [
     link: "#skills",
   },
   {
-    name: "Reviews",
-    link: "#testimonials",
+    name: "GitHub",
+    link: "#github",
   },
 ];
 
@@ -198,51 +198,6 @@ const expLogos = [
   {
     name: "logo3",
     imgPath: "/images/logo3.png",
-  },
-];
-
-const testimonials = [
-  {
-    name: "Sanjay Sharma",
-    mentions: "Fintech CTO, SV Finance",
-    review:
-      "Preet revolutionized our credit assessment pipeline. By building the NBFC LOMS automation layer with Zoho CRM/Books and WhatsApp APIs, he completely eliminated manual entry errors across our divisions. His understanding of fintech operational flow is exceptional.",
-    imgPath: "/images/client1.png",
-  },
-  {
-    name: "Neha Gupta",
-    mentions: "Lead Architect, MindGeeks Tech",
-    review:
-      "Preet is a brilliant MERN developer. He took ownership of secure API design with custom JWT authentication and optimized our MongoDB query speeds by 40% using indexing. A proactive problem solver who excels in agile sprint cycles.",
-    imgPath: "/images/client2.png",
-  },
-  {
-    name: "Alex Mercer",
-    mentions: "Founder, DevNet Community",
-    review:
-      "Preet's Socket.IO messaging features and real-time collaborative whiteboard are flawless. He scaled our message pipeline using Redis Pub/Sub adapters and integrated tldraw seamlessly. He has a real talent for interactive UI/UX.",
-    imgPath: "/images/client3.png",
-  },
-  {
-    name: "David Chen",
-    mentions: "AI Product Lead",
-    review:
-      "We integrated Preet's AI workspace into our pipeline. The Vercel AI SDK streaming response is incredibly smooth, and the social login flow using Better Auth was set up in record time. Excellent work on prompt design.",
-    imgPath: "/images/client4.png",
-  },
-  {
-    name: "Rajesh Kumar",
-    mentions: "Manager, Beniss Global",
-    review:
-      "Working with Preet on our Beniss Global investment platform was a pleasure. He led the backend team efficiently, ensuring high security and robust deployment pipelines on AWS EC2 using Nginx and PM2.",
-    imgPath: "/images/client5.png",
-  },
-  {
-    name: "Sophie Laurent",
-    mentions: "Tech Recruiter",
-    review:
-      "Preet's mastery of both frontend (React, Next.js, Tailwind) and backend architectures (Node, Postgres, Redis) is rare. His agentic AI automation skills make him a valuable asset to any modern engineering team.",
-    imgPath: "/images/client6.png",
   },
 ];
 
@@ -652,7 +607,6 @@ export {
   counterItems,
   expCards,
   expLogos,
-  testimonials,
   socialImgs,
   techStackIcons,
   techStackImgs,
