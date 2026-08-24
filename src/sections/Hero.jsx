@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,6 +13,17 @@ import { audioFX } from "../utils/audioFX";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = ({ onResumeClick, onOpenCopilot }) => {
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Active unmask state triggers on hover (desktop) OR tap/touch (mobile/tablet)
+  const isUnmasked = isHovered || isRevealed;
+
+  const handleToggleReveal = () => {
+    audioFX.playBeep();
+    setIsRevealed((prev) => !prev);
+  };
+
   useGSAP(() => {
     // 1. Text Animation
     gsap.fromTo(
@@ -111,11 +123,25 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
           </div>
         </header>
 
-        {/* RIGHT: Interactive Cyber Identity Hologram (Mask Hover Reveal) */}
+        {/* RIGHT: Interactive Cyber Identity Hologram (Mask Hover & Mobile Tap Reveal) */}
         <div className="relative z-20 w-full xl:w-[44%] flex justify-center items-center">
           <div 
+            role="button"
+            tabIndex={0}
+            aria-label="Toggle anonymous mask reveal"
+            onClick={handleToggleReveal}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleToggleReveal();
+              }
+            }}
+            onMouseEnter={() => {
+              audioFX.playBeep();
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => setIsHovered(false)}
             className="group relative w-full max-w-[360px] sm:max-w-[420px] xl:max-w-[460px] aspect-[4/5] rounded-2xl overflow-hidden border border-[#00f0ff]/30 bg-black-100/90 shadow-[0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-[#00f0ff]/70 hover:shadow-[0_0_50px_rgba(0,240,255,0.3)] select-none cursor-pointer"
-            onMouseEnter={() => audioFX.playBeep()}
           >
             {/* Corner HUD Reticles */}
             <span className="hud-corner-cross -top-1 -left-1 opacity-80" />
@@ -126,10 +152,11 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
             {/* Top HUD Badge Status */}
             <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between pointer-events-none">
               <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono">
-                <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-ping" />
+                <span className={`w-2 h-2 rounded-full ${isUnmasked ? "bg-[#00ff88]" : "bg-[#00f0ff]"} animate-ping`} />
                 <span className="text-white-50/70">IDENTITY:</span>
-                <span className="text-[#00f0ff] font-bold group-hover:hidden">MASKED [HOVER TO REVEAL]</span>
-                <span className="text-[#00ff88] font-bold hidden group-hover:inline">PREET KARWAL [UNMASKED]</span>
+                <span className={`font-bold ${isUnmasked ? "text-[#00ff88]" : "text-[#00f0ff]"}`}>
+                  {isUnmasked ? "PREET KARWAL [UNMASKED]" : "MASKED [HOVER / TAP]"}
+                </span>
               </div>
               <div className="px-2 py-1 rounded bg-black/85 border border-[#00f0ff]/30 text-[10px] font-mono text-[#00f0ff]">
                 HUD // v2.6
@@ -140,18 +167,29 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
             <img
               src="/images/hero_unmasked.jpg"
               alt="Preet Karwal Unmasked"
-              className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out ${
+                isUnmasked ? "scale-105" : "scale-100"
+              }`}
             />
 
-            {/* 2. Top Layer: MASKED Image (Fades out on Hover to reveal unmasked image) */}
+            {/* 2. Top Layer: MASKED Image (Smooth Cross-fade on Hover or Mobile Tap) */}
             <img
               src="/images/hero_masked.jpg"
               alt="Anonymous Masked Engineer"
-              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out opacity-100 group-hover:opacity-0"
+              className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out ${
+                isUnmasked ? "opacity-0 pointer-events-none" : "opacity-100"
+              }`}
             />
 
+            {/* Mobile Interaction Hint Badge */}
+            <div className="block xl:hidden absolute bottom-12 right-3 z-30 px-2.5 py-1 rounded-lg bg-black/80 border border-[#00f0ff]/40 backdrop-blur-md font-mono text-[9px] text-[#00f0ff] font-bold shadow-lg">
+              {isUnmasked ? "✓ UNMASKED (TAP TO MASK)" : "👆 TAP TO UNMASK"}
+            </div>
+
             {/* Subtle CRT Scanline overlay */}
-            <div className="absolute inset-0 pointer-events-none hud-scanline opacity-20 group-hover:opacity-10 transition-opacity" />
+            <div className={`absolute inset-0 pointer-events-none hud-scanline transition-opacity ${
+              isUnmasked ? "opacity-10" : "opacity-20"
+            }`} />
 
             {/* Bottom Holographic HUD telemetry tag */}
             <div className="absolute bottom-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between px-3.5 py-1.5 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono text-white-50 pointer-events-none">
