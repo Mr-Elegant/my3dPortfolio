@@ -10,7 +10,7 @@ const SystemTelemetryBar = ({ onOpenCopilot }) => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 relative z-20">
+    <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12 mt-6 relative z-20">
       <div className="bg-black-100/90 border border-white-50/15 rounded-2xl p-4 md:p-5 backdrop-blur-xl shadow-[0_0_30px_rgba(76,201,240,0.1)] flex flex-wrap items-center justify-between gap-4">
         
         {/* Left: Operational Status */}

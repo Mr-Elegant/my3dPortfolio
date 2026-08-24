@@ -68,14 +68,14 @@ const GitHubActivityMatrix = () => {
   };
 
   return (
-    <section id="github" className="section-padding relative">
-      <div className="w-full h-full md:px-10 px-5">
+    <section id="github" className="w-full section-padding relative z-20">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
           title="Open-Source & GitHub Activity Matrix"
           sub="🐙 Real-time engineering output, code commits, and open-source contributions 🚀"
         />
 
-        <div className="mt-14 max-w-6xl mx-auto">
+        <div className="mt-14 w-full">
           <GlowingBorderCard>
             <div className="p-6 md:p-10 bg-black-100/95 rounded-2xl border border-white-50/10 backdrop-blur-xl relative">
               

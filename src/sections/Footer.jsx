@@ -11,12 +11,13 @@ const Footer = () => {
   };
 
   return (
-    <footer className="section-padding py-10 border-t border-white/10 flex justify-between items-center flex-wrap gap-5">
-      <div className="text-white-50 flex gap-2 text-sm md:text-base">
-        <p>Terms & Conditions</p>
-        <p>|</p>
-        <p>Privacy Policy</p>
-      </div>
+    <footer className="w-full mt-20 py-10 border-t border-white/10 relative z-20">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12 flex justify-between items-center flex-wrap gap-5">
+        <div className="text-white-50 flex gap-2 text-sm md:text-base">
+          <p>Terms &amp; Conditions</p>
+          <p>|</p>
+          <p>Privacy Policy</p>
+        </div>
 
       {/* Social Icons Section */}
       <div className="flex gap-4 z-50">
@@ -40,9 +41,10 @@ const Footer = () => {
         ))}
       </div>
 
-      <p className="text-white-50 text-sm md:text-base">
-        © 2026 Preet Karwal. All rights reserved.
-      </p>
+        <p className="text-white-50 text-sm md:text-base">
+          © 2026 Preet Karwal. All rights reserved.
+        </p>
+      </div>
     </footer>
   );
 };

@@ -112,8 +112,8 @@ const TechStack = () => {
   });
 
   return (
-    <div id="skills" className="flex-center section-padding">
-      <div className="w-full h-full md:px-10 px-5">
+    <section id="skills" className="w-full flex-center section-padding relative z-20">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
           title="How I Can Contribute & My Key Skills"
           sub="🤝 What I Bring to the Table"
@@ -150,7 +150,7 @@ const TechStack = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

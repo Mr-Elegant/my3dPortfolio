@@ -48,11 +48,11 @@ section {
   }
 
   .padding-x-lg {
-    @apply px-5 md:px-20;
+    @apply px-5 sm:px-8 md:px-10 xl:px-12;
   }
 
   .section-padding {
-    @apply px-5 md:px-10 md:mt-40 mt-20;
+    @apply md:mt-36 mt-20;
   }
 
   .mt-responsive {
@@ -159,7 +159,7 @@ section {
   }
 
   .app-showcase {
-    @apply w-full mt-20 px-5 md:px-20 py-10 md:py-20 flex items-center justify-center;
+    @apply w-full md:mt-36 mt-20 flex items-center justify-center;
 
     .showcaselayout {
       @apply flex xl:flex-row flex-col gap-10 justify-between;

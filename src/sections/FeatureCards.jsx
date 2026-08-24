@@ -29,25 +29,27 @@ const FeatureCards = () => {
   }, []);
 
   return (
-    <div className="w-full padding-x-lg feature-cards-grid my-20">
-      <div className="mx-auto grid-3-cols">
-        {abilities.map(({ imgPath, title, desc }) => (
-          <div key={title} className="feature-card">
-            <GlowingBorderCard>
-              <div className="flex flex-col gap-4 min-h-48 justify-between">
-                <div>
-                  <div className="size-14 flex items-center justify-center rounded-full bg-white/5 border border-white-50/10 p-3">
-                    <img src={imgPath} alt={title} className="w-full h-full object-contain" />
+    <section className="w-full section-padding feature-cards-grid">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
+        <div className="grid-3-cols">
+          {abilities.map(({ imgPath, title, desc }) => (
+            <div key={title} className="feature-card">
+              <GlowingBorderCard>
+                <div className="flex flex-col gap-4 min-h-48 justify-between">
+                  <div>
+                    <div className="size-14 flex items-center justify-center rounded-full bg-white/5 border border-white-50/10 p-3">
+                      <img src={imgPath} alt={title} className="w-full h-full object-contain" />
+                    </div>
+                    <h3 className="text-white text-xl font-semibold mt-4">{title}</h3>
                   </div>
-                  <h3 className="text-white text-xl font-semibold mt-4">{title}</h3>
+                  <p className="text-[#839cb5] text-sm leading-relaxed">{desc}</p>
                 </div>
-                <p className="text-[#839cb5] text-sm leading-relaxed">{desc}</p>
-              </div>
-            </GlowingBorderCard>
-          </div>
-        ))}
+              </GlowingBorderCard>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

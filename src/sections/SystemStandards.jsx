@@ -5,7 +5,7 @@ import GlowingBorderCard from "../components/GlowingBorderCard";
 const SystemStandards = () => {
   return (
     <section id="standards" className="w-full section-padding relative z-20">
-      <div className="w-full max-w-7xl mx-auto md:px-10 px-5">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         
         <TitleHeader
           title="Architectural & Security Standards"

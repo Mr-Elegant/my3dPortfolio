@@ -85,9 +85,9 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="flex-center md:mt-40 mt-20 section-padding xl:px-0"
+      className="w-full flex-center section-padding relative z-20"
     >
-      <div className="w-full h-full md:px-20 px-5">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
           title="Professional Work Experience"
           sub="💼 My Career Overview"

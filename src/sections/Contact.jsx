@@ -54,8 +54,8 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="flex-center section-padding">
-      <div className="w-full h-full md:px-10 px-5">
+    <section id="contact" className="w-full flex-center section-padding relative z-20">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
           title="Encrypted Uplink – Let’s Connect"
           sub="🛰️ Establish direct frequency connection for lead engineering & architecture opportunities 🚀"

@@ -45,8 +45,8 @@ const AppShowcase = ({ onOpenADR }) => {
   }, []);
 
   return (
-    <div id="work" ref={sectionRef} className="app-showcase">
-      <div className="w-full">
+    <section id="work" ref={sectionRef} className="app-showcase">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <div className="showcaselayout">
           
           {/* ----- PROJECT 1: DevNet ----- */}
@@ -164,7 +164,7 @@ const AppShowcase = ({ onOpenADR }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -17,8 +17,8 @@ const SkillBadge = ({ skill }) => {
 };
 
 const TechShowcase = () => (
-  <div className="w-full md:mt-24 mt-12 px-5 md:px-20 py-10 relative z-20">
-    <div className="w-full h-full max-w-7xl mx-auto flex flex-col gap-10">
+  <section className="w-full section-padding relative z-20">
+    <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12 flex flex-col gap-10">
       
       {/* Title Header Section */}
       <TitleHeader
@@ -55,7 +55,7 @@ const TechShowcase = () => (
         </div>
       </div>
     </div>
-  </div>
+  </section>
 );
 
 export default TechShowcase;
