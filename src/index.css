@@ -979,6 +979,13 @@ html[data-theme="light"] footer p {
   color: #475569 !important;
 }
 
+html[data-theme="light"] aside[aria-label="Social Uplink Dock"] a img[alt="x"],
+html[data-theme="light"] aside[aria-label="Social Uplink Dock"] a img[alt="github"],
+html[data-theme="light"] footer img[alt="x"],
+html[data-theme="light"] footer img[alt="github"] {
+  filter: invert(1);
+}
+
 @media print {
   /* Hide website content for clean printing */
   #root > *:not(.fixed),

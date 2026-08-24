@@ -16,6 +16,7 @@ import HUDCommandPalette from "./components/HUDCommandPalette";
 import PreetAICopilot from "./components/PreetAICopilot";
 import LatencyBenchmarkPlayground from "./components/LatencyBenchmarkPlayground";
 import GitHubActivityMatrix from "./components/GitHubActivityMatrix";
+import FloatingSocialDock from "./components/FloatingSocialDock";
 import { audioFX } from "./utils/audioFX";
 import { getInitialTheme, applyTheme, THEMES } from "./utils/themeEngine";
 
@@ -96,6 +97,9 @@ const App = () => {
       <Testimonials />
       <Contact />
       <Footer />
+
+      {/* Floating Social Contact Dock (LinkedIn, X, Insta, FB, GitHub) */}
+      <FloatingSocialDock />
 
       {/* Floating Preet AI Copilot Trigger Button */}
       <button
