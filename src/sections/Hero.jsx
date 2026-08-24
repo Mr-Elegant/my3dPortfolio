@@ -1,24 +1,19 @@
-import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useMediaQuery } from "react-responsive";
 
 import AnimatedCounter from "../components/AnimatedCounter";
 import Button from "../components/Button";
 import SystemTelemetryBar from "../components/SystemTelemetryBar";
 import { words } from "../constants";
-import HeroExperience from "../components/models/hero_models/HeroExperience";
 import { audioFX } from "../utils/audioFX";
 
 // Register plugins with GSAP
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = ({ onResumeClick, onOpenCopilot }) => {
-  const isDesktop = useMediaQuery({ query: "(min-width: 1280px)" });
-
   useGSAP(() => {
-    // 1. Existing Text Animation
+    // 1. Text Animation
     gsap.fromTo(
       ".hero-text h1",
       { y: 50, opacity: 0 },
@@ -38,17 +33,16 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
     });
   });
 
-  const [roomTheme, setRoomTheme] = useState("cyan");
-
   return (
     <section id="hero" className="relative overflow-hidden">
       <div className="absolute top-0 left-0 z-10 pointer-events-none opacity-40">
         <img src="/images/bg.png" alt="background" />
       </div>
 
-      <div className="hero-layout relative">
-        {/* LEFT: Hero Content */}
-        <header className="flex flex-col justify-center md:w-full w-screen md:px-20 px-5 z-20">
+      <div className="hero-layout relative max-w-7xl mx-auto px-5 md:px-10 xl:px-12 flex flex-col xl:flex-row items-center justify-between gap-12 xl:gap-8">
+        
+        {/* LEFT: Hero Headline & CTA Actions */}
+        <header className="flex flex-col justify-center w-full xl:w-[56%] z-20">
           <div className="flex flex-col gap-6">
             
             {/* Futuristic Terminal Boot Sequence Badge */}
@@ -117,41 +111,56 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
           </div>
         </header>
 
-        {/* RIGHT: 3D Model or Visual */}
-        {isDesktop && (
-          <figure className="relative z-20 w-full xl:h-full h-[45vh] min-h-[350px] xl:mr-[10%] mr-0">
-            {/* 3D Room Ambient Light Controller HUD */}
-            <div className="absolute top-2 right-2 xl:right-10 z-40 flex items-center gap-1.5 p-1.5 rounded-xl bg-black-100/90 border border-white-50/15 backdrop-blur-xl font-mono text-[10px] shadow-[0_0_20px_rgba(0,0,0,0.8)]">
-              <span className="text-white-50/50 px-1 hidden sm:inline">3D_LIGHT:</span>
-              {[
-                { id: "cyan", color: "#00f0ff", label: "CYAN" },
-                { id: "emerald", color: "#00ff88", label: "MATRIX" },
-                { id: "violet", color: "#f72585", label: "VIOLET" },
-                { id: "amber", color: "#ffb703", label: "AMBER" },
-              ].map((preset) => (
-                <button
-                  key={preset.id}
-                  onClick={() => {
-                    audioFX.playClick();
-                    setRoomTheme(preset.id);
-                  }}
-                  className={`px-2 py-0.5 rounded transition-all cursor-pointer font-bold ${
-                    roomTheme === preset.id
-                      ? "bg-white/15 border border-white-50/30"
-                      : "text-white-50/50 hover:text-white border border-transparent"
-                  }`}
-                  style={{ color: preset.color }}
-                >
-                  {preset.label}
-                </button>
-              ))}
+        {/* RIGHT: Interactive Cyber Identity Hologram (Mask Hover Reveal) */}
+        <div className="relative z-20 w-full xl:w-[44%] flex justify-center items-center">
+          <div 
+            className="group relative w-full max-w-[360px] sm:max-w-[420px] xl:max-w-[460px] aspect-[4/5] rounded-2xl overflow-hidden border border-[#00f0ff]/30 bg-black-100/90 shadow-[0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-[#00f0ff]/70 hover:shadow-[0_0_50px_rgba(0,240,255,0.3)] select-none cursor-pointer"
+            onMouseEnter={() => audioFX.playBeep()}
+          >
+            {/* Corner HUD Reticles */}
+            <span className="hud-corner-cross -top-1 -left-1 opacity-80" />
+            <span className="hud-corner-cross -top-1 -right-1 opacity-80" />
+            <span className="hud-corner-cross -bottom-1 -left-1 opacity-80" />
+            <span className="hud-corner-cross -bottom-1 -right-1 opacity-80" />
+
+            {/* Top HUD Badge Status */}
+            <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between pointer-events-none">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono">
+                <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-ping" />
+                <span className="text-white-50/70">IDENTITY:</span>
+                <span className="text-[#00f0ff] font-bold group-hover:hidden">MASKED [HOVER TO REVEAL]</span>
+                <span className="text-[#00ff88] font-bold hidden group-hover:inline">PREET KARWAL [UNMASKED]</span>
+              </div>
+              <div className="px-2 py-1 rounded bg-black/85 border border-[#00f0ff]/30 text-[10px] font-mono text-[#00f0ff]">
+                HUD // v2.6
+              </div>
             </div>
 
-            <div className="hero-3d-layout">
-              <HeroExperience themeMode={roomTheme} />
+            {/* 1. Base Layer: UNMASKED Image */}
+            <img
+              src="/images/hero_unmasked.jpg"
+              alt="Preet Karwal Unmasked"
+              className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+
+            {/* 2. Top Layer: MASKED Image (Fades out on Hover to reveal unmasked image) */}
+            <img
+              src="/images/hero_masked.jpg"
+              alt="Anonymous Masked Engineer"
+              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out opacity-100 group-hover:opacity-0"
+            />
+
+            {/* Subtle CRT Scanline overlay */}
+            <div className="absolute inset-0 pointer-events-none hud-scanline opacity-20 group-hover:opacity-10 transition-opacity" />
+
+            {/* Bottom Holographic HUD telemetry tag */}
+            <div className="absolute bottom-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between px-3.5 py-1.5 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono text-white-50 pointer-events-none">
+              <span className="text-[#00f0ff]">SYS_OP: ARCHITECT</span>
+              <span className="text-[#00ff88]">ZERO_TRUST: ACTIVE</span>
             </div>
-          </figure>
-        )}
+          </div>
+        </div>
+
       </div>
 
       {/* Live System Telemetry Bar */}
