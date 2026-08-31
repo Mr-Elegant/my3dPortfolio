@@ -1053,3 +1053,13 @@ html[data-theme="light"] footer img[alt="github"] {
     break-before: page !important;
   }
 }
+
+/* Custom Pointer CSS when fine cursor is active */
+@media (pointer: fine) {
+  body.custom-cursor-enabled,
+  body.custom-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
+

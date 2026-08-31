@@ -25,12 +25,38 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
   };
 
   useGSAP(() => {
-    // 1. Text Animation
-    gsap.fromTo(
-      ".hero-text h1",
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, stagger: 0.2, duration: 1, ease: "power2.inOut" }
-    );
+    // 1. Comprehensive Hero Entrance Stagger Timeline
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.fromTo(
+      ".hero-badge-boot",
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8 }
+    )
+      .fromTo(
+        ".hero-text h1",
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.15, duration: 0.8 },
+        "-=0.4"
+      )
+      .fromTo(
+        ".hero-bio",
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 },
+        "-=0.4"
+      )
+      .fromTo(
+        ".hero-cta-btn",
+        { y: 20, opacity: 0, scale: 0.95 },
+        { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.6 },
+        "-=0.3"
+      )
+      .fromTo(
+        ".hero-identity-card",
+        { x: 40, opacity: 0, scale: 0.95 },
+        { x: 0, opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" },
+        "-=0.7"
+      );
 
     // 2. Scroll Down Indicator Fade Out
     gsap.to(".scroll-indicator", {
@@ -58,7 +84,7 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
           <div className="flex flex-col gap-6">
             
             {/* Futuristic Terminal Boot Sequence Badge */}
-            <div className="flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-lg bg-black-100/90 border border-[#00f0ff]/30 text-[11px] font-mono text-[#00f0ff] w-fit shadow-[0_0_20px_rgba(0,240,255,0.12)]">
+            <div className="hero-badge-boot flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-lg bg-black-100/90 border border-[#00f0ff]/30 text-[11px] font-mono text-[#00f0ff] w-fit shadow-[0_0_20px_rgba(0,240,255,0.12)]">
               <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-pulse inline-block" />
               <span className="text-white-50/70 font-semibold">&gt; SYS_BOOT:</span>
               <span className="text-[#00f0ff]">PREET_OS v2.6.4</span>
@@ -95,7 +121,7 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
               <h1>that Scale &amp; Deliver</h1>
             </div>
 
-            <p className="text-white-50 md:text-xl relative z-10 max-w-2xl leading-relaxed">
+            <p className="hero-bio text-white-50 md:text-xl relative z-10 max-w-2xl leading-relaxed">
               Hi, I’m <strong className="text-white">Preet Karwal</strong> — Full-Stack &amp; AI Systems Engineer.<br />
               <span className="text-[#839cb5] text-sm md:text-base mt-1 block">
                 Designing high-throughput distributed backends, autonomous multi-agent automation pipelines, and enterprise cloud architectures.
@@ -103,28 +129,34 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
             </p>
 
             <div className="flex flex-wrap gap-3.5 items-center relative z-20 mt-1">
-              <Button
-                text="Featured Projects 🚀"
-                className="w-auto"
-                id="work"
-              />
-              <Button
-                text="System Topologies 📐"
-                className="w-auto"
-                id="architecture"
-              />
-              <Button
-                text="Curriculum Vitae 📄"
-                className="w-auto"
-                onClick={onResumeClick}
-              />
+              <div className="hero-cta-btn">
+                <Button
+                  text="Featured Projects 🚀"
+                  className="w-auto"
+                  id="work"
+                />
+              </div>
+              <div className="hero-cta-btn">
+                <Button
+                  text="System Topologies 📐"
+                  className="w-auto"
+                  id="architecture"
+                />
+              </div>
+              <div className="hero-cta-btn">
+                <Button
+                  text="Curriculum Vitae 📄"
+                  className="w-auto"
+                  onClick={onResumeClick}
+                />
+              </div>
             </div>
 
           </div>
         </header>
 
         {/* RIGHT: Interactive Cyber Identity Hologram (Mask Hover & Mobile Tap Reveal) */}
-        <div className="relative z-20 w-full xl:w-[44%] flex justify-center items-center">
+        <div className="hero-identity-card relative z-20 w-full xl:w-[44%] flex justify-center items-center">
           <div 
             role="button"
             tabIndex={0}
@@ -204,12 +236,19 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
       {/* Live System Telemetry Bar */}
       <SystemTelemetryBar onOpenCopilot={onOpenCopilot} />
 
-      {/* Scroll Down Indicator */}
+      {/* Scroll Down Indicator (Desktop) */}
       <div className="scroll-indicator absolute bottom-24 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-2 z-30 pointer-events-none">
         <span className="text-white-50/50 text-[10px] uppercase tracking-[0.2em] font-bold">Scroll Down</span>
         <div className="w-[24px] h-[42px] rounded-full border border-white/20 flex justify-center p-1.5">
           <div className="w-1 h-2 bg-[#4cc9f0] rounded-full scroll-dot" />
         </div>
+      </div>
+
+      {/* Scroll Down Indicator (Mobile/Tablet) */}
+      <div className="scroll-indicator flex xl:hidden justify-center items-center gap-1.5 mt-6 mb-2 text-white-50/50 text-xs font-mono">
+        <span className="animate-bounce">▼</span>
+        <span className="tracking-widest uppercase text-[10px]">SCROLL TO EXPLORE</span>
+        <span className="animate-bounce">▼</span>
       </div>
 
       <AnimatedCounter />

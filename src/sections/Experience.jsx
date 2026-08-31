@@ -31,11 +31,26 @@ const Experience = () => {
     gsap.utils.toArray(".expText").forEach((text) => {
       gsap.from(text, {
         opacity: 0,
+        x: 30,
         duration: 1,
         ease: "power2.inOut",
         scrollTrigger: {
           trigger: text,
           start: "top 75%",
+        },
+      });
+    });
+
+    // 2b. Animate the left tech panels in
+    gsap.utils.toArray(".exp-tech-panel").forEach((panel) => {
+      gsap.from(panel, {
+        opacity: 0,
+        x: -30,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: panel,
+          start: "top 80%",
         },
       });
     });
@@ -94,15 +109,58 @@ const Experience = () => {
         />
         <div className="mt-32 relative">
           <div className="relative z-50 xl:space-y-32 space-y-10">
-            {expCards.map((card) => (
-              <div key={card.title} className="exp-card-wrapper">
-                <div className="xl:w-2/6">
-                  {/* <GlowCard card={card}>
-                    <div>
-                      <img src={card.imgPath} alt="exp-img" />
+            {expCards.map((card, idx) => (
+              <div key={card.title + idx} className="exp-card-wrapper">
+                {/* LEFT COLUMN: Role Tech-Stack & Company Telemetry Panel */}
+                <div className="xl:w-2/6 exp-tech-panel">
+                  <div className="bg-black-100/90 border border-white-50/15 rounded-2xl p-6 sm:p-7 backdrop-blur-xl shadow-[0_0_30px_rgba(0,240,255,0.06)] relative group hover:border-[#00f0ff]/50 transition-all duration-500">
+                    <span className="hud-corner-cross -top-1 -left-1 opacity-70" />
+                    <span className="hud-corner-cross -top-1 -right-1 opacity-70" />
+                    <span className="hud-corner-cross -bottom-1 -left-1 opacity-70" />
+                    <span className="hud-corner-cross -bottom-1 -right-1 opacity-70" />
+
+                    <div className="flex items-center justify-between text-[10px] font-mono text-white-50/60 pb-3 border-b border-white-50/10">
+                      <span className="text-[#00f0ff] font-bold">// TENURE_SYS</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30">
+                        {card.badge || "VERIFIED"}
+                      </span>
                     </div>
-                  </GlowCard> */}
+
+                    <div className="flex items-center gap-3.5 my-4">
+                      <div className="size-12 rounded-xl bg-black-200 border border-white/10 p-2 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(76,201,240,0.2)]">
+                        <img
+                          src={card.logoPath}
+                          alt={card.company}
+                          className="w-full h-full object-contain rounded-lg"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-base line-clamp-1">{card.company}</h3>
+                        <p className="text-xs text-[#839cb5] font-mono">{card.date}</p>
+                      </div>
+                    </div>
+
+                    {card.techStack && card.techStack.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-white-50/10">
+                        <p className="text-[11px] font-mono text-white-50/60 uppercase tracking-wider mb-2">
+                          // Core Technologies
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {card.techStack.map((tech, techIdx) => (
+                            <span
+                              key={techIdx}
+                              className="px-2 py-1 rounded-md bg-white/5 hover:bg-[#00f0ff]/15 hover:text-[#00f0ff] hover:border-[#00f0ff]/40 border border-white-50/10 text-[11px] font-mono text-white-50 transition-all duration-200 cursor-default"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
+
+                {/* RIGHT COLUMN: Responsibilities Timeline */}
                 <div className="xl:w-4/6">
                   <div className="flex items-start">
                     <div className="timeline-wrapper">
@@ -120,7 +178,7 @@ const Experience = () => {
                           🗓️&nbsp;{card.date}
                         </p>
                         <p className="text-[#839CB5] italic">
-                          Responsibilities
+                          Key Deliverables &amp; Impact
                         </p>
                         <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
                           {card.responsibilities.map(

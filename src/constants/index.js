@@ -37,10 +37,10 @@ const words = [
 ];
 
 const counterItems = [
-  { value: 4, suffix: "+", label: "Years of Experience" },
-  { value: 50, suffix: "+", label: "Projects Completed" },
-  { value: 100, suffix: "%", label: "Commitment to Quality" },
-  { value: 99, suffix: "%", label: "Uptime Achieved" },
+  { value: 4, suffix: "+", label: "Years of Experience", accent: "#00f0ff", tag: "SYS_EXP" },
+  { value: 50, suffix: "+", label: "Projects Completed", accent: "#00ff88", tag: "PROD_SHIPPED" },
+  { value: 100, suffix: "%", label: "Commitment to Quality", accent: "#f72585", tag: "CODE_QUALITY" },
+  { value: 99, suffix: "%", label: "Uptime Achieved", accent: "#9d4edd", tag: "HIGH_AVAIL" },
 ];
 
 const logoIconsList = [
@@ -84,16 +84,19 @@ const abilities = [
     imgPath: "/images/seo.png",
     title: "Quality Focus",
     desc: "Delivering high-quality results while maintaining attention to every detail.",
+    accent: "#00f0ff",
   },
   {
     imgPath: "/images/chat.png",
     title: "Reliable Communication",
     desc: "Keeping you updated at every step to ensure transparency and clarity.",
+    accent: "#00ff88",
   },
   {
     imgPath: "/images/time.png",
     title: "On-Time Delivery",
     desc: "Making sure projects are completed on schedule, with quality & attention to detail.",
+    accent: "#9d4edd",
   },
 ];
 
@@ -157,6 +160,8 @@ const expCards = [
     company: "Shree Vishnupriya Finance and Leasing Limited",
     date: "May 2025 – Apr 2026",
     logoPath: "/images/logos/shree-vishnu-logo.png",
+    badge: "FULL-TIME",
+    techStack: ["React.js", "Node.js", "Express.js", "MongoDB", "AWS EC2", "LLM Tooling", "Zoho API"],
     responsibilities: [
       "Architected and delivered an end-to-end Loan Origination & Management System (LOMS) featuring a React frontend and modular Node.js/Express services, managing automated EMI calculation, credit scoring, and disbursement workflows compliant with RBI NBFC guidelines.",
       "Engineered high-throughput REST APIs and custom Express middleware for JWT authentication, role-based access control (RBAC), rate-limiting, and structured error handling for reliable request processing.",
@@ -169,6 +174,8 @@ const expCards = [
     company: "MindGeeks Tech LLP",
     date: "Mar 2022 – Dec 2024",
     logoPath: "/images/logos/mindgeeks-logo.jpg",
+    badge: "FULL-TIME",
+    techStack: ["React.js", "Node.js", "Express", "MongoDB", "JWT Auth", "Jest", "CI/CD"],
     responsibilities: [
       "Developed and maintained 15+ production MERN applications (React, Node.js/Express, MongoDB) serving high-concurrency traffic with high availability.",
       "Implemented secure authentication flows using JWT access/refresh tokens, RBAC permissions, and bcrypt password encryption; authored automated Jest test suites for critical business logic.",
@@ -180,6 +187,8 @@ const expCards = [
     company: "AMS Web Solutions Pvt. Ltd.",
     date: "Jan 2021 – Jun 2021",
     logoPath: "/images/logos/ams-logo.png",
+    badge: "INTERNSHIP",
+    techStack: ["PHP OOP", "MySQL", "JavaScript", "MVC", "Security Auditing"],
     responsibilities: [
       "Built data-driven PHP (OOP/MVC) web applications with strict input validation, parameterized queries, and SQL injection prevention mechanisms."
     ],

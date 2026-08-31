@@ -97,8 +97,8 @@ const Contact = () => {
                   </div>
                 )}
 
-                <div>
-                  <label htmlFor="name" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide">
+                <div className="group">
+                  <label htmlFor="name" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide group-focus-within:text-[#00f0ff] transition-colors">
                     // SENDER_COORDINATE_NAME:
                   </label>
                   <input
@@ -110,12 +110,12 @@ const Contact = () => {
                     placeholder="Enter your name or organization..."
                     required
                     disabled={loading}
-                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] font-mono placeholder:text-white-50/30"
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] focus:shadow-[0_0_0_1px_#00f0ff,0_0_20px_rgba(0,240,255,0.35)] font-mono placeholder:text-white-50/30 transition-all duration-300"
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide">
+                <div className="group">
+                  <label htmlFor="email" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide group-focus-within:text-[#00f0ff] transition-colors">
                     // COMM_UPLINK_EMAIL:
                   </label>
                   <input
@@ -127,12 +127,12 @@ const Contact = () => {
                     placeholder="Enter your corporate/personal email..."
                     required
                     disabled={loading}
-                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] font-mono placeholder:text-white-50/30"
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] focus:shadow-[0_0_0_1px_#00f0ff,0_0_20px_rgba(0,240,255,0.35)] font-mono placeholder:text-white-50/30 transition-all duration-300"
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide">
+                <div className="group">
+                  <label htmlFor="message" className="block text-xs font-mono text-white-50/80 mb-2 uppercase tracking-wide group-focus-within:text-[#00f0ff] transition-colors">
                     // ENCRYPTED_PAYLOAD_MESSAGE:
                   </label>
                   <textarea
@@ -144,7 +144,7 @@ const Contact = () => {
                     rows="4"
                     required
                     disabled={loading}
-                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] font-mono placeholder:text-white-50/30 resize-none"
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] focus:shadow-[0_0_0_1px_#00f0ff,0_0_20px_rgba(0,240,255,0.35)] font-mono placeholder:text-white-50/30 resize-none transition-all duration-300"
                   />
                 </div>
 

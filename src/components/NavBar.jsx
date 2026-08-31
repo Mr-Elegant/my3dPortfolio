@@ -5,6 +5,7 @@ import { audioFX } from "../utils/audioFX";
 const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,9 +20,32 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("keydown", handleKeyDown);
 
+    // Scroll spy via IntersectionObserver
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observerOptions = {
+      rootMargin: "-20% 0px -50% 0px",
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    navLinks.forEach(({ link }) => {
+      const sectionId = link.replace("#", "");
+      const el = document.getElementById(sectionId);
+      if (el) observer.observe(el);
+    });
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("keydown", handleKeyDown);
+      observer.disconnect();
     };
   }, []);
 
@@ -42,14 +66,35 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
         {/* Desktop Navigation */}
         <nav className="desktop">
           <ul>
-            {navLinks.map(({ link, name }) => (
-              <li key={name} className="group">
-                <a href={link}>
-                  <span>{name}</span>
-                  <span className="underline" />
-                </a>
-              </li>
-            ))}
+            {navLinks.map(({ link, name }) => {
+              const targetId = link.replace("#", "");
+              const isActive = activeSection === targetId;
+
+              return (
+                <li key={name} className="group">
+                  <a
+                    href={link}
+                    onClick={() => audioFX.playClick()}
+                    className="relative py-1 block"
+                  >
+                    <span
+                      className={`transition-colors duration-300 ${
+                        isActive ? "text-white font-bold" : "text-white-50 group-hover:text-white"
+                      }`}
+                    >
+                      {name}
+                    </span>
+                    <span
+                      className={`underline transition-all duration-300 ${
+                        isActive
+                          ? "w-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]"
+                          : "w-0 bg-[#00f0ff] group-hover:w-full"
+                      }`}
+                    />
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -119,18 +164,30 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden mt-3 p-5 bg-black-100/95 backdrop-blur-xl border border-white-50/15 rounded-2xl shadow-2xl flex flex-col gap-4 animate-[fadeIn_0.2s_ease-out]">
-          <ul className="flex flex-col gap-3">
-            {navLinks.map(({ link, name }) => (
-              <li key={name}>
-                <a
-                  href={link}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-2.5 rounded-lg text-white-50 hover:text-white hover:bg-white/10 text-base font-medium transition-all"
-                >
-                  {name}
-                </a>
-              </li>
-            ))}
+          <ul className="flex flex-col gap-2">
+            {navLinks.map(({ link, name }) => {
+              const targetId = link.replace("#", "");
+              const isActive = activeSection === targetId;
+
+              return (
+                <li key={name}>
+                  <a
+                    href={link}
+                    onClick={() => {
+                      audioFX.playClick();
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`block px-4 py-2.5 rounded-xl font-medium transition-all ${
+                      isActive
+                        ? "bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/30 font-bold"
+                        : "text-white-50 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {name}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="border-t border-white-50/10 pt-4 flex flex-col gap-3">

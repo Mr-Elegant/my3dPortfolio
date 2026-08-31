@@ -18,12 +18,17 @@ import GitHubActivityMatrix from "./components/GitHubActivityMatrix";
 import FloatingSocialDock from "./components/FloatingSocialDock";
 import { audioFX } from "./utils/audioFX";
 import { getInitialTheme, applyTheme, THEMES } from "./utils/themeEngine";
+import BootLoader from "./components/BootLoader";
+import CustomCursor from "./components/CustomCursor";
 
 const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const SystemDesignModal = lazy(() => import("./components/SystemDesignModal"));
 
 const App = () => {
   const [theme, setTheme] = useState(getInitialTheme);
+  const [isBooting, setIsBooting] = useState(() => {
+    return typeof window !== "undefined" && !sessionStorage.getItem("preet_os_booted");
+  });
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [isCLIOpen, setIsCLIOpen] = useState(false);
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
@@ -54,6 +59,12 @@ const App = () => {
 
   return (
     <>
+      {/* Custom HUD Cyberpunk Mouse Cursor */}
+      <CustomCursor />
+
+      {/* Cinematic Terminal Boot Sequence on First Visit */}
+      {isBooting && <BootLoader onComplete={() => setIsBooting(false)} />}
+
       <Navbar
         theme={theme}
         onToggleTheme={handleToggleTheme}
