@@ -4,7 +4,7 @@ import TitleHeader from "./TitleHeader";
 import GlowingBorderCard from "./GlowingBorderCard";
 
 const AgenticSandbox = () => {
-  const [activeScenarioId, setActiveScenarioId] = useState("scenario-loan-sanction");
+  const [activeScenarioId, setActiveScenarioId] = useState("scenario-muhurat-calendar");
   const [isRunning, setIsRunning] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [logs, setLogs] = useState([]);

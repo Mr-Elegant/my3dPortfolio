@@ -3,6 +3,12 @@ import { audioFX } from "../utils/audioFX";
 
 const PREET_KNOWLEDGE_BASE = [
   {
+    keywords: ["muhurat", "calendar", "agent", "vedic", "scheduling", "descope", "mastra", "gemini", "mcp"],
+    answer:
+      "Preet architected Muhurat AI (मुहूर्त AI), a state-of-the-art autonomous calendar assistant powered by Google Gemini 3.6 Flash, Mastra AI Agent Framework, and Descope Outbound OAuth Vaulting. It features deterministic Zod tool execution, persistent working memory, conflict-free Free/Busy query scheduling, instant Google Meet creation, Model Context Protocol (MCP) server endpoints, and a signature Midnight Glass / Frosted Pearl dual-theme Next.js 16 UI.",
+    citations: ["Muhurat AI System Architecture (RFC-03)", "Descope Outbound OAuth Vault Blueprint"],
+  },
+  {
     keywords: ["redis", "websocket", "socket", "realtime", "real-time", "pubsub", "pub/sub", "devnet"],
     answer:
       "Preet architected DevNet (devnet.co.in), scaling real-time 1-on-1 messaging and collaborative whiteboards (tldraw) across multiple Node.js instances using a Redis Pub/Sub adapter. He engineered binary packet serialization, read receipts, and typing indicators, delivering sub-25ms latency with 99.99% session uptime.",
@@ -165,6 +171,7 @@ const PreetAICopilot = ({ isOpen, onClose, onOpenResume, onOpenADR }) => {
             </button>
           )}
           {[
+            "How does Muhurat AI work?",
             "Experience with Redis & WebSockets?",
             "NBFC LOMS architecture flow?",
             "What LLMs & AI SDKs do you use?",

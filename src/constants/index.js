@@ -261,6 +261,87 @@ const techSkillsList = {
 
 const systemTopologies = [
   {
+    id: "muhurat-ai-topology",
+    name: "Muhurat AI — Autonomous Calendar Intelligence & Vedic Time Engine",
+    tagline: "Google Gemini 3.6 Flash, Mastra AI Agent Memory, Descope Outbound OAuth Vault & MCP Server",
+    scaleStats: {
+      uptime: "99.98%",
+      latency: "< 18ms (SSE Streaming)",
+      throughput: "Multi-Tool Orchestration",
+      compliance: "Descope AES-256 Vault / Google API",
+    },
+    nodes: [
+      {
+        id: "muhurat-client",
+        name: "Next.js 16 Midnight Glass Frontend",
+        layer: "client",
+        type: "Frontend Workspace & Visual Calendar",
+        tech: "Next.js 16, React 19, Tailwind CSS v4, Lucide, @descope/nextjs-sdk",
+        spec: "Dual-Theme (Midnight Glass / Frosted Pearl), interactive 7x6 month grid, 8AM-8PM week timeline, popovers, Google Meet join buttons & reactive refresh.",
+        tradeOff: "OKLCH color space with hardware-accelerated 24px backdrop blur for high-fidelity glassmorphism across dark/light modes.",
+        failureMode: "Silent optimistic UI rendering with auto-retry on failed event mutations."
+      },
+      {
+        id: "descope-vault",
+        name: "Descope Identity & Outbound App Vault",
+        layer: "gateway",
+        type: "Auth & OAuth2 Token Vault",
+        tech: "Descope SDK, Passkeys, OAuth 2.0 PKCE, AES-256 Vault",
+        spec: "Manages session JWTs, handles Google Calendar OAuth consent, and securely vaults refresh/access tokens without exposing them to client code.",
+        tradeOff: "Delegating third-party OAuth token vaulting to Descope eliminates server-side plaintext token storage liabilities.",
+        failureMode: "Automatic OAuth refresh token rotation with Descope session re-authentication fallback."
+      },
+      {
+        id: "backend-orchestrator",
+        name: "Express.js Backend & MCP Mount",
+        layer: "compute",
+        type: "API Gateway & SSE Stream Server",
+        tech: "Express.js, TypeScript, Server-Sent Events (SSE), MCP Endpoint",
+        spec: "SSE streaming for token/reasoning generation, Descope JWT verification middleware, database pooling, and standard /mcp IDE endpoint.",
+        tradeOff: "SSE streaming provides backpressure control and native HTTP/2 multiplexing without WebSocket connection state overhead.",
+        failureMode: "Client stream recovery with AbortController upstream cancellation on connection drop."
+      },
+      {
+        id: "agent-engine",
+        name: "Mastra AI Core & Gemini 3.6 Flash",
+        layer: "ai",
+        type: "Agentic Reasoning & Function Calling Engine",
+        tech: "Google Gemini 3.6 Flash, Mastra AI Framework, Zod Schemas",
+        spec: "Temporal grounding, deterministic Zod function calling (createMeeting, checkFreeBusy, reschedule, cancel), and multi-provider fallback (OpenRouter, OpenAI).",
+        tradeOff: "Gemini 3.6 Flash provides ultra-fast tool-calling latency with high schema adherence at low token cost.",
+        failureMode: "Multi-provider cascading to OpenRouter/OpenAI fallback on upstream rate limits (HTTP 429)."
+      },
+      {
+        id: "mastra-memory",
+        name: "PostgreSQL Working Memory & Thread Store",
+        layer: "storage",
+        type: "Relational Database & Context Store",
+        tech: "PostgreSQL 16+, Neon Cloud / Supabase, pg Connection Pool",
+        spec: "Stores thread histories, user scheduling habits, preferred working hours, and favorite collaborators across conversations.",
+        tradeOff: "PostgreSQL relational schemas ensure strict foreign-key cascading and ACID transactional consistency for thread deletions.",
+        failureMode: "Connection pooling via PgBouncer with automatic reconnect on transient cloud timeouts."
+      },
+      {
+        id: "google-calendar-service",
+        name: "Google Calendar API v3 & Meet Engine",
+        layer: "integration",
+        type: "Calendar Sync & Video Conferencing",
+        tech: "Google Calendar API v3, Free/Busy Query, hangoutsMeet API",
+        spec: "Real-time free/busy matrix conflict detection, automated Google Meet conference link generation, and bi-directional event mutations.",
+        tradeOff: "Direct Free/Busy matrix scanning prevents double-booking before committing create/reschedule mutations.",
+        failureMode: "Exponential backoff retry with jitter on Google Cloud API rate limits."
+      }
+    ],
+    flows: [
+      { from: "muhurat-client", to: "descope-vault", label: "Session Auth & OAuth Consent" },
+      { from: "muhurat-client", to: "backend-orchestrator", label: "SSE Prompt Stream & /mcp" },
+      { from: "backend-orchestrator", to: "agent-engine", label: "Agent Invocation & Tool Execution" },
+      { from: "agent-engine", to: "mastra-memory", label: "User Habit & Context Retrieval" },
+      { from: "agent-engine", to: "google-calendar-service", label: "Free/Busy Check & Event Mutation" },
+      { from: "descope-vault", to: "google-calendar-service", label: "Outbound Bearer Token Exchange" }
+    ]
+  },
+  {
     id: "devnet-distributed",
     name: "DevNet — Distributed Real-Time Collaboration & Matchmaking Engine",
     tagline: "Multi-Instance WebSocket Clustering, Redis Pub/Sub Message Bus & Razorpay HMAC Subscriptions",
@@ -402,6 +483,53 @@ const systemTopologies = [
 
 const architectureADRs = [
   {
+    id: "muhurat-calendar-adr",
+    projectTitle: "Muhurat AI — Autonomous Calendar Intelligence",
+    rfcTitle: "RFC-03: Autonomous Multi-Tool Calendar Scheduling & Outbound OAuth Token Vaulting",
+    status: "APPROVED & IN PRODUCTION",
+    author: "Preet Karwal (AI Systems Architect)",
+    date: "2026",
+    executiveSummary: "Engineered an autonomous AI calendar assistant combining Google Gemini 3.6 Flash, Mastra AI persistent working memory, Descope Outbound OAuth Vaulting, and a bidirectional reactive visual calendar with Model Context Protocol (MCP) tool integration.",
+    constraints: [
+      "Sub-20ms Time to First Byte (TTFB) on SSE token and reasoning streaming.",
+      "Zero double-booking guarantee via Free/Busy matrix scanning prior to event mutations.",
+      "Zero-trust OAuth token security: Google OAuth refresh tokens must never touch client code or plaintext storage.",
+      "Deterministic tool schema execution without LLM argument hallucination."
+    ],
+    decisions: [
+      {
+        decision: "Descope Outbound Application Vault vs Traditional Server Token Encryption",
+        rationale: "Descope's Outbound Application Vault offloads encrypted token rotation, consent lifecycle, and OAuth token exchanges to an isolated, SOC2-compliant hardware security layer, keeping application servers stateless.",
+        tradeOff: "Requires backend to route calendar API requests using scoped Descope outbound bearer token exchanges."
+      },
+      {
+        decision: "Zod-Enforced Deterministic Tool Schemas in Mastra AI Core",
+        rationale: "All calendar tools (createMeeting, checkFreeBusy, reschedule, cancel) are enforced via strict Zod schemas with ISO-8601 validation to prevent malformed API mutations.",
+        tradeOff: "Requires upfront schema definition and temporal parsing in prompt system instructions."
+      },
+      {
+        decision: "Bidirectional Reactive Calendar Sync (SSE Chat to Visual Grid)",
+        rationale: "When Muhurat AI confirms a booking in chat, it dispatches an event trigger that instructs the visual Month/Week timeline to silently refetch live Google Calendar metadata and render interactive Meet badges.",
+        tradeOff: "Client maintains a lightweight state trigger rather than an active high-frequency polling loop."
+      },
+      {
+        decision: "Model Context Protocol (MCP) Standard Server Mount",
+        rationale: "Exposes POST /mcp endpoint enabling external developer environments (Antigravity IDE, Cursor, Claude Desktop) to invoke calendar tools natively.",
+        tradeOff: "Requires session authentication verification middleware on the MCP endpoint."
+      }
+    ],
+    failureModes: [
+      "Google API Rate Limiting: Backoff retry with jitter; agent informs user and proposes cached available slots.",
+      "Calendar Slot Conflict: Agent automatically scans surrounding time window and proposes 2-3 optimal alternative slots.",
+      "Provider Rate Limit: Dynamic cascading fallback from Gemini 3.6 Flash to OpenRouter/OpenAI."
+    ],
+    roiImpact: [
+      "Eliminated 100% of calendar scheduling conflicts via automated Free/Busy pre-flight queries.",
+      "Sub-18ms SSE response streaming with instant Google Meet link generation.",
+      "Seamless multi-environment scheduling across Web UI, Visual Calendar, and IDE MCP tools."
+    ]
+  },
+  {
     id: "devnet-realtime",
     projectTitle: "DevNet Platform & Collaboration Engine",
     rfcTitle: "RFC-01: Scaling Real-Time WebSockets via Redis Pub/Sub Message Bus",
@@ -478,6 +606,53 @@ const architectureADRs = [
 ];
 
 const agenticScenarios = [
+  {
+    id: "scenario-muhurat-calendar",
+    title: "Autonomous Calendar Scheduling & Conflict Detection",
+    triggerEvent: "User prompt: 'Schedule a 45-min strategy sync with alex@corp.com tomorrow at 11 AM'",
+    steps: [
+      {
+        step: 1,
+        title: "Session Verification & Outbound OAuth Vault",
+        node: "Descope Auth & Outbound Vault",
+        status: "success",
+        log: "Verified JWT session token. Retrieved encrypted Google Calendar OAuth access token from Descope Outbound App Vault.",
+        payload: { userId: "usr_descope_8819", provider: "google-calendar", vaultStatus: "VAULTED_AES256" }
+      },
+      {
+        step: 2,
+        title: "Temporal Grounding & Mastra Memory Load",
+        node: "Mastra AI Engine / Gemini 3.6 Flash",
+        status: "success",
+        log: "Resolved 'tomorrow 11 AM' to 2026-09-03T11:00:00+05:30. Loaded user habits from PostgreSQL (Timezone: IST, Duration: 45m).",
+        payload: { startTime: "2026-09-03T11:00:00+05:30", endTime: "2026-09-03T11:45:00+05:30", attendee: "alex@corp.com" }
+      },
+      {
+        step: 3,
+        title: "Free/Busy Matrix Conflict Query",
+        node: "Google Calendar API (checkCalendarBusyTool)",
+        status: "success",
+        log: "Executed calendar.freebusy.query over [11:00 AM - 11:45 AM]. Found 0 overlapping busy slots.",
+        payload: { busySlots: 0, status: "CONFLICT_FREE", auspiciousSlot: true }
+      },
+      {
+        step: 4,
+        title: "Meeting Creation & Google Meet Generation",
+        node: "Google Calendar API (createMeetingTool)",
+        status: "success",
+        log: "Created calendar event with conferenceDataVersion=1. Generated Google Meet room 'meet.google.com/qxr-mkpv-yzt'.",
+        payload: { eventId: "evt_muhurat_994", meetUrl: "https://meet.google.com/qxr-mkpv-yzt", status: "CONFIRMED" }
+      },
+      {
+        step: 5,
+        title: "Reactive Visual Calendar Synchronize",
+        node: "Next.js 16 Midnight Glass UI",
+        status: "success",
+        log: "Dispatched calendarRefreshTrigger. Visual Month & Week grid silently updated with new Google Meet meeting pill.",
+        payload: { refreshTrigger: 1, viewMode: "SplitView", toast: "Event booked successfully" }
+      }
+    ]
+  },
   {
     id: "scenario-realtime-whiteboard",
     title: "Real-Time Collaborative Whiteboard Invite & Sync",

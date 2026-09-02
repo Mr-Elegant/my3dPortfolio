@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { architectureADRs } from "../constants";
 
-const SystemDesignModal = ({ initialSystemId = "devnet", onClose }) => {
-  const [selectedId, setSelectedId] = useState(
-    initialSystemId === "devnet-chat" || initialSystemId === "devnet-ai-chat"
-      ? "devnet-ai-chat-adr"
-      : "devnet-realtime"
-  );
+const SystemDesignModal = ({ initialSystemId = "muhurat-ai", onClose }) => {
+  const [selectedId, setSelectedId] = useState(() => {
+    if (initialSystemId === "muhurat-ai" || initialSystemId === "muhurat-ai-topology" || initialSystemId === "muhurat-calendar-adr") {
+      return "muhurat-calendar-adr";
+    }
+    if (initialSystemId === "devnet-chat" || initialSystemId === "devnet-ai-chat" || initialSystemId === "devnet-ai-chat-adr") {
+      return "devnet-ai-chat-adr";
+    }
+    return "devnet-realtime";
+  });
   const [activeTab, setActiveTab] = useState("decisions");
 
   const currentADR =

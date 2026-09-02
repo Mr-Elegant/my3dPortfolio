@@ -77,6 +77,18 @@ const ResumeModal = ({ onClose }) => {
 
   const projects = [
     {
+      name: "Muhurat AI — Autonomous Calendar Intelligence & Vedic Time Optimization",
+      linkText: "mahurart-ai.vercel.app",
+      link: "https://mahurart-ai.vercel.app/",
+      github: "https://github.com/Mr-Elegant/Mahurart-AI",
+      githubText: "GitHub Repo",
+      tech: "Next.js 16, React 19, Tailwind CSS v4, Google Gemini 3.6 Flash, Mastra AI Agent Framework, Descope Outbound OAuth Vault, PostgreSQL (Neon), MCP Server, Express.js",
+      points: [
+        "Architected an autonomous calendar assistant orchestrating Google Gemini 3.6 Flash and Mastra AI persistent memory with deterministic Zod schema function calling.",
+        "Integrated Descope Outbound Application Vault for zero-trust AES-256 encrypted Google Calendar OAuth token rotation, real-time Free/Busy conflict queries, instant Google Meet generation, and Model Context Protocol (MCP) tool server execution."
+      ]
+    },
+    {
       name: "DevNet — Developer Networking Platform",
       linkText: "devnet.co.in",
       link: "https://devnet.co.in",

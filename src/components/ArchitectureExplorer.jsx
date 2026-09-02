@@ -4,7 +4,7 @@ import TitleHeader from "./TitleHeader";
 import GlowingBorderCard from "./GlowingBorderCard";
 
 const ArchitectureExplorer = ({ onOpenADR }) => {
-  const [selectedSystemId, setSelectedSystemId] = useState("devnet-distributed");
+  const [selectedSystemId, setSelectedSystemId] = useState("muhurat-ai-topology");
   const [selectedNode, setSelectedNode] = useState(null);
   const [activeLayerFilter, setActiveLayerFilter] = useState("all");
 

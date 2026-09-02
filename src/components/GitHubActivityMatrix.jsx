@@ -16,6 +16,13 @@ const GITHUB_STATS = {
   ],
   repos: [
     {
+      name: "Muhurat-AI",
+      desc: "Autonomous calendar agent with Gemini 3.6 Flash, Mastra AI, Descope Outbound OAuth Vault, and MCP Server.",
+      stars: "42",
+      lang: "TypeScript",
+      link: "https://github.com/Mr-Elegant/Mahurart-AI",
+    },
+    {
       name: "DevNet",
       desc: "Distributed social networking platform with Socket.IO, Redis Pub/Sub, and tldraw canvas.",
       stars: "28",
