@@ -1,11 +1,41 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState, lazy, Suspense } from "react";
 import emailjs from "@emailjs/browser";
 
 import TitleHeader from "../components/TitleHeader";
-import ContactExperience from "../components/models/contact/ContactExperience";
+import useInView from "../hooks/useInView";
+
+const ContactExperience = lazy(() => import("../components/models/contact/ContactExperience"));
+
+class ModelErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error, info) {
+    console.warn("Contact 3D Model Error caught:", error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="w-full h-full min-h-[420px] flex flex-col items-center justify-center gap-3 bg-[#0a0c10] text-[#00f0ff] font-mono text-xs">
+          <span className="w-8 h-8 rounded-full border-2 border-[#00f0ff]/40 flex items-center justify-center">⚡</span>
+          <span>TERMINAL OFFLINE</span>
+          <button
+            onClick={() => this.setState({ hasError: false })}
+            className="px-3.5 py-1.5 rounded-lg border border-[#00f0ff]/40 hover:bg-[#00f0ff]/20 text-[#00f0ff] text-xs font-mono transition-colors"
+          >
+            REBOOT WORKSTATION
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const Contact = () => {
   const formRef = useRef(null);
+  const [modelContainerRef, isModelInView] = useInView({ rootMargin: "300px 0px", once: true });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: string }
   const [form, setForm] = useState({
@@ -58,7 +88,7 @@ const Contact = () => {
       <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
           title="Encrypted Uplink – Let’s Connect"
-          sub="🛰️ Establish direct frequency connection for lead engineering & architecture opportunities 🚀"
+          sub="Direct Communication & Engineering Opportunities"
         />
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">
@@ -138,13 +168,13 @@ const Contact = () => {
                   <textarea
                     id="message"
                     name="message"
+                    rows="4"
                     value={form.message}
                     onChange={handleChange}
                     placeholder="Describe project requirements, timeline, or engineering role..."
-                    rows="4"
                     required
                     disabled={loading}
-                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] focus:shadow-[0_0_0_1px_#00f0ff,0_0_20px_rgba(0,240,255,0.35)] font-mono placeholder:text-white-50/30 resize-none transition-all duration-300"
+                    className="w-full bg-black-200/80 border border-white-50/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00f0ff] focus:shadow-[0_0_0_1px_#00f0ff,0_0_20px_rgba(0,240,255,0.35)] font-mono placeholder:text-white-50/30 transition-all duration-300 resize-none"
                   />
                 </div>
 
@@ -172,9 +202,30 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="xl:col-span-7 min-h-96">
-            <div className="bg-black-200 border border-white/10 w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <ContactExperience />
+          <div className="xl:col-span-7 min-h-[420px]" ref={modelContainerRef}>
+            <div className="bg-[#0a0c10] border border-white-50/15 w-full h-full min-h-[420px] hover:cursor-grab rounded-3xl overflow-hidden shadow-2xl relative">
+              <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/70 border border-white/10 text-[10px] font-mono text-white-50/70 pointer-events-none flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-ping" />
+                <span>3D_TERMINAL // DRAG TO ROTATE</span>
+              </div>
+              {isModelInView ? (
+                <ModelErrorBoundary>
+                  <Suspense
+                    fallback={
+                      <div className="w-full h-full min-h-[420px] flex flex-col items-center justify-center font-mono text-xs text-[#00f0ff] gap-3 bg-[#0a0c10]">
+                        <span className="w-6 h-6 border-2 border-[#00f0ff] border-t-transparent rounded-full animate-spin" />
+                        <span>INITIALIZING 3D WORKSTATION...</span>
+                      </div>
+                    }
+                  >
+                    <ContactExperience />
+                  </Suspense>
+                </ModelErrorBoundary>
+              ) : (
+                <div className="w-full h-full min-h-[420px] flex items-center justify-center text-white-50/20 font-mono text-xs bg-[#0a0c10]">
+                  INITIALIZING...
+                </div>
+              )}
             </div>
           </div>
         </div>

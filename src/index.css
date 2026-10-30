@@ -242,16 +242,8 @@ section {
     @apply md:w-40 w-32;
   }
 
-  .timeline-wrapper {
-    @apply absolute top-0 xl:left-[35.5vw] md:left-10 left-5 h-full flex justify-center;
-  }
-
-  .timeline {
-    @apply absolute z-30 h-[110%] -top-10 w-14 md:w-28 bg-black;
-  }
-
   .timeline-logo {
-    @apply md:size-20 size-10 flex-none rounded-full flex justify-center items-center md:-translate-y-7 border border-black-50 bg-black-100;
+    @apply md:size-20 size-10 flex-none rounded-full flex justify-center items-center border border-black-50 bg-black-100;
   }
 
   .exp-card-wrapper {
@@ -1061,5 +1053,63 @@ html[data-theme="light"] footer img[alt="github"] {
     cursor: none !important;
   }
 }
+
+/* ========================================================= */
+/* CRAFT STANDARDS: BROWSER SURFACES & SELECTION             */
+/* ========================================================= */
+::selection {
+  background-color: rgba(0, 240, 255, 0.28);
+  color: #00f0ff;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 240, 255, 0.28);
+  color: #00f0ff;
+}
+
+html[data-theme="light"] ::selection {
+  background-color: rgba(2, 132, 199, 0.25);
+  color: #0369a1;
+}
+
+/* Custom Cyber Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060709;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1f2c;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.4);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border: 1px solid #94a3b8;
+}
+
+/* Form Caret & Accessible Focus Rings */
+input, textarea {
+  caret-color: #00f0ff;
+}
+
+:focus-visible {
+  outline: 2px solid #00f0ff;
+  outline-offset: 3px;
+}
+
 
 

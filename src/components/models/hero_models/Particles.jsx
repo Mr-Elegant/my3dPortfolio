@@ -1,40 +1,39 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 
-const Particles = ({ count = 200 }) => {
+const Particles = ({ count = 60 }) => {
   const mesh = useRef();
 
-  const particles = useMemo(() => {
+  const { particles, positions } = useMemo(() => {
     const temp = [];
+    const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
+      const p = [
+        (Math.random() - 0.5) * 10,
+        Math.random() * 10 + 5,
+        (Math.random() - 0.5) * 10,
+      ];
       temp.push({
-        position: [
-          (Math.random() - 0.5) * 10,
-          Math.random() * 10 + 5, // higher starting point
-          (Math.random() - 0.5) * 10,
-        ],
+        position: p,
         speed: 0.005 + Math.random() * 0.001,
       });
+      pos[i * 3] = p[0];
+      pos[i * 3 + 1] = p[1];
+      pos[i * 3 + 2] = p[2];
     }
-    return temp;
+    return { particles: temp, positions: pos };
   }, [count]);
 
   useFrame(() => {
-    const positions = mesh.current.geometry.attributes.position.array;
+    if (!mesh.current || !mesh.current.geometry) return;
+    const posArray = mesh.current.geometry.attributes.position.array;
     for (let i = 0; i < count; i++) {
-      let y = positions[i * 3 + 1];
+      let y = posArray[i * 3 + 1];
       y -= particles[i].speed;
       if (y < -2) y = Math.random() * 10 + 5;
-      positions[i * 3 + 1] = y;
+      posArray[i * 3 + 1] = y;
     }
     mesh.current.geometry.attributes.position.needsUpdate = true;
-  });
-
-  const positions = new Float32Array(count * 3);
-  particles.forEach((p, i) => {
-    positions[i * 3] = p.position[0];
-    positions[i * 3 + 1] = p.position[1];
-    positions[i * 3 + 2] = p.position[2];
   });
 
   return (
@@ -48,10 +47,10 @@ const Particles = ({ count = 200 }) => {
         />
       </bufferGeometry>
       <pointsMaterial
-        color="#ffffff"
-        size={0.05}
+        color="#00f0ff"
+        size={0.04}
         transparent
-        opacity={0.9}
+        opacity={0.7}
         depthWrite={false}
       />
     </points>

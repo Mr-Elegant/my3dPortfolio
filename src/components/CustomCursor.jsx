@@ -6,8 +6,8 @@ const CustomCursor = () => {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    // Only run on desktop devices with a precision mouse
-    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+    // Only run on desktop devices with a precision mouse and desktop viewport
+    const isFinePointer = window.matchMedia("(pointer: fine) and (min-width: 768px)").matches;
     if (!isFinePointer) return;
 
     setEnabled(true);

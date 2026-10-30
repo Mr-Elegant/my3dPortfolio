@@ -19,25 +19,33 @@ const HeroExperience = ({ themeMode = "cyan" }) => {
   };
 
   return (
-    <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
+    <Canvas
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, powerPreference: "high-performance" }}
+      camera={{ position: [0, 0, 15], fov: 45 }}
+      className="w-full h-full"
+    >
       {/* Deep themed ambient light */}
-      <ambientLight intensity={0.3} color={ambientColors[themeMode] || "#0d1b2a"} />
+      <ambientLight intensity={0.6} color={ambientColors[themeMode] || "#0d1b2a"} />
       
       <OrbitControls
         enablePan={false}
         enableZoom={!isTablet}
-        maxDistance={20}
-        minDistance={5}
+        maxDistance={22}
+        minDistance={6}
         minPolarAngle={Math.PI / 5}
-        maxPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2.05}
+        autoRotate
+        autoRotateSpeed={0.6}
+        makeDefault
       />
 
       <Suspense fallback={null}>
         <HeroLights themeMode={themeMode} />
-        <Particles count={100} />
+        <Particles count={isMobile ? 30 : 70} />
         <group
-          scale={isMobile ? 0.7 : 1}
-          position={[0, -3.5, 0]}
+          scale={isMobile ? 0.65 : 0.95}
+          position={[0, -3.2, 0]}
           rotation={[0, -Math.PI / 4, 0]}
         >
           <Room />

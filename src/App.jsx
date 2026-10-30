@@ -1,7 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import Footer from "./sections/Footer";
 import Contact from "./sections/Contact";
-import TechStack from "./sections/TechStack";
 import Experience from "./sections/Experience";
 import Hero from "./sections/Hero";
 import ShowcaseSection from "./sections/ShowcaseSection";
@@ -11,8 +10,6 @@ import SystemStandards from "./sections/SystemStandards";
 import Navbar from "./components/NavBar";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
 import AgenticSandbox from "./components/AgenticSandbox";
-import HUDCommandPalette from "./components/HUDCommandPalette";
-import PreetAICopilot from "./components/PreetAICopilot";
 import LatencyBenchmarkPlayground from "./components/LatencyBenchmarkPlayground";
 import GitHubActivityMatrix from "./components/GitHubActivityMatrix";
 import FloatingSocialDock from "./components/FloatingSocialDock";
@@ -21,6 +18,9 @@ import { getInitialTheme, applyTheme, THEMES } from "./utils/themeEngine";
 import BootLoader from "./components/BootLoader";
 import CustomCursor from "./components/CustomCursor";
 
+const TechStack = lazy(() => import("./sections/TechStack"));
+const HUDCommandPalette = lazy(() => import("./components/HUDCommandPalette"));
+const PreetAICopilot = lazy(() => import("./components/PreetAICopilot"));
 const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const SystemDesignModal = lazy(() => import("./components/SystemDesignModal"));
 
@@ -99,7 +99,17 @@ const App = () => {
       <SystemStandards />
 
       <Experience />
-      <TechStack />
+
+      <Suspense
+        fallback={
+          <div className="w-full min-h-96 flex items-center justify-center font-mono text-xs text-[#00f0ff] gap-2">
+            <span className="w-4 h-4 border-2 border-[#00f0ff] border-t-transparent rounded-full animate-spin" />
+            <span>CALIBRATING SKILLS MATRIX...</span>
+          </div>
+        }
+      >
+        <TechStack />
+      </Suspense>
 
       {/* Live GitHub Commit Matrix & Contribution Heatmap */}
       <GitHubActivityMatrix />
@@ -110,13 +120,13 @@ const App = () => {
       {/* Floating Social Contact Dock (LinkedIn, X, Insta, FB, GitHub) */}
       <FloatingSocialDock />
 
-      {/* Floating Preet AI Copilot Trigger Button */}
+      {/* Floating Preet AI Copilot Trigger Button (Desktop) */}
       <button
         onClick={() => {
           audioFX.playClick();
           setIsCopilotOpen(true);
         }}
-        className="fixed bottom-6 left-6 z-40 px-3.5 py-2 rounded-xl bg-black-100/90 hover:bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/40 shadow-[0_0_20px_rgba(0,255,136,0.2)] backdrop-blur-xl flex items-center gap-2 font-mono text-xs cursor-pointer transition-all hover:scale-105 group print:hidden"
+        className="hidden md:flex fixed bottom-6 left-6 z-40 px-3.5 py-2 rounded-xl bg-black-100/90 hover:bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/40 shadow-[0_0_20px_rgba(0,255,136,0.2)] backdrop-blur-xl items-center gap-2 font-mono text-xs cursor-pointer transition-all hover:scale-105 group print:hidden"
         title="Open Preet AI Copilot"
       >
         <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-ping" />
@@ -124,13 +134,13 @@ const App = () => {
         <span className="text-sm">🤖</span>
       </button>
 
-      {/* Floating HUD Terminal CLI Trigger Button */}
+      {/* Floating HUD Terminal CLI Trigger Button (Desktop) */}
       <button
         onClick={() => {
           audioFX.playClick();
           setIsCLIOpen(true);
         }}
-        className="fixed bottom-6 right-6 z-40 px-3.5 py-2 rounded-xl bg-black-100/90 hover:bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40 shadow-[0_0_20px_rgba(0,240,255,0.2)] backdrop-blur-xl flex items-center gap-2 font-mono text-xs cursor-pointer transition-all hover:scale-105 group print:hidden"
+        className="hidden md:flex fixed bottom-6 right-6 z-40 px-3.5 py-2 rounded-xl bg-black-100/90 hover:bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40 shadow-[0_0_20px_rgba(0,240,255,0.2)] backdrop-blur-xl items-center gap-2 font-mono text-xs cursor-pointer transition-all hover:scale-105 group print:hidden"
         title="Open HUD Command Terminal (Ctrl + K)"
       >
         <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
@@ -141,20 +151,28 @@ const App = () => {
       </button>
 
       {/* Preet AI Autonomous Copilot Assistant Modal */}
-      <PreetAICopilot
-        isOpen={isCopilotOpen}
-        onClose={() => setIsCopilotOpen(false)}
-        onOpenResume={() => setIsResumeOpen(true)}
-        onOpenADR={handleOpenADR}
-      />
+      {isCopilotOpen && (
+        <Suspense fallback={null}>
+          <PreetAICopilot
+            isOpen={isCopilotOpen}
+            onClose={() => setIsCopilotOpen(false)}
+            onOpenResume={() => setIsResumeOpen(true)}
+            onOpenADR={handleOpenADR}
+          />
+        </Suspense>
+      )}
 
       {/* Interactive Developer HUD Command Terminal Modal */}
-      <HUDCommandPalette
-        isOpen={isCLIOpen}
-        onClose={() => setIsCLIOpen(false)}
-        onResumeClick={() => setIsResumeOpen(true)}
-        onToggleTheme={handleToggleTheme}
-      />
+      {isCLIOpen && (
+        <Suspense fallback={null}>
+          <HUDCommandPalette
+            isOpen={isCLIOpen}
+            onClose={() => setIsCLIOpen(false)}
+            onResumeClick={() => setIsResumeOpen(true)}
+            onToggleTheme={handleToggleTheme}
+          />
+        </Suspense>
+      )}
       
       {/* Lazy-Loaded Resume Modal */}
       {isResumeOpen && (

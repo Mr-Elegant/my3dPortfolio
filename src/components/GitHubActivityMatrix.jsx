@@ -24,7 +24,7 @@ const GITHUB_STATS = {
     },
     {
       name: "DevNet",
-      desc: "Distributed social networking platform with Socket.IO, Redis Pub/Sub, and tldraw canvas.",
+      desc: "Developer MatchMaker, Scrollytelling (/story), Custom Vector Canvas, AI Architect & Socket.IO Chat.",
       stars: "28",
       lang: "TypeScript",
       link: "https://github.com/Mr-Elegant/DevNet",

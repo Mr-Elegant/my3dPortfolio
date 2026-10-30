@@ -13,6 +13,7 @@ import { audioFX } from "../utils/audioFX";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = ({ onResumeClick, onOpenCopilot }) => {
+  // Hologram mask reveal state (hover on desktop, tap on mobile/tablet)
   const [isRevealed, setIsRevealed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -77,10 +78,10 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
         <img src="/images/bg.png" alt="background" />
       </div>
 
-      <div className="hero-layout relative max-w-7xl mx-auto px-5 md:px-10 xl:px-12 flex flex-col xl:flex-row items-center justify-between gap-12 xl:gap-8">
+      <div className="hero-layout relative max-w-7xl mx-auto px-5 md:px-10 xl:px-12 flex flex-col xl:flex-row items-center justify-between gap-12 xl:gap-8 pt-4 sm:pt-6">
         
         {/* LEFT: Hero Headline & CTA Actions */}
-        <header className="flex flex-col justify-center w-full xl:w-[56%] z-20">
+        <header className="flex flex-col justify-center w-full xl:w-[54%] z-20">
           <div className="flex flex-col gap-6">
             
             {/* Futuristic Terminal Boot Sequence Badge */}
@@ -106,7 +107,7 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
                       >
                         <img
                           src={word.imgPath}
-                          alt="person"
+                          alt={word.text}
                           className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full bg-white-50"
                         />
                         <span className="bg-gradient-to-r from-[#4cc9f0] to-[#7209b7] bg-clip-text text-transparent leading-none">
@@ -131,21 +132,21 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
             <div className="flex flex-wrap gap-3.5 items-center relative z-20 mt-1">
               <div className="hero-cta-btn">
                 <Button
-                  text="Featured Projects 🚀"
+                  text="Featured Projects"
                   className="w-auto"
                   id="work"
                 />
               </div>
               <div className="hero-cta-btn">
                 <Button
-                  text="System Topologies 📐"
+                  text="System Topologies"
                   className="w-auto"
                   id="architecture"
                 />
               </div>
               <div className="hero-cta-btn">
                 <Button
-                  text="Curriculum Vitae 📄"
+                  text="Curriculum Vitae"
                   className="w-auto"
                   onClick={onResumeClick}
                 />
@@ -155,8 +156,8 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
           </div>
         </header>
 
-        {/* RIGHT: Interactive Cyber Identity Hologram (Mask Hover & Mobile Tap Reveal) */}
-        <div className="hero-identity-card relative z-20 w-full xl:w-[44%] flex justify-center items-center">
+        {/* RIGHT: Cyber Identity Hologram (Interactive Hover & Tap Reveal) */}
+        <div className="hero-identity-card relative z-20 w-full xl:w-[46%] flex justify-center items-center">
           <div 
             role="button"
             tabIndex={0}
@@ -173,7 +174,7 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
               setIsHovered(true);
             }}
             onMouseLeave={() => setIsHovered(false)}
-            className="group relative w-full max-w-[360px] sm:max-w-[420px] xl:max-w-[460px] aspect-[4/5] rounded-2xl overflow-hidden border border-[#00f0ff]/30 bg-black-100/90 shadow-[0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-[#00f0ff]/70 hover:shadow-[0_0_50px_rgba(0,240,255,0.3)] select-none cursor-pointer"
+            className="group relative w-full max-w-[380px] sm:max-w-[430px] xl:max-w-[460px] aspect-[4/5] rounded-2xl overflow-hidden border border-[#00f0ff]/30 bg-black-100/90 shadow-[0_0_40px_rgba(0,240,255,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-[#00f0ff]/70 hover:shadow-[0_0_55px_rgba(0,240,255,0.3)] select-none cursor-pointer"
           >
             {/* Corner HUD Reticles */}
             <span className="hud-corner-cross -top-1 -left-1 opacity-80" />
@@ -183,14 +184,14 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
 
             {/* Top HUD Badge Status */}
             <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between pointer-events-none">
-              <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono shadow-md">
                 <span className={`w-2 h-2 rounded-full ${isUnmasked ? "bg-[#00ff88]" : "bg-[#00f0ff]"} animate-ping`} />
                 <span className="text-white-50/70">IDENTITY:</span>
                 <span className={`font-bold ${isUnmasked ? "text-[#00ff88]" : "text-[#00f0ff]"}`}>
                   {isUnmasked ? "PREET KARWAL [UNMASKED]" : "MASKED [HOVER / TAP]"}
                 </span>
               </div>
-              <div className="px-2 py-1 rounded bg-black/85 border border-[#00f0ff]/30 text-[10px] font-mono text-[#00f0ff]">
+              <div className="px-2.5 py-1 rounded bg-black/85 border border-[#00f0ff]/30 text-[10px] font-mono text-[#00f0ff] shadow-md">
                 HUD // v2.6
               </div>
             </div>
@@ -213,18 +214,18 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
               }`}
             />
 
-            {/* Mobile Interaction Hint Badge */}
-            <div className="block xl:hidden absolute bottom-12 right-3 z-30 px-2.5 py-1 rounded-lg bg-black/80 border border-[#00f0ff]/40 backdrop-blur-md font-mono text-[9px] text-[#00f0ff] font-bold shadow-lg">
+            {/* Mobile / Tablet Interaction Hint Badge */}
+            <div className="block xl:hidden absolute bottom-12 right-3 z-30 px-2.5 py-1 rounded-lg bg-black/85 border border-[#00f0ff]/40 backdrop-blur-md font-mono text-[9px] text-[#00f0ff] font-bold shadow-lg">
               {isUnmasked ? "✓ UNMASKED (TAP TO MASK)" : "👆 TAP TO UNMASK"}
             </div>
 
             {/* Subtle CRT Scanline overlay */}
-            <div className={`absolute inset-0 pointer-events-none hud-scanline transition-opacity ${
-              isUnmasked ? "opacity-10" : "opacity-20"
+            <div className={`absolute inset-0 pointer-events-none hud-scanline transition-opacity duration-300 ${
+              isUnmasked ? "opacity-10" : "opacity-25"
             }`} />
 
             {/* Bottom Holographic HUD telemetry tag */}
-            <div className="absolute bottom-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between px-3.5 py-1.5 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono text-white-50 pointer-events-none">
+            <div className="absolute bottom-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between px-3.5 py-1.5 rounded-lg bg-black/85 border border-white-50/15 backdrop-blur-md text-[10px] font-mono text-white-50 pointer-events-none shadow-md">
               <span className="text-[#00f0ff]">SYS_OP: ARCHITECT</span>
               <span className="text-[#00ff88]">ZERO_TRUST: ACTIVE</span>
             </div>
@@ -257,3 +258,4 @@ const Hero = ({ onResumeClick, onOpenCopilot }) => {
 };
 
 export default Hero;
+

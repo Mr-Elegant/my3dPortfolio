@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame, Canvas } from "@react-three/fiber";
-import { Float, Environment } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 
 const AbstractShape = ({ type }) => {
   const meshRef = useRef();
@@ -108,11 +108,9 @@ const AbstractShape = ({ type }) => {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={2} />
-      <directionalLight position={[-5, -5, -5]} intensity={1} color="#9d4edd" />
-      <Environment preset="city" />
-      {/* FIX: Scaled down from 1.6 to 1.2 so it doesn't clip the edges */}
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[5, 5, 5]} intensity={2.2} />
+      <directionalLight position={[-5, -5, -5]} intensity={1.5} color="#9d4edd" />
       <Float speed={4} rotationIntensity={1} floatIntensity={2}>
         <group scale={1.2} ref={groupRef}>
           {renderShape()}
@@ -124,8 +122,7 @@ const AbstractShape = ({ type }) => {
 
 const AbstractSkillModel = ({ type }) => {
   return (
-    // FIX: Pulled camera back to 10, lowered FOV to 35
-    <Canvas dpr={[1, 1.5]} gl={{ antialias: false }} camera={{ position: [0, 0, 10], fov: 35 }}>
+    <Canvas dpr={[1, 1.5]} gl={{ antialias: false, powerPreference: "high-performance" }} camera={{ position: [0, 0, 10], fov: 35 }}>
       <AbstractShape type={type} />
     </Canvas>
   );

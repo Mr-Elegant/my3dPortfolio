@@ -9,10 +9,10 @@ const PREET_KNOWLEDGE_BASE = [
     citations: ["Muhurat AI System Architecture (RFC-03)", "Descope Outbound OAuth Vault Blueprint"],
   },
   {
-    keywords: ["redis", "websocket", "socket", "realtime", "real-time", "pubsub", "pub/sub", "devnet"],
+    keywords: ["redis", "websocket", "socket", "realtime", "real-time", "pubsub", "pub/sub", "devnet", "whiteboard", "canvas", "story"],
     answer:
-      "Preet architected DevNet (devnet.co.in), scaling real-time 1-on-1 messaging and collaborative whiteboards (tldraw) across multiple Node.js instances using a Redis Pub/Sub adapter. He engineered binary packet serialization, read receipts, and typing indicators, delivering sub-25ms latency with 99.99% session uptime.",
-    citations: ["DevNet Architecture Blueprint", "Redis Pub/Sub RFC-01"],
+      "Preet architected DevNet (devnet-gilt.vercel.app), an intelligent developer social & collaboration ecosystem. It features Tinder-style developer matchmaking, an interactive 4-act scrollytelling journey (/story), a custom GPU-accelerated HTML5 vector whiteboard engine (saving ~70% bundle size / >2.5MB), AI Architect diagram generation via free OpenRouter LLMs, and sub-25ms Socket.IO real-time chat with read receipts and 12-minute keep-alive resilience.",
+    citations: ["DevNet Architecture Blueprint", "DevNet RFC-01 (Vector Canvas & Real-Time Sync)"],
   },
   {
     keywords: ["nbfc", "loms", "loan", "shree", "vishnupriya", "credit", "fintech", "zoho", "whatsapp"],

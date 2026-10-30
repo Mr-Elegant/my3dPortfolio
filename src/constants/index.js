@@ -344,53 +344,53 @@ const systemTopologies = [
   {
     id: "devnet-distributed",
     name: "DevNet — Distributed Real-Time Collaboration & Matchmaking Engine",
-    tagline: "Multi-Instance WebSocket Clustering, Redis Pub/Sub Message Bus & Razorpay HMAC Subscriptions",
+    tagline: "React 19, Custom GPU Vector Whiteboard, AI Architect (OpenRouter), Socket.IO Cluster & Vercel/Render Cloud",
     scaleStats: {
       uptime: "99.99%",
       latency: "< 25ms (WebSocket)",
-      throughput: "Multi-Node Scaled",
-      compliance: "PCI-DSS Webhook Verification",
+      throughput: "~70% Bundle Drop (>2.5MB)",
+      compliance: "Zero-Cost Cloud Topology",
     },
     nodes: [
       {
         id: "dev-client",
-        name: "Interactive Collaboration Client",
+        name: "Interactive Scrollytelling & Collaboration Client",
         layer: "client",
-        type: "Frontend Workspace",
-        tech: "React.js, Redux Toolkit, tldraw, Framer Motion",
-        spec: "Tinder-style card matchmaking, infinite collaborative canvas with live cursor broadcasting & markdown code editor.",
-        tradeOff: "Optimistic UI updates on canvas elements with server-authoritative reconciliation.",
-        failureMode: "Socket auto-reconnection with buffered packet queue on temporary network drops."
+        type: "React 19 SPA Workspace",
+        tech: "React 19, Vite 6, Tailwind v4, Redux Toolkit, Custom Vector Canvas, Framer Motion",
+        spec: "Interactive 4-act scrollytelling journey (/story), Tinder swipe matchmaking, custom HTML5 vector canvas (saving ~70% bundle size / >2.5MB), AI Architect diagramming & markdown code editor.",
+        tradeOff: "Custom lightweight vector engine chosen over heavy third-party libraries (tldraw) to eliminate >2.5MB bundle bloat while ensuring sub-25ms multi-user cursor sync.",
+        failureMode: "Socket auto-reconnection with buffered packet queue on temporary network drops; local draft caching."
       },
       {
         id: "load-balancer",
-        name: "AWS EC2 Nginx Load Balancer",
+        name: "Cloudflare DNS & Vercel Edge CDN",
         layer: "gateway",
-        type: "Traffic & Ingress Gateway",
-        tech: "Nginx, SSL/TLS, PM2 Cluster",
-        spec: "Sticky sessions (IP hash) for WebSocket handshakes, HTTPS termination, static asset gzip caching.",
-        tradeOff: "Sticky sessions ensure persistent WebSocket handshake stability without cross-node handshake drift.",
-        failureMode: "Round-robin HTTP fallback if socket connection fails."
+        type: "Edge Ingress & CDN",
+        tech: "Cloudflare DNS, Vercel Global Edge CDN, SSL/TLS Full Strict",
+        spec: "Anycast global edge caching for Vite SPA bundle, DNS-only CNAME routing for devnet-gilt.vercel.app, automatic Brotli compression.",
+        tradeOff: "Decoupled edge frontend hosting on Vercel allows zero-cost instant deploys separate from Node compute tiers.",
+        failureMode: "Automatic Cloudflare edge failover and CDN stale-while-revalidate serving."
       },
       {
         id: "socket-cluster",
-        name: "Socket.IO Multi-Instance Cluster",
+        name: "Render Web Service & Socket.IO Engine",
         layer: "compute",
-        type: "Real-Time Gateway Nodes",
-        tech: "Socket.IO v4, Node.js, Express",
-        spec: "Room-based event dispatching for 1-on-1 chats, read receipts, active presence heartbeats, and canvas delta streaming.",
-        tradeOff: "Binary packet packing for canvas vector deltas to reduce bandwidth by 65%.",
-        failureMode: "Graceful client reconnection with room state reconciliation."
+        type: "Real-Time Gateway & REST API",
+        tech: "Express 5, Socket.IO v4, Node.js, Keep-Alive Worker",
+        spec: "Sub-millisecond room-based event dispatching for 1-on-1 chats, read receipts (sent/delivered/seen), live presence, whiteboard shape broadcasting & collaborator cursors.",
+        tradeOff: "Binary delta packet packing for vector shape updates to minimize real-time network payload.",
+        failureMode: "Self-pinging keep-alive worker queries /health every 12 min to prevent free-tier instances from idling."
       },
       {
-        id: "redis-bus",
-        name: "Redis Pub/Sub & Distributed Cache",
-        layer: "integration",
-        type: "Distributed Message Broker & Cache",
-        tech: "Redis, Redis Adapter for Socket.IO",
-        spec: "Cross-instance WebSocket broadcasting, user online status registry, rate-limiting sliding window token buckets.",
-        tradeOff: "In-memory Pub/Sub chosen over RabbitMQ for sub-millisecond inter-node communication latency.",
-        failureMode: "Redis AOF persistence + automatic client reconnection strategy."
+        id: "ai-architect",
+        name: "AI Architect Diagram Generation Engine",
+        layer: "ai",
+        type: "LLM System Design Synthesizer",
+        tech: "OpenRouter Free Models (Llama 3.3 70B, Gemini 2.0 Flash, Qwen 2.5 72B)",
+        spec: "Natural language text-to-architecture diagram generator. Automatically creates structured 2D component layouts, DB cylinders, service boxes, and directional flow arrows from developer prompts.",
+        tradeOff: "Automated multi-model fallback cascade ensures 100% free uptime even when specific free-tier LLMs encounter rate limits.",
+        failureMode: "Falls back to instant pre-baked system design templates (URL Shortener, E-Commerce, Chat, Event Analytics)."
       },
       {
         id: "payment-webhook",
@@ -399,26 +399,26 @@ const systemTopologies = [
         type: "Financial Subscription Service",
         tech: "HMAC-SHA256, Node-Cron, Webhook Validation",
         spec: "Tiered subscription validation (Silver/Gold), cryptographic signature verification, idempotency token check.",
-        tradeOff: "Idempotency key stored in Redis prevents double-crediting on webhook duplicate delivery.",
+        tradeOff: "Idempotency key prevents double-crediting on duplicate webhook deliveries.",
         failureMode: "Webhook replay queue with exponential backoff on internal processing errors."
       },
       {
         id: "database-cluster",
-        name: "MongoDB Sharded Data Layer",
+        name: "MongoDB Atlas M0 & Cloudinary Media Layer",
         layer: "storage",
-        type: "Primary Database",
-        tech: "MongoDB, Mongoose, Redis Query Caching",
-        spec: "Indexed user profiles, threaded Q&A comments, chat history with cursor-based pagination, and media metadata.",
-        tradeOff: "Cursor-based pagination over offset-based pagination to maintain O(1) query performance on large chat logs.",
-        failureMode: "Replica set automatic failover with zero-downtime secondary reads."
+        type: "Cloud Database & Media Storage",
+        tech: "MongoDB Atlas, Mongoose ODM, Cloudinary API",
+        spec: "Indexed user profiles, threaded Q&A comments with accepted answer checkmarks, chat history with cursor pagination, and in-memory media streaming.",
+        tradeOff: "Cursor-based pagination over offset pagination ensures O(1) query performance across growing chat archives.",
+        failureMode: "MongoDB Atlas replica set automatic failover with zero-downtime secondary reads."
       }
     ],
     flows: [
-      { from: "dev-client", to: "load-balancer", label: "WSS / HTTPS" },
-      { from: "load-balancer", to: "socket-cluster", label: "Sticky WebSocket Handshake" },
-      { from: "socket-cluster", to: "redis-bus", label: "Inter-Instance Pub/Sub" },
+      { from: "dev-client", to: "load-balancer", label: "HTTPS Edge Delivery" },
+      { from: "dev-client", to: "socket-cluster", label: "WSS Sub-25ms Real-Time" },
+      { from: "socket-cluster", to: "ai-architect", label: "OpenRouter LLM Synthesis" },
       { from: "load-balancer", to: "payment-webhook", label: "Signed Razorpay Webhook" },
-      { from: "socket-cluster", to: "database-cluster", label: "Async Message Persistence" }
+      { from: "socket-cluster", to: "database-cluster", label: "Async Message & Media Persistence" }
     ]
   },
   {
@@ -532,41 +532,48 @@ const architectureADRs = [
   {
     id: "devnet-realtime",
     projectTitle: "DevNet Platform & Collaboration Engine",
-    rfcTitle: "RFC-01: Scaling Real-Time WebSockets via Redis Pub/Sub Message Bus",
+    rfcTitle: "RFC-01: Zero-Cost Distributed Real-Time Collaboration & Custom Vector Engine",
     status: "APPROVED & IN PRODUCTION",
     author: "Preet Karwal (Architect & Full-Stack Engineer)",
-    date: "2024",
-    executiveSummary: "Designed a distributed real-time messaging, presence, and collaborative whiteboard architecture capable of horizontal scaling across multiple Node.js instances without dropping WebSocket state.",
+    date: "2024 - 2025",
+    executiveSummary: "Architected a decoupled, zero-cost developer pairing ecosystem featuring custom GPU-accelerated HTML5 vector whiteboard collaboration, multi-model AI Architect diagramming, and Socket.IO real-time communication across Vercel Edge and Render services.",
     constraints: [
-      "Sub-30ms latency for collaborative whiteboard strokes (tldraw) across synchronized users.",
-      "Guaranteed delivery and read receipts for 1-on-1 developer messaging.",
-      "Secure webhook validation for tiered premium subscription renewals."
+      "Sub-25ms latency for collaborative whiteboard vector events & live cursor presence across synchronized developers.",
+      "Eliminate heavy third-party whiteboard bundle (>2.5MB) to achieve sub-second initial load on web and mobile.",
+      "Guaranteed message delivery with 3-state read receipts (sent, delivered, seen) for 1-on-1 developer messaging.",
+      "100% free forever cloud deployment footprint with 24/7 uptime using automated keep-alive background workers."
     ],
     decisions: [
       {
-        decision: "Redis Pub/Sub Adapter vs Apache Kafka",
-        rationale: "Redis Pub/Sub provides sub-millisecond in-memory routing for transient real-time chat and whiteboard delta sync without Kafka's operational partition rebalancing overhead.",
-        tradeOff: "Messages are not persisted inside Redis; persistence is handled asynchronously by worker threads writing directly to MongoDB."
+        decision: "Custom GPU-Accelerated Vector Canvas vs Proprietary Canvas (tldraw)",
+        rationale: "Replaced heavy third-party canvas dependencies with a custom lightweight HTML5 vector engine containing system design primitives (Service Box, DB Cylinder, Worker Node, Flow Arrow, Sticky Note). Slashed frontend production bundle size by ~70% (saving >2.5 MB) for instant sub-second page loads.",
+        tradeOff: "Required writing custom geometry collision detection, mouse-wheel zoom centering, and quadratic-bezier stroke smoothing in vanilla Canvas API."
       },
       {
-        decision: "HMAC-SHA256 Signature Verification for Razorpay Webhooks",
-        rationale: "Enforced strict cryptographic verification using shared secret keys to guarantee incoming payment events originate solely from Razorpay's banking servers.",
-        tradeOff: "Raw request body must be preserved unparsed to verify exact signature match before JSON parsing."
+        decision: "AI Architect via Free OpenRouter LLMs with Model Cascade",
+        rationale: "Integrated free OpenRouter LLMs (Llama 3.3 70B, Gemini 2.0 Flash, Qwen 2.5 72B) to generate structured 2D architecture diagrams from natural language prompts with zero API cost and automatic fallback.",
+        tradeOff: "LLM responses require strict JSON schema validation and layout coordinate normalization before rendering onto the canvas."
       },
       {
-        decision: "Cursor-Based Pagination for Chat Logs",
-        rationale: "Replaced `skip/limit` SQL-style pagination with cursor queries (`{ _id: { $lt: lastMessageId } }`) which execute in O(1) time regardless of chat room depth.",
-        tradeOff: "Frontend must track last message ID token in Redux store."
+        decision: "Zero-Cost Cloud Topology & 12-Minute Keep-Alive Heartbeat",
+        rationale: "Decoupled frontend onto Vercel Global Edge CDN and backend onto Render Web Services. Implemented an internal Node scheduler that self-pings the public /health endpoint every 12 minutes to prevent free-tier instances from sleeping.",
+        tradeOff: "Self-pinging worker runs inside the application process rather than requiring external paid synthetic monitors."
+      },
+      {
+        decision: "Cursor-Based Pagination & Atomic MongoDB Operations",
+        rationale: "Replaced offset-based pagination with cursor queries ({ _id: { $lt: lastMessageId } }) for O(1) chat history loading. Utilized atomic $pull operators for tamper-proof message deletions.",
+        tradeOff: "Client Redux store must track message cursor tokens during infinite scroll."
       }
     ],
     failureModes: [
-      "Socket Server Node Crash: Nginx sticky load balancer routes client to surviving instance; client auto-reconnects and syncs missed messages via cursor timestamp.",
-      "Redis Connection Loss: Socket.IO falls back to single-node memory adapter until Redis heartbeat recovers."
+      "Render Free-Tier Spin-Down: Prevented by 12-minute keep-alive self-pinging background worker querying /health endpoint.",
+      "OpenRouter Rate Limiting: Automatically cascades across free models (Llama 3.3 -> Gemini 2.0 Flash -> Qwen 2.5) with instant fallback to pre-baked system design templates.",
+      "WebSocket Connection Drop: Client automatically buffers outgoing vector strokes and chat messages with optimistic UI feedback, re-syncing upon reconnection."
     ],
     roiImpact: [
-      "Maintained 99.99% real-time session uptime with zero cross-instance message drop.",
-      "Reduced canvas sync latency to < 25ms.",
-      "Successfully monetized developer discovery with automated subscription webhooks."
+      "~70% frontend production bundle reduction (>2.5 MB saved) delivering instant sub-second initial load.",
+      "Maintained 99.99% real-time session uptime with sub-25ms vector sync across collaborative whiteboard sessions.",
+      "100% zero cloud hosting footprint across Vercel, Render, Cloudflare, MongoDB Atlas, and OpenRouter."
     ]
   },
   {
@@ -679,7 +686,7 @@ const agenticScenarios = [
         title: "Vector Delta Broadcast & Cursor Sync",
         node: "Socket.IO Multi-Instance Gateway",
         status: "success",
-        log: "Broadcasting binary vector deltas for tldraw shapes with optimistic client rendering.",
+        log: "Broadcasting vector shape deltas for custom vector canvas with optimistic client rendering and live cursor presence.",
         payload: { vectorCount: 42, fps: 60, packetLoss: "0.00%" }
       },
       {

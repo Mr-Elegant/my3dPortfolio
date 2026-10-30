@@ -221,33 +221,41 @@ const AppShowcase = ({ onOpenADR }) => {
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <a 
-                    href="https://devnet.co.in" 
+                    href="https://devnet-gilt.vercel.app/" 
                     target="_blank" 
                     rel="noreferrer" 
                     className="block cursor-pointer aspect-[16/9] overflow-hidden"
                   >
                     <img
-                      src="/images/dnimage.jpg"
-                      alt="DevNet App Interface"
+                      src="/images/devnet_poster.jpg"
+                      alt="DevNet Platform Ecosystem Poster"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover/tilt:scale-105"
                     />
                   </a>
 
                   {/* Floating Quick Action Overlay */}
-                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover/tilt:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 p-4 pointer-events-none group-hover/tilt:pointer-events-auto backdrop-blur-xs">
+                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover/tilt:opacity-100 transition-opacity duration-300 flex flex-wrap items-center justify-center gap-2.5 p-4 pointer-events-none group-hover/tilt:pointer-events-auto backdrop-blur-xs">
                     <a
-                      href="https://devnet.co.in"
+                      href="https://devnet-gilt.vercel.app/"
                       target="_blank"
                       rel="noreferrer"
-                      className="px-4 py-2.5 rounded-xl bg-[#00f0ff] text-black font-mono text-xs font-bold hover:bg-[#00ff88] transition-all hover:scale-105 shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+                      className="px-3.5 py-2 rounded-xl bg-[#00f0ff] text-black font-mono text-xs font-bold hover:bg-[#00ff88] transition-all hover:scale-105 shadow-[0_0_20px_rgba(0,240,255,0.4)]"
                     >
                       🚀 Live Site
+                    </a>
+                    <a
+                      href="https://devnet-gilt.vercel.app/story"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#ff0055] to-[#7928ca] text-white font-mono text-xs font-bold transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,0,85,0.4)]"
+                    >
+                      ✨ Story Mode
                     </a>
                     <a
                       href="https://github.com/Mr-Elegant/DevNet"
                       target="_blank"
                       rel="noreferrer"
-                      className="px-4 py-2.5 rounded-xl bg-black-100/90 text-white font-mono text-xs font-bold border border-white-50/20 hover:border-[#00f0ff] transition-all hover:scale-105"
+                      className="px-3.5 py-2 rounded-xl bg-black-100/90 text-white font-mono text-xs font-bold border border-white-50/20 hover:border-[#00f0ff] transition-all hover:scale-105"
                     >
                       📦 GitHub Repo
                     </a>
@@ -261,25 +269,25 @@ const AppShowcase = ({ onOpenADR }) => {
               <div>
                 <div className="flex items-center gap-2 font-mono text-[10px] text-[#00f0ff] uppercase tracking-wider mb-2">
                   <span className="w-2 h-2 rounded-full bg-[#00f0ff] inline-block animate-ping" />
-                  <span>[CLEARANCE: PRODUCTION] // [INFRA: AWS EC2] // [PROTOCOL: WSS/HTTPS]</span>
+                  <span>[CLEARANCE: PRODUCTION] // [INFRA: VERCEL EDGE + RENDER] // [PROTOCOL: WSS/HTTPS]</span>
                 </div>
                 
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
-                  DevNet — Developer Platform &amp; Collaboration Engine
+                  DevNet — Developer Ecosystem &amp; Collaboration Engine
                 </h3>
                 <p className="text-sm font-semibold text-[#4cc9f0] mt-0.5">
-                  Distributed Real-Time Messaging &amp; Live Whiteboard Clustering
+                  Tinder Matchmaking, Custom GPU Vector Whiteboard, AI Architect &amp; Scrollytelling
                 </p>
 
                 <p className="text-white-50 text-sm md:text-base mt-4 text-justify leading-relaxed">
-                  Distributed social networking &amp; pairing platform for software developers. Features Tinder-style developer matchmaking, an infinite collaborative whiteboard (tldraw) with binary vector broadcasting, multi-instance Socket.IO clustering via Redis Pub/Sub, and HMAC-SHA256 verified Razorpay subscriptions.
+                  Full-stack developer social networking and pairing ecosystem. Combines Tinder-style skill matchmaking with an interactive 4-act horizontal scrollytelling journey (<a href="https://devnet-gilt.vercel.app/story" target="_blank" rel="noreferrer" className="text-[#00f0ff] underline hover:text-[#00ff88]">/story</a>), an in-house GPU-accelerated HTML5 vector whiteboard engine (slashing bundle size by ~70% / &gt;2.5MB), AI Architect diagram generation via free OpenRouter LLMs, Socket.IO sub-millisecond chat with read receipts, and zero-cost 24/7 keep-alive resilience.
                 </p>
 
                 {/* Tech Highlights */}
                 <div className="mt-4 pt-4 border-t border-white-50/10">
                   <span className="text-xs font-mono text-white-50/70 block mb-1.5 uppercase tracking-wider font-semibold">Tech Ecosystem:</span>
                   <div className="flex flex-wrap gap-1.5">
-                    {["React.js", "Redux Toolkit", "Node.js", "Express.js", "Socket.IO v4", "Redis Pub/Sub", "MongoDB", "AWS EC2", "Nginx", "Razorpay"].map((tech) => (
+                    {["React 19", "Vite 6", "Tailwind v4", "Socket.IO v4", "Custom Vector Canvas", "AI Architect (OpenRouter)", "Redux Toolkit", "Node.js", "Express 5", "MongoDB Atlas", "Vercel Edge", "Render", "Razorpay"].map((tech) => (
                       <span key={tech} className="px-2.5 py-1 rounded-md bg-white-50/5 border border-white-50/10 text-xs font-mono text-[#00f0ff]">
                         {tech}
                       </span>
@@ -291,12 +299,20 @@ const AppShowcase = ({ onOpenADR }) => {
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a 
-                  href="https://devnet.co.in" 
+                  href="https://devnet-gilt.vercel.app/" 
                   target="_blank" 
                   rel="noreferrer" 
                   className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-[#00f0ff] transition-colors"
                 >
                   Visit Live Site ↗
+                </a>
+                <a 
+                  href="https://devnet-gilt.vercel.app/story" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff0055]/20 to-[#7928ca]/20 border border-[#ff0055]/40 text-[#ff7597] hover:text-white text-xs font-semibold transition-colors"
+                >
+                  Story Mode ✨
                 </a>
                 <a 
                   href="https://github.com/Mr-Elegant/DevNet" 

@@ -89,15 +89,15 @@ const ResumeModal = ({ onClose }) => {
       ]
     },
     {
-      name: "DevNet — Developer Networking Platform",
-      linkText: "devnet.co.in",
-      link: "https://devnet.co.in",
+      name: "DevNet — Developer Ecosystem & Collaboration Engine",
+      linkText: "devnet-gilt.vercel.app",
+      link: "https://devnet-gilt.vercel.app/",
       github: "https://github.com/Mr-Elegant/DevNet",
       githubText: "GitHub Repo",
-      tech: "React, Vite, Redux Toolkit, Tailwind CSS, Node.js, Express, MongoDB, Socket.IO, Redis, AWS EC2, Nginx, PM2, Razorpay",
+      tech: "React 19, Vite 6, Tailwind v4, Redux Toolkit, Socket.IO, Custom Vector Canvas, OpenRouter LLMs, Express 5, MongoDB Atlas, Vercel, Render, Razorpay",
       points: [
-        "Engineered a full-stack developer community platform in React and Node.js/Express featuring real-time 1-on-1 chat (Socket.IO) with typing indicators, read receipts, and Cloudinary media delivery scaled via Redis Pub/Sub.",
-        "Built developer matchmaking integrating GitHub OAuth stats, tiered subscriptions via Razorpay with HMAC-SHA256 webhook validation, and an interactive Markdown community feed."
+        "Architected a full-stack developer social networking & collaboration ecosystem featuring Tinder-style developer matchmaking, an interactive 4-act scrollytelling showcase (/story), and Socket.IO real-time chat with read receipts.",
+        "Engineered a custom GPU-accelerated HTML5 vector whiteboard engine (slashing production bundle size by ~70% / >2.5MB), integrated AI Architect text-to-diagram generation via free OpenRouter LLMs, and established zero-cost cloud resilience on Vercel Edge + Render with an automated keep-alive heartbeat."
       ]
     },
     {

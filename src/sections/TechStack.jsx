@@ -1,10 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useMediaQuery } from "react-responsive";
 
 import TitleHeader from "../components/TitleHeader";
-import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
-import AbstractSkillModel from "../components/models/tech_logos/AbstractSkillModel";
 import { techStackIcons } from "../constants";
 // import { techStackImgs } from "../constants";
 
@@ -87,8 +84,6 @@ const TechStack2DFallback = ({ techStackIcon }) => {
 };
 
 const TechStack = () => {
-  const isDesktop = useMediaQuery({ query: "(min-width: 1280px)" });
-
   // Animate the tech cards in the skills section
   useGSAP(() => {
     gsap.fromTo(
@@ -115,8 +110,8 @@ const TechStack = () => {
     <section id="skills" className="w-full flex-center section-padding relative z-20">
       <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
-          title="How I Can Contribute & My Key Skills"
-          sub="🤝 What I Bring to the Table"
+          title="Core Capabilities & Specializations"
+          sub="Engineering Architecture & Stack Capabilities"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mt-10 w-full">
           {techStackIcons.map((techStackIcon) => (
@@ -127,15 +122,7 @@ const TechStack = () => {
               <div className="tech-card-animated-bg" />
               <div className="tech-card-content flex flex-col items-center justify-between h-full p-6 text-center">
                 <div className="tech-icon-wrapper w-full h-48 flex justify-center items-center">
-                  {isDesktop ? (
-                    techStackIcon.abstractType ? (
-                      <AbstractSkillModel type={techStackIcon.abstractType} />
-                    ) : (
-                      <TechIconCardExperience model={techStackIcon} />
-                    )
-                  ) : (
-                    <TechStack2DFallback techStackIcon={techStackIcon} />
-                  )}
+                  <TechStack2DFallback techStackIcon={techStackIcon} />
                 </div>
                 <div className="padding-x w-full mt-4 flex flex-col gap-2 relative z-20">
                   <p className="font-bold text-lg text-white group-hover:text-white transition-colors">{techStackIcon.name}</p>

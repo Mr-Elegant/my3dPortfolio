@@ -101,14 +101,14 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
         {/* Desktop Action Buttons & Mobile Hamburger */}
         <div className="flex items-center gap-2.5 md:gap-3">
           
-          {/* Global Theme Toggle Button */}
+          {/* Global Theme Toggle Button (Desktop & Tablet) */}
           {onToggleTheme && (
             <button
               onClick={() => {
                 audioFX.playClick();
                 onToggleTheme();
               }}
-              className="flex items-center justify-center p-2 rounded-lg bg-black-200/80 hover:bg-white/10 text-white-50 hover:text-white border border-white-50/15 text-xs font-mono transition-all cursor-pointer shadow-md"
+              className="hidden sm:flex items-center justify-center p-2 rounded-lg bg-black-200/80 hover:bg-white/10 text-white-50 hover:text-white border border-white-50/15 text-xs font-mono transition-all cursor-pointer shadow-md"
               title={theme === "light" ? "Switch to Dark Theme" : "Switch to Light Theme"}
               aria-label="Toggle Color Theme"
             >
@@ -116,10 +116,10 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
             </button>
           )}
 
-          {/* HUD Command Terminal Trigger Button */}
+          {/* HUD Command Terminal Trigger Button (Desktop & Tablet) */}
           <button
             onClick={onOpenCLI}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black-200/80 hover:bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/30 text-xs font-mono transition-all cursor-pointer shadow-[0_0_12px_rgba(0,240,255,0.12)]"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black-200/80 hover:bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/30 text-xs font-mono transition-all cursor-pointer shadow-[0_0_12px_rgba(0,240,255,0.12)]"
             title="Open HUD Command Terminal (Ctrl + K)"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-ping inline-block" />

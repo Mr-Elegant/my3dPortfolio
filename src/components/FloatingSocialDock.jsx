@@ -41,7 +41,7 @@ const FloatingSocialDock = () => {
   return (
     <aside
       aria-label="Social Uplink Dock"
-      className={`fixed left-2 sm:left-4 top-1/2 -translate-y-1/2 z-40 transition-all duration-300 print:hidden select-none ${
+      className={`hidden lg:block fixed left-2 sm:left-4 top-1/2 -translate-y-1/2 z-40 transition-all duration-300 print:hidden select-none ${
         isMinimized ? "-translate-x-[calc(100%-12px)] sm:-translate-x-[calc(100%-14px)]" : "translate-x-0"
       }`}
     >

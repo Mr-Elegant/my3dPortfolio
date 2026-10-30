@@ -6,15 +6,24 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 750,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "three-vendor": ["three", "@react-three/fiber", "@react-three/drei"],
-          "animation-vendor": ["gsap", "@gsap/react"],
+        manualChunks(id) {
+          if (id.includes("node_modules/three/")) {
+            return "three-core";
+          }
+          if (id.includes("node_modules/@react-three/drei")) {
+            return "react-three-drei";
+          }
+          if (id.includes("node_modules/@react-three/fiber")) {
+            return "react-three-fiber";
+          }
+          if (id.includes("node_modules/gsap/") || id.includes("node_modules/@gsap/")) {
+            return "animation-vendor";
+          }
         },
       },
     },
   },
 });
-
