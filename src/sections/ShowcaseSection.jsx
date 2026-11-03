@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AppShowcase = ({ onOpenADR }) => {
   const sectionRef = useRef(null);
+  const interviewLabRef = useRef(null);
   const muhuratRef = useRef(null);
   const devnetRef = useRef(null);
   const devnetChatRef = useRef(null);
@@ -23,6 +24,7 @@ const AppShowcase = ({ onOpenADR }) => {
 
     // Animations for each app showcase card
     const cards = [
+      interviewLabRef.current,
       muhuratRef.current,
       devnetRef.current,
       devnetChatRef.current,
@@ -88,7 +90,126 @@ const AppShowcase = ({ onOpenADR }) => {
         <div className="space-y-16">
           
           {/* ========================================================= */}
-          {/* ----- FLAGSHIP PROJECT 1: MUHURAT AI (मुहूर्त AI) ----- */}
+          {/* ----- FLAGSHIP PROJECT 1: ENGINEERING INTERVIEW LAB ----- */}
+          {/* ========================================================= */}
+          <div ref={interviewLabRef} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black-100/60 border border-white-50/10 rounded-3xl p-6 md:p-8 lg:p-10 backdrop-blur-xl hover:border-[#00f0ff]/30 transition-all duration-500 shadow-2xl">
+            
+            {/* Image Preview / 3D Tilt Card */}
+            <div className="lg:col-span-7">
+              <GlowingBorderCard>
+                <div
+                  onMouseMove={handleTiltMove}
+                  onMouseLeave={handleTiltLeave}
+                  className="relative rounded-2xl overflow-hidden group/tilt transition-transform duration-200 ease-out bg-[#0a0c10]"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <a 
+                    href="https://engineering-interview-lab.vercel.app/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="block cursor-pointer aspect-[16/9] overflow-hidden"
+                  >
+                    <img
+                      src="/images/interview_lab_poster.png"
+                      alt="Full Stack Engineering Interview Lab Poster"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover/tilt:scale-105"
+                    />
+                  </a>
+
+                  {/* Floating Quick Action Overlay */}
+                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover/tilt:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 p-4 pointer-events-none group-hover/tilt:pointer-events-auto backdrop-blur-xs">
+                    <a
+                      href="https://engineering-interview-lab.vercel.app/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2.5 rounded-xl bg-[#00f0ff] text-black font-mono text-xs font-bold hover:bg-[#00ff88] transition-all hover:scale-105 shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+                    >
+                      🚀 Live Demo
+                    </a>
+                    <a
+                      href="https://github.com/Mr-Elegant/Road-To-Senior-dev-Simulator"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2.5 rounded-xl bg-black-100/90 text-white font-mono text-xs font-bold border border-white-50/20 hover:border-[#00f0ff] transition-all hover:scale-105"
+                    >
+                      📦 View Source
+                    </a>
+                    <button
+                      onClick={() => onOpenADR && onOpenADR("interview-lab")}
+                      className="px-3.5 py-2.5 rounded-xl bg-white-50/10 text-white font-mono text-xs font-bold border border-white-50/20 hover:border-[#4cc9f0] transition-all hover:scale-105 cursor-pointer"
+                    >
+                      📐 RFC-04
+                    </button>
+                  </div>
+                </div>
+              </GlowingBorderCard>
+            </div>
+
+            {/* Content Details */}
+            <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center gap-2 font-mono text-[10px] text-[#00f0ff] uppercase tracking-wider mb-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00f0ff] inline-block animate-ping" />
+                  <span>[SIMULATOR: 65_SCENARIOS] // [EXECUTION: WASM_PGLITE] // [INCIDENTS: 8_EVOLVING]</span>
+                </div>
+                
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                  ⚡ Full Stack Engineering Interview Lab
+                </h3>
+                <p className="text-sm font-semibold text-[#00f0ff] mt-0.5">
+                  Senior Systems Simulator, Evolving Incidents &amp; Browser SQL Sandbox
+                </p>
+
+                <p className="text-white-50 text-sm md:text-base mt-4 text-justify leading-relaxed">
+                  Full-stack engineering practice platform engineered to simulate the work behind senior/staff engineering interviews: diagnosing evolving production incidents, resolving concurrency &amp; race conditions, querying client-side PostgreSQL (PGlite WASM), and defending system design trade-offs. Features 65 real-world scenarios across 10 topics, 3 Enterprise Labs (Loan Operations, Commerce, Multi-Tenant SaaS), 8 evolving live incident simulations with 24 timed developments, 120 SQL challenges, and a dedicated isolated Worker sandbox with zero-overhead transactional recovery.
+                </p>
+
+                {/* Tech Highlights */}
+                <div className="mt-4 pt-4 border-t border-white-50/10">
+                  <span className="text-xs font-mono text-white-50/70 block mb-1.5 uppercase tracking-wider font-semibold">Tech Ecosystem:</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["Next.js 16 (App Router)", "React 19", "TypeScript 5", "PostgreSQL (Prisma)", "Better Auth", "PGlite (WASM)", "AlaSQL", "Redux Toolkit", "Monaco Editor", "Google Gemini AI SDK", "Zod", "Playwright"].map((tech) => (
+                      <span key={tech} className="px-2.5 py-1 rounded-md bg-white-50/5 border border-white-50/10 text-xs font-mono text-[#00f0ff]">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a 
+                  href="https://engineering-interview-lab.vercel.app/" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-[#00f0ff] transition-colors"
+                >
+                  Visit Live Site ↗
+                </a>
+                <a 
+                  href="https://github.com/Mr-Elegant/Road-To-Senior-dev-Simulator" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="px-4 py-2 rounded-xl bg-white-50/10 hover:bg-white-50/20 text-white text-xs font-semibold transition-colors"
+                >
+                  GitHub ↗
+                </a>
+                {onOpenADR && (
+                  <button
+                    onClick={() => onOpenADR("interview-lab")}
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#00f0ff]/20 to-[#7928ca]/20 hover:from-[#00f0ff]/30 hover:to-[#7928ca]/30 text-[#00f0ff] border border-[#00f0ff]/40 text-xs font-bold cursor-pointer transition-all flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.15)]"
+                  >
+                    <span>System Architecture &amp; ADR (RFC-04)</span>
+                    <span>📐</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================= */}
+          {/* ----- FLAGSHIP PROJECT 2: MUHURAT AI (मुहूर्त AI) ----- */}
           {/* ========================================================= */}
           <div ref={muhuratRef} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black-100/60 border border-white-50/10 rounded-3xl p-6 md:p-8 lg:p-10 backdrop-blur-xl hover:border-[#00ff88]/30 transition-all duration-500 shadow-2xl">
             

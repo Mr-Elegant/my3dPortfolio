@@ -3,6 +3,12 @@ import { audioFX } from "../utils/audioFX";
 
 const PREET_KNOWLEDGE_BASE = [
   {
+    keywords: ["interview", "lab", "senior", "simulator", "pglite", "incident", "concurrency", "monaco", "wasm", "engineering"],
+    answer:
+      "Preet architected the Full Stack Engineering Interview Lab (engineering-interview-lab.vercel.app), a senior developer practice platform featuring 65 scenarios across 10 topics, 3 Enterprise Labs (Loan Operations, Commerce, Multi-Tenant SaaS), 8 evolving live incident simulations with 24 timed developments, and 120 SQL challenges. It features client-side PostgreSQL via PGlite WebAssembly, an isolated disposable Web Worker sandbox with strict 1,500ms watchdog timeouts, Better Auth transactional progress synchronization, and Google Gemini AI interview scoring with deterministic offline fallbacks.",
+    citations: ["Full Stack Engineering Interview Lab Architecture (RFC-04)", "Browser Sandbox & Incident Engine Blueprint"],
+  },
+  {
     keywords: ["muhurat", "calendar", "agent", "vedic", "scheduling", "descope", "mastra", "gemini", "mcp"],
     answer:
       "Preet architected Muhurat AI (मुहूर्त AI), a state-of-the-art autonomous calendar assistant powered by Google Gemini 3.6 Flash, Mastra AI Agent Framework, and Descope Outbound OAuth Vaulting. It features deterministic Zod tool execution, persistent working memory, conflict-free Free/Busy query scheduling, instant Google Meet creation, Model Context Protocol (MCP) server endpoints, and a signature Midnight Glass / Frosted Pearl dual-theme Next.js 16 UI.",
@@ -171,6 +177,7 @@ const PreetAICopilot = ({ isOpen, onClose, onOpenResume, onOpenADR }) => {
             </button>
           )}
           {[
+            "Engineering Interview Lab architecture?",
             "How does Muhurat AI work?",
             "Experience with Redis & WebSockets?",
             "NBFC LOMS architecture flow?",

@@ -77,6 +77,20 @@ const ResumeModal = ({ onClose }) => {
 
   const projects = [
     {
+      name: "Full Stack Engineering Interview Lab — Senior Systems Simulator",
+      linkText: "engineering-interview-lab.vercel.app",
+      link: "https://engineering-interview-lab.vercel.app/",
+      github: "https://github.com/Mr-Elegant/Road-To-Senior-dev-Simulator",
+      githubText: "GitHub Repo",
+      tech: "Next.js 16 (App Router), React 19, TypeScript 5, PostgreSQL (Neon/Prisma), Better Auth, PGlite (WASM), AlaSQL, Redux Toolkit, Monaco Editor, Google Gemini AI SDK, Zod, Playwright",
+      points: [
+        "Architected an enterprise practice platform featuring 65 scenarios across 10 topics, 3 Enterprise Labs (Loan Operations, Commerce, Multi-Tenant SaaS), and 8 evolving incident simulations with 24 timed developments.",
+        "Engineered an isolated browser execution sandbox using an opaque iframe, private MessageChannel, and disposable Web Workers with 1,500ms watchdog timeouts and structural equality verification.",
+        "Embedded client-side PostgreSQL via PGlite WebAssembly for 120 SQL challenge tiers, delivering sub-15ms local query execution without server database load.",
+        "Implemented robust authentication & transactional progress synchronization with Better Auth, session-derived ownership, and per-user row locking with 203 passing unit tests and 34 verified Playwright journeys."
+      ]
+    },
+    {
       name: "Muhurat AI — Autonomous Calendar Intelligence & Vedic Time Optimization",
       linkText: "mahurart-ai.vercel.app",
       link: "https://mahurart-ai.vercel.app/",

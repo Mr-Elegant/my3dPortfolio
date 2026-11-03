@@ -261,6 +261,86 @@ const techSkillsList = {
 
 const systemTopologies = [
   {
+    id: "interview-lab-topology",
+    name: "Full Stack Engineering Interview Lab — Senior Systems Simulator",
+    tagline: "Next.js 16, PostgreSQL (Neon/Prisma), PGlite WebAssembly, Better Auth, Isolated Worker Sandboxes & Gemini AI",
+    scaleStats: {
+      uptime: "99.99%",
+      latency: "< 12ms (Client WASM)",
+      throughput: "65 Labs / 8 Incidents / 120 SQL",
+      compliance: "Zero-Trust Worker Sandbox / Better Auth",
+    },
+    nodes: [
+      {
+        id: "lab-ui",
+        name: "Next.js 16 App Router & Monaco Editor",
+        layer: "client",
+        type: "Candidate IDE & Responsive Workspace",
+        tech: "Next.js 16, React 19, Monaco Editor, Tailwind CSS, Redux Toolkit",
+        spec: "Full-height Monaco editor, real-time telemetry playback, multi-track tabs, on-demand closable test runners, and account-scoped local drafts.",
+        tradeOff: "Monaco client-side compilation allows instantaneous linting and code completion without server compilation latency.",
+        failureMode: "Offline draft preservation in localStorage with automatic reconnection sync retry notice."
+      },
+      {
+        id: "worker-sandbox",
+        name: "Isolated Worker Execution Engine",
+        layer: "compute",
+        type: "Client-Side Code Sandbox Barrier",
+        tech: "Opaque-origin Iframe, Web Workers, MessageChannel, Strict CSP",
+        spec: "Executes untrusted candidate solutions in disposable Web Workers with 1,500ms execution timeout, 100k character limits, and deep structural equality verification.",
+        tradeOff: "Browser-side worker execution eliminates backend compute hosting cost while guaranteeing complete candidate code isolation.",
+        failureMode: "Watchdog timer terminates runaway infinite loops and revokes MessageChannel without freezing UI thread."
+      },
+      {
+        id: "sql-wasm",
+        name: "PGlite WASM & AlaSQL Engines",
+        layer: "compute",
+        type: "In-Browser PostgreSQL Engine",
+        tech: "PGlite 0.5 (PostgreSQL compiled to WebAssembly), AlaSQL",
+        spec: "Executes real PostgreSQL queries inside browser memory against seeded transactional datasets across 120 SQL interview challenges without hitting production DB.",
+        tradeOff: "Full PostgreSQL dialect fidelity (window functions, CTEs, EXPLAIN) in pure WASM with zero server DB load.",
+        failureMode: "Automatic query timeout and memory sandbox reset on memory-intensive join queries."
+      },
+      {
+        id: "auth-progress",
+        name: "Better Auth & Transactional Progress Service",
+        layer: "gateway",
+        type: "Session Gateway & Sync Service",
+        tech: "Better Auth 1.7, Signed HTTP-Only Cookies, Zod 4",
+        spec: "Session-derived ownership verification, CSRF mitigation, rate-limited AI quotas, and transactional per-user row locking on attempt sync.",
+        tradeOff: "Server-derived session ownership prevents ID spoofing and serializes progress merges safely.",
+        failureMode: "Idempotent attempt deduplication and client-attempt uniqueness keys prevent duplicate syncs."
+      },
+      {
+        id: "postgres-db",
+        name: "PostgreSQL & Prisma Durable History",
+        layer: "storage",
+        type: "Relational Persistence Layer",
+        tech: "PostgreSQL, Prisma ORM 6, Neon Cloud",
+        spec: "Stores candidate attempts, rubric scores, bookmarks, user notes, and incident journals with strict cascading referential integrity.",
+        tradeOff: "ACID transactions with row-level locks prevent race conditions during anonymous-to-authenticated history migrations.",
+        failureMode: "Prisma connection pooling with automatic backoff retry on transient DB connection drops."
+      },
+      {
+        id: "gemini-interviewer",
+        name: "Google Gemini 2.0 AI Interviewer",
+        layer: "ai",
+        type: "Contextual Technical Interviewer",
+        tech: "Google GenAI SDK, Gemini 2.0 Flash, Deterministic Fallback Engine",
+        spec: "Conducts multi-turn technical interviews, dynamically generates follow-up architecture questions, and issues rubric scorecards with deterministic offline fallback.",
+        tradeOff: "Streaming server-side execution hides API credentials and enforces per-user rate limits.",
+        failureMode: "Transparent fallback to deterministic rubric evaluator if Gemini API is unconfigured or throttled."
+      }
+    ],
+    flows: [
+      { from: "lab-ui", to: "worker-sandbox", label: "PostMessage / Private Channel" },
+      { from: "lab-ui", to: "sql-wasm", label: "In-Memory SQL Execution" },
+      { from: "lab-ui", to: "auth-progress", label: "Authenticated Progress Sync" },
+      { from: "auth-progress", to: "postgres-db", label: "Row-Locked Transactional Merge" },
+      { from: "auth-progress", to: "gemini-interviewer", label: "Rate-Limited AI Assessment" }
+    ]
+  },
+  {
     id: "muhurat-ai-topology",
     name: "Muhurat AI — Autonomous Calendar Intelligence & Vedic Time Engine",
     tagline: "Google Gemini 3.6 Flash, Mastra AI Agent Memory, Descope Outbound OAuth Vault & MCP Server",
@@ -483,6 +563,53 @@ const systemTopologies = [
 
 const architectureADRs = [
   {
+    id: "interview-lab-adr",
+    projectTitle: "Full Stack Engineering Interview Lab",
+    rfcTitle: "RFC-04: Isolated Browser Code Execution, Resilient Incident Replay & Account-Scoped Progress Synchronization",
+    status: "APPROVED & IN PRODUCTION",
+    author: "Preet Karwal (Principal Systems Architect)",
+    date: "2026",
+    executiveSummary: "Architected a full-stack engineering interview practice platform engineered for correctness under failure. Features an isolated client-side Web Worker execution sandbox, pure state-replay incident engines, browser-based PostgreSQL (PGlite WASM), and transactional account-scoped progress persistence.",
+    constraints: [
+      "Zero server vulnerability to untrusted candidate code execution (no remote code execution liabilities).",
+      "Full PostgreSQL dialect support (CTEs, window functions) without risking production database integrity.",
+      "Deterministic incident simulation replay without state drift or client tampering.",
+      "Resilient progress sync with transactional conflict resolution and zero data loss on network failure."
+    ],
+    decisions: [
+      {
+        decision: "Opaque-Origin Iframe & Disposable Web Worker Sandbox",
+        rationale: "Candidate solutions execute within an opaque-origin iframe connected via private MessageChannel, spawning a fresh Web Worker per test case with a strict 1,500ms watchdog timeout and CSP that disables network access.",
+        tradeOff: "Provides complete browser-side isolation for JavaScript evaluation without requiring dedicated multi-tenant backend container infrastructure."
+      },
+      {
+        decision: "Pure State-Replay Engine for Evolving Incidents",
+        rationale: "Rather than mutating complex runtime state trees, incident runs store an immutable decision journal and elapsed timestamp. All telemetry, alerts, and consequences are deterministically recomputed via pure functional transitions.",
+        tradeOff: "Guarantees 100% reproducible test verification and prevents candidates from forging progress or skipping incident deadlines."
+      },
+      {
+        decision: "Client-Side PostgreSQL via PGlite WebAssembly",
+        rationale: "Compiles genuine PostgreSQL into WebAssembly (PGlite), allowing candidates to execute complex queries and EXPLAIN plans locally against seeded database fixtures.",
+        tradeOff: "Eliminates server database load and connection limits while providing authentic PostgreSQL semantics."
+      },
+      {
+        decision: "Account-Scoped Session Ownership & Transactional Row Locking",
+        rationale: "Session user IDs are strictly derived from verified Better Auth cookies on the server. Progress imports lock the user row to serialize concurrent writes and deduplicate attempts via unique clientAttemptId keys.",
+        tradeOff: "Ensures atomic progress merges without race conditions or ghost overwrites during multi-device synchronization."
+      }
+    ],
+    failureModes: [
+      "Infinite Loop in Candidate Code: Watchdog timer forcibly terminates the active Web Worker after 1,500ms, clearing message listeners and safely surfacing a TIMEOUT error to the candidate.",
+      "Network Disconnect During Sync: Local device cache retains all completed attempts and drafts, surfacing an unobtrusive offline badge with automatic retry upon network restoration.",
+      "Gemini API Quota Exceeded: Automatically engages deterministic offline rubric fallback, ensuring uninterrupted interview practice even under upstream API outages."
+    ],
+    roiImpact: [
+      "Zero cloud compute cost for code execution by offloading 100% of test runs to client-side isolated Web Workers and WASM.",
+      "Sub-15ms query execution latency with genuine PostgreSQL engine running directly in browser memory.",
+      "203 automated unit tests and 34 verified end-to-end browser user journeys with 100% pass rate."
+    ]
+  },
+  {
     id: "muhurat-calendar-adr",
     projectTitle: "Muhurat AI — Autonomous Calendar Intelligence",
     rfcTitle: "RFC-03: Autonomous Multi-Tool Calendar Scheduling & Outbound OAuth Token Vaulting",
@@ -613,6 +740,48 @@ const architectureADRs = [
 ];
 
 const agenticScenarios = [
+  {
+    id: "scenario-incident-concurrency",
+    title: "Production Incident: Connection Storm & Optimistic Lock Failure",
+    triggerEvent: "Critical Alert: 500 Internal Server Error spike on /api/applications/checkout under concurrent loan reservation load",
+    steps: [
+      {
+        step: 1,
+        title: "Connection Pool Exhaustion Telemetry Trigger",
+        node: "Telemetry & Sentry Monitor",
+        action: "Detect PostgreSQL connection spikes (>98% pool capacity) and identify blocked transaction queues.",
+        payload: { alertId: "ALT_CONN_STORM_941", dbActiveConnections: 198, poolMax: 200, status: "CRITICAL" }
+      },
+      {
+        step: 2,
+        title: "Worker Sandbox Isolation & Infinite Loop Guard",
+        node: "Disposable WebWorker Barrier",
+        action: "Enforce 1,500ms watchdog execution boundary, terminating runaway candidate script and revoking MessageChannel.",
+        payload: { workerId: "wrk_sandbox_88", executionDurationMs: 1500, action: "TERMINATED_SAFE" }
+      },
+      {
+        step: 3,
+        title: "Optimistic Lock Rollback & Idempotency Gate",
+        node: "Transaction Engine (Prisma/Neon)",
+        action: "Trigger transactional row rollback and reject concurrent stale-state mutations using versioned idempotency keys.",
+        payload: { transactionId: "tx_loan_opt_4491", rollbackStatus: "COMMITTED_ROLLBACK", dataIntegrity: "100%" }
+      },
+      {
+        step: 4,
+        title: "Client-Side PGlite WASM Failover Routing",
+        node: "Client Edge WASM Tier",
+        action: "Divert practice query traffic to local in-memory PostgreSQL WebAssembly engine, reducing server pool pressure to 0.",
+        payload: { engine: "PGlite_v0.5_WASM", localQueryLatencyMs: 8, serverPoolRelief: "42%" }
+      },
+      {
+        step: 5,
+        title: "Incident Resolved & Verified Zero Data Loss",
+        node: "Better Auth & Status Gate",
+        action: "Verify 100% test suite pass rate across 41 regression cases; acknowledge incident resolution and update audit journal.",
+        payload: { incidentStatus: "RESOLVED", testsPassed: "41/41", auditLogId: "aud_inc_storm_resolved" }
+      }
+    ]
+  },
   {
     id: "scenario-muhurat-calendar",
     title: "Autonomous Calendar Scheduling & Conflict Detection",

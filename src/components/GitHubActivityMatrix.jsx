@@ -16,6 +16,13 @@ const GITHUB_STATS = {
   ],
   repos: [
     {
+      name: "Road-To-Senior-dev-Simulator",
+      desc: "Full-Stack Senior Dev Practice Simulator: 65 scenarios, 8 evolving incidents, PGlite WASM, and AI interviews.",
+      stars: "58",
+      lang: "TypeScript",
+      link: "https://github.com/Mr-Elegant/Road-To-Senior-dev-Simulator",
+    },
+    {
       name: "Muhurat-AI",
       desc: "Autonomous calendar agent with Gemini 3.6 Flash, Mastra AI, Descope Outbound OAuth Vault, and MCP Server.",
       stars: "42",

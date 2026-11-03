@@ -100,15 +100,16 @@ const HUDCommandPalette = ({ isOpen, onClose, onResumeClick, onToggleTheme }) =>
       responseLog = {
         type: "system",
         text: `[SYSTEM TELEMETRY DIAGNOSTICS]:
+  • PGlite WASM & Worker Sandbox: [ISOLATED] Sub-15ms In-Memory SQL Execution
   • Descope Outbound OAuth Vault: [SECURE]  AES-256 Encrypted Token Bus
-  • Gemini 3.6 Flash Agent Core : [ONLINE]  Mastra Working Memory Sync
+  • Gemini 3.6 & 2.0 Agent Core : [ONLINE]  Mastra Working Memory Sync
   • AWS EC2 Nginx Ingress       : [ONLINE]  Latency: 14ms (p99)
   • Node.js PM2 Process Cluster : [ONLINE]  Workers: 4 CPU cores
   • Redis Pub/Sub Message Bus   : [ONLINE]  Memory: 24.8MB / 0% drops
   • PostgreSQL (Neon Serverless): [HEALTHY] ACID Thread Cascades
   • Model Context Protocol (MCP): [MOUNTED] POST /mcp Active
   -------------------------------------------------------------
-  OVERALL STATUS: 100% OPERATIONAL | 0 FATAL ERRORS | 99.98% SLA`,
+  OVERALL STATUS: 100% OPERATIONAL | 0 FATAL ERRORS | 99.99% SLA`,
       };
     } else if (cmd === "sysinfo") {
       responseLog = {
@@ -116,7 +117,7 @@ const HUDCommandPalette = ({ isOpen, onClose, onResumeClick, onToggleTheme }) =>
         text: `[PREET_OS ENVIRONMENT SPECIFICATIONS]:
   • ARCHITECT: Preet Karwal (Full-Stack & AI Systems Engineer)
   • EXPERIENCE: 4+ Years Production Full-Stack & Agentic AI Architecture
-  • CORE TECH: React.js • Next.js 16 • Tailwind v4 • Google Gemini • Mastra AI • Descope Vault • Node.js • TypeScript • Redis • PostgreSQL • MongoDB • AWS EC2
+  • CORE TECH: React.js • Next.js 16 • TypeScript • PGlite (WASM) • Better Auth • Tailwind v4 • Google Gemini • Mastra AI • Descope Vault • Node.js • Redis • PostgreSQL • MongoDB • AWS EC2
   • LOCATION: Sonipat, Haryana, India (Remote Global Ready)`,
       };
     } else if (cmd === "sudo hire-preet" || cmd === "hire" || cmd === "contact") {

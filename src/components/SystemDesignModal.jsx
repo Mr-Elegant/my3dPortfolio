@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { architectureADRs } from "../constants";
 
-const SystemDesignModal = ({ initialSystemId = "muhurat-ai", onClose }) => {
+const SystemDesignModal = ({ initialSystemId = "interview-lab", onClose }) => {
   const [selectedId, setSelectedId] = useState(() => {
+    if (initialSystemId === "interview-lab" || initialSystemId === "interview-lab-topology" || initialSystemId === "interview-lab-adr") {
+      return "interview-lab-adr";
+    }
     if (initialSystemId === "muhurat-ai" || initialSystemId === "muhurat-ai-topology" || initialSystemId === "muhurat-calendar-adr") {
       return "muhurat-calendar-adr";
     }
