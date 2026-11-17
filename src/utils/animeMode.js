@@ -39,3 +39,21 @@ const subscribe = (l) => {
 };
 
 export const useAnimeMode = () => useSyncExternalStore(subscribe, getAnimeMode, () => true);
+
+/**
+ * Background dancer / video layer switch (DanceBackground.jsx). ON by default.
+ * Independent of Anime Mode, but only has a visible effect while it's on.
+ */
+const BG_KEY = "preet_anime_bg";
+
+export const getAnimeBg = () => {
+  if (typeof window === "undefined") return true;
+  return localStorage.getItem(BG_KEY) !== "0";
+};
+
+export const setAnimeBg = (on) => {
+  localStorage.setItem(BG_KEY, on ? "1" : "0");
+  listeners.forEach((l) => l());
+};
+
+export const useAnimeBg = () => useSyncExternalStore(subscribe, getAnimeBg, () => true);

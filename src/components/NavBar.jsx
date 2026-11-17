@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { navLinks } from "../constants";
 import { audioFX, useSoundMuted } from "../utils/audioFX";
-import { useAnimeMode, setAnimeMode } from "../utils/animeMode";
+import { useAnimeMode, setAnimeMode, useAnimeBg, setAnimeBg } from "../utils/animeMode";
 
 const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => {
   const animeOn = useAnimeMode();
+  const bgOn = useAnimeBg();
   const soundMuted = useSoundMuted();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -148,6 +149,23 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
             <span aria-hidden="true">{soundMuted ? "🔇" : "🔊"}</span>
           </button>
 
+          {/* Background video / dancer toggle (only meaningful in Anime Mode) */}
+          {animeOn && (
+            <button
+              onClick={() => setAnimeBg(!bgOn)}
+              aria-pressed={bgOn}
+              aria-label={bgOn ? "Turn background video off" : "Turn background video on"}
+              title={bgOn ? "Turn background video off" : "Turn background video on"}
+              className={`ani-nav-bg hidden md:flex items-center justify-center p-2 rounded-lg border text-xs transition-all cursor-pointer shadow-md ${
+                bgOn
+                  ? "bg-[#00ff88]/15 text-[#00ff88] border-[#00ff88]/40"
+                  : "bg-black-200/80 hover:bg-white/10 text-white-50 border-white-50/15"
+              }`}
+            >
+              <span aria-hidden="true" className={bgOn ? "" : "opacity-50 grayscale"}>🎬</span>
+            </button>
+          )}
+
           {/* HUD Command Terminal Trigger Button (Desktop & Tablet) */}
           <button
             onClick={onOpenCLI}
@@ -249,6 +267,16 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
             >
               <span>{soundMuted ? "🔇 Sound: OFF" : "🔊 Sound: ON"}</span>
             </button>
+
+            {animeOn && (
+              <button
+                onClick={() => setAnimeBg(!bgOn)}
+                aria-pressed={bgOn}
+                className="hidden md:flex w-full py-2.5 px-4 text-center rounded-lg bg-black-200 text-white font-mono text-sm transition-colors cursor-pointer border border-white-50/10 items-center justify-center gap-2"
+              >
+                <span>{bgOn ? "🎬 Background Video: ON" : "🎬 Background Video: OFF"}</span>
+              </button>
+            )}
 
             <button
               onClick={() => {

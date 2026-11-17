@@ -9,6 +9,7 @@ import FeatureCards from "./sections/FeatureCards";
 import SystemStandards from "./sections/SystemStandards";
 import AnimeLab from "./sections/AnimeLab";
 import AnimeLayer from "./components/anime/AnimeLayer";
+import DanceBackground from "./components/anime/DanceBackground";
 import Navbar from "./components/NavBar";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
 import AgenticSandbox from "./components/AgenticSandbox";
@@ -66,6 +67,9 @@ const App = () => {
 
       {/* Site-wide anime interactions (press squash, impact FX, speed lines) */}
       <AnimeLayer />
+
+      {/* Looping transparent dance video behind all content (Anime Mode only) */}
+      <DanceBackground />
 
       {/* Cinematic Terminal Boot Sequence on First Visit */}
       {isBooting && <BootLoader onComplete={() => setIsBooting(false)} />}

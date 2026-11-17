@@ -1496,6 +1496,186 @@ html[data-anime="on"] ::-webkit-scrollbar-thumb {
   mask-composite: intersect;
 }
 
+/* ---------- Background dance video (DanceBackground.jsx) ---------- */
+/* z-index:-1 keeps it under all page content. Both <html> and <body> carry a
+   background, so body must be its own stacking context; otherwise body's
+   background paints over negative-z layers. */
+html[data-anime="on"] body {
+  isolation: isolate;
+}
+.ani-dance-bg {
+  --ani-dance-opacity: 0.22;
+  position: fixed;
+  right: -1vw;
+  bottom: 0;
+  height: min(78vh, 760px);
+  width: auto;
+  max-width: 45vw;
+  object-fit: contain;
+  object-position: bottom right;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.ani-dance-bg[data-ready="true"] {
+  opacity: var(--ani-dance-opacity);
+}
+html[data-theme="light"] .ani-dance-bg {
+  --ani-dance-opacity: 0.16;
+}
+
+/* Full-screen scene clip (no transparency): dimmed, edges faded into the page */
+.ani-scene-bg {
+  --ani-scene-opacity: 0.28;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+  -webkit-mask-image: radial-gradient(ellipse at 60% 50%, #000 35%, transparent 85%);
+  mask-image: radial-gradient(ellipse at 60% 50%, #000 35%, transparent 85%);
+}
+.ani-scene-bg[data-ready="true"] {
+  opacity: var(--ani-scene-opacity);
+}
+html[data-theme="light"] .ani-scene-bg {
+  --ani-scene-opacity: 0.18;
+}
+
+/* ---------- Kōdo mascot (AnimeMascot.jsx), the default dancer ---------- */
+.ani-mascot {
+  --beat: 0.48s;
+  --ani-mascot-opacity: 0.5;
+  position: fixed;
+  right: 1.5vw;
+  bottom: 0;
+  height: min(56vh, 520px);
+  width: auto;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--ani-mascot-opacity);
+  overflow: visible;
+}
+html[data-theme="light"] .ani-mascot {
+  --ani-mascot-opacity: 0.42;
+}
+/* Pivot conventions: wrapped parts rotate around their local (0,0);
+   self-contained parts use their own box. */
+.ani-mascot .m-arm,
+.ani-mascot .m-leg,
+.ani-mascot .m-head {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.ani-mascot .m-hop,
+.ani-mascot .m-shadow,
+.ani-mascot .m-eyes,
+.ani-mascot .m-hair,
+.ani-mascot .m-note {
+  transform-box: fill-box;
+}
+
+.ani-mascot .m-hop {
+  transform-origin: 50% 100%;
+  animation: mc-hop var(--beat) cubic-bezier(0.3, 0, 0.3, 1) infinite;
+}
+.ani-mascot .m-shadow {
+  transform-origin: 50% 50%;
+  animation: mc-shadow var(--beat) cubic-bezier(0.3, 0, 0.3, 1) infinite;
+}
+.ani-mascot .m-head {
+  animation: mc-tilt calc(var(--beat) * 2) ease-in-out infinite;
+}
+.ani-mascot .m-hair {
+  transform-origin: 50% 100%;
+  animation: mc-sway calc(var(--beat) * 2) ease-in-out infinite;
+  animation-delay: calc(var(--beat) * -0.25);
+}
+.ani-mascot .m-tips {
+  animation: mc-glow calc(var(--beat) * 2) ease-in-out infinite;
+}
+.ani-mascot .m-arm-l {
+  animation: mc-arm-l calc(var(--beat) * 2) ease-in-out infinite;
+}
+.ani-mascot .m-arm-r {
+  animation: mc-arm-r calc(var(--beat) * 2) ease-in-out infinite;
+}
+.ani-mascot .m-leg-l {
+  animation: mc-leg-l calc(var(--beat) * 2) ease-in-out infinite;
+}
+.ani-mascot .m-leg-r {
+  animation: mc-leg-r calc(var(--beat) * 2) ease-in-out infinite;
+}
+.ani-mascot .m-eyes {
+  transform-origin: 50% 50%;
+  animation: mc-blink 4.2s linear infinite;
+}
+.ani-mascot .m-note {
+  transform-origin: 50% 50%;
+  opacity: 0;
+  animation: mc-note 3s ease-out infinite;
+}
+.ani-mascot .m-note:nth-child(2) { animation-delay: -1s; }
+.ani-mascot .m-note:nth-child(3) { animation-delay: -2s; }
+
+@keyframes mc-hop {
+  0%, 100% { transform: translateY(0) scale(1.05, 0.95); }
+  50% { transform: translateY(-18px) scale(0.97, 1.04); }
+}
+@keyframes mc-shadow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.72); opacity: 0.55; }
+}
+@keyframes mc-tilt {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+@keyframes mc-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes mc-glow {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+/* Arm at rest points down (0deg); ~120deg is raised up-and-out, wide enough
+   that the hand clears the big chibi head. */
+@keyframes mc-arm-l {
+  0%, 100% { transform: rotate(122deg); }
+  50% { transform: rotate(28deg); }
+}
+@keyframes mc-arm-r {
+  0%, 100% { transform: rotate(-28deg); }
+  50% { transform: rotate(-122deg); }
+}
+@keyframes mc-leg-l {
+  0%, 100% { transform: rotate(-9deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes mc-leg-r {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(9deg); }
+}
+@keyframes mc-blink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+@keyframes mc-note {
+  0% { transform: translate(0, 10px) scale(0.6); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate(14px, -70px) scale(1.1) rotate(15deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ani-mascot * { animation: none !important; }
+}
+
 /* ---------- Section headings (TitleHeader) ---------- */
 html[data-anime="on"] .ani-title-wrap {
   position: relative;
@@ -1708,12 +1888,14 @@ html[data-anime="on"] .ani-nav-toggle {
   font-style: italic;
 }
 
-html[data-anime="on"] .ani-nav-sound {
+html[data-anime="on"] .ani-nav-sound,
+html[data-anime="on"] .ani-nav-bg {
   border-radius: 3px !important;
   border: 2px solid var(--ani-line) !important;
   box-shadow: 3px 3px 0 var(--ani-accent) !important;
 }
-html[data-anime="on"] .ani-nav-sound[aria-pressed="true"] {
+html[data-anime="on"] .ani-nav-sound[aria-pressed="true"],
+html[data-anime="on"] .ani-nav-bg[aria-pressed="true"] {
   background: var(--ani-accent) !important;
   border-color: var(--ani-ink) !important;
   box-shadow: 3px 3px 0 var(--ani-line) !important;
