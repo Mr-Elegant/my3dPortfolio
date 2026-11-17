@@ -1,8 +1,10 @@
 // Web Audio API Synthesizer for Zero-Asset Sci-Fi Sound Effects
+import { useSyncExternalStore } from "react";
 
 class AudioFXEngine {
   constructor() {
     this.ctx = null;
+    this.listeners = new Set();
     this.isMuted = typeof window !== "undefined"
       ? localStorage.getItem("preet_portfolio_sound_enabled") !== "true"
       : true;
@@ -20,15 +22,20 @@ class AudioFXEngine {
     }
   }
 
-  getMuted() {
-    return this.isMuted;
-  }
+  getMuted = () => this.isMuted;
+
+  // Lets every sound toggle on the page (navbar, telemetry bar) stay in sync.
+  subscribe = (listener) => {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  };
 
   toggleMute() {
     this.isMuted = !this.isMuted;
     if (typeof window !== "undefined") {
       localStorage.setItem("preet_portfolio_sound_enabled", (!this.isMuted).toString());
     }
+    this.listeners.forEach((l) => l());
     if (!this.isMuted) {
       this.init();
       this.playSuccess();
@@ -36,9 +43,47 @@ class AudioFXEngine {
     return this.isMuted;
   }
 
+  // ---- Optional file-based click sample (used by Anime Mode) ----
+  // While a sample is set and loaded, playClick() plays it instead of the
+  // synthesized click. A missing/broken file silently falls back to synth.
+  setClickSample(url) {
+    if (typeof Audio === "undefined" || this.clickSample?.dataset?.src === url) return;
+    const audio = new Audio(url);
+    audio.preload = "auto";
+    audio.dataset.src = url;
+    this.clickSampleOk = false;
+    audio.addEventListener("canplaythrough", () => (this.clickSampleOk = true), { once: true });
+    audio.addEventListener("error", () => {
+      this.clickSampleOk = false;
+      console.warn(`AudioFX: click sample not found at ${url}; using synth click.`);
+    });
+    this.clickSample = audio;
+  }
+
+  clearClickSample() {
+    this.clickSample = null;
+    this.clickSampleOk = false;
+  }
+
+  playClickSample() {
+    const now = performance.now();
+    // Many components call playClick and the global layer may too; play once per click.
+    if (now - (this.lastSampleAt || 0) < 120) return;
+    this.lastSampleAt = now;
+    const voice = this.clickSample.cloneNode(); // clone → overlapping rapid clicks
+    voice.volume = 0.55;
+    voice.preservesPitch = false;
+    voice.playbackRate = 0.95 + Math.random() * 0.1; // tiny pitch variation
+    voice.play().catch(() => {});
+  }
+
   // Micro mechanical keystroke click
   playClick() {
     if (this.isMuted) return;
+    if (this.clickSample && this.clickSampleOk) {
+      this.playClickSample();
+      return;
+    }
     this.init();
     if (!this.ctx) return;
 
@@ -149,3 +194,7 @@ class AudioFXEngine {
 }
 
 export const audioFX = new AudioFXEngine();
+
+/** React hook: current muted state, re-renders when any toggle changes it. */
+export const useSoundMuted = () =>
+  useSyncExternalStore(audioFX.subscribe, audioFX.getMuted, () => true);

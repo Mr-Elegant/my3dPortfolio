@@ -1,15 +1,16 @@
 const GlowingBorderCard = ({ children }) => {
   return (
     // 1. Outer Container: `p-[2px]` acts as the border thickness. `overflow-hidden` clips the spinning background.
-    <div className="relative overflow-hidden rounded-2xl p-[2px] group hover:scale-[1.02] transition-transform duration-300">
-      
-      {/* 2. The Running Line: A large spinning conic gradient. 
-             It fades from transparent -> Theme Cyan -> Theme Purple -> transparent to look like a shooting star/line. 
+    //    `ani-card*` hooks let Anime Mode restyle this as a manga panel (see index.css).
+    <div className="ani-card relative overflow-hidden rounded-2xl p-[2px] group hover:scale-[1.02] transition-transform duration-300">
+
+      {/* 2. The Running Line: A large spinning conic gradient.
+             It fades from transparent -> Theme Cyan -> Theme Purple -> transparent to look like a shooting star/line.
              `animate-[spin_4s_linear_infinite]` controls the speed. */}
-      <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#4cc9f0_30%,#7209b7_60%,transparent_100%)]" />
-      
+      <div className="ani-card__spin absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#4cc9f0_30%,#7209b7_60%,transparent_100%)]" />
+
       {/* 3. The Inner Card: Solid background that covers the middle of the gradient */}
-      <div className="relative h-full w-full rounded-xl bg-black-100 glowing-card-inner p-6 z-10">
+      <div className="ani-card__inner relative h-full w-full rounded-xl bg-black-100 glowing-card-inner p-6 z-10">
         {children}
       </div>
     </div>

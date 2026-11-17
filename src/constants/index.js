@@ -12,6 +12,10 @@ const navLinks = [
     link: "#sandbox",
   },
   {
+    name: "Anime Lab",
+    link: "#anime-lab",
+  },
+  {
     name: "Experience",
     link: "#experience",
   },

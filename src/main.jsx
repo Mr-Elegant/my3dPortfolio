@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client'
 
 import './index.css'
 import App from './App.jsx'
+import { applyAnimeMode } from './utils/animeMode'
+
+// Apply the anime skin before first paint to avoid a style flash.
+applyAnimeMode()
 
 // Register Service Worker for PWA Offline Performance
 if ('serviceWorker' in navigator && import.meta.env.PROD) {

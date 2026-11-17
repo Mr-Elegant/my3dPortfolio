@@ -23,7 +23,7 @@ const SystemStandards = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-3xl">{standard.icon}</span>
                       <span
-                        className="text-[11px] font-mono font-bold px-3 py-1 rounded-full border"
+                        className="neon-ink text-[11px] font-mono font-bold px-3 py-1 rounded-full border"
                         style={{
                           backgroundColor: `${standard.color}15`,
                           borderColor: `${standard.color}40`,

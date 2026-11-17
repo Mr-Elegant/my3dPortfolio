@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Bangers&family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -655,6 +655,9 @@ html[data-theme="light"] #hero img[alt="background"] {
 
 /* Surfaces & Containers */
 html[data-theme="light"] .bg-black-100,
+html[data-theme="light"] .bg-black-100\/60,
+html[data-theme="light"] .bg-black-100\/70,
+html[data-theme="light"] .bg-black-100\/80,
 html[data-theme="light"] .bg-black-100\/90,
 html[data-theme="light"] .bg-black-100\/95,
 html[data-theme="light"] .bg-\[\#090c12\],
@@ -761,6 +764,13 @@ html[data-theme="light"] .text-\[\#7209b7\],
 html[data-theme="light"] .text-\[\#9d4edd\],
 html[data-theme="light"] .text-\[\#f72585\] {
   color: #7e22ce !important;
+}
+
+/* Neon accents set via inline style (data-driven colours) can't be remapped
+   by class, so darken them in place to stay readable on white. */
+html[data-theme="light"] .neon-ink {
+  filter: brightness(0.55) saturate(1.6);
+  text-shadow: none !important;
 }
 
 /* Badges & Pills */
@@ -1109,6 +1119,617 @@ input, textarea {
 :focus-visible {
   outline: 2px solid #00f0ff;
   outline-offset: 3px;
+}
+
+/* ==========================================================================
+   ANIME LAB: anime-style micro-interactions
+   Every colour is an overridable --ani-* variable (also read by animeFX.js).
+   ========================================================================== */
+:root {
+  --ani-ink: #060709;
+  --ani-paper: #ffffff;
+  --ani-accent: #00f0ff;
+  --ani-hot: #ff2e63;
+  --ani-gold: #ffd23f;
+  --ani-panel-bg: #0c0e13;
+  --ani-line: #e9f2ff;
+  --ani-dot: rgba(255, 255, 255, 0.06);
+
+  /* Card panel shadows & texture (re-tuned for light theme below) */
+  --ani-shadow: var(--ani-accent);
+  --ani-shadow-2: var(--ani-hot);
+  --ani-shadow-hover: var(--ani-hot);
+  --ani-card-dot: var(--ani-dot);
+
+  /* Anime typography */
+  --ani-font-display: "Dela Gothic One", "Mona Sans", sans-serif; /* title cards */
+  --ani-font-sfx: "Bangers", "Impact", sans-serif; /* manga SFX / action text */
+  --ani-font-body: "M PLUS Rounded 1c", "Mona Sans", sans-serif; /* soft rounded UI text */
+}
+
+/* Light theme = classic manga: white paper, black ink. */
+html[data-theme="light"] {
+  --ani-panel-bg: #ffffff;
+  --ani-line: #060709;
+  --ani-dot: rgba(0, 0, 0, 0.08);
+  /* Neon cyan shadows wash out on white; classic manga uses solid ink. */
+  --ani-shadow: var(--ani-ink);
+  --ani-shadow-2: var(--ani-ink);
+  --ani-shadow-hover: var(--ani-hot);
+  /* Keep halftone off the reading surface so body text stays crisp. */
+  --ani-card-dot: transparent;
+}
+
+.ani-lab {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Focus-line burst behind the heading */
+.ani-lab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-conic-gradient(from 0deg at 50% 70px, var(--ani-dot) 0 1.2deg, transparent 1.2deg 5deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 70px, transparent 60px, #000 140px, transparent 520px);
+  mask-image: radial-gradient(circle at 50% 70px, transparent 60px, #000 140px, transparent 520px);
+}
+
+.ani-squash {
+  transform: scale(var(--sx, 1), var(--sy, 1)) rotate(calc(var(--r, 0) * 1deg));
+  will-change: transform;
+}
+
+/* ---------- Manga panel grid ---------- */
+.ani-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .ani-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      "a a a a b b"
+      "c c d d d d"
+      "e e d d d d";
+  }
+  .ani-grid__a { grid-area: a; }
+  .ani-grid__b { grid-area: b; }
+  .ani-grid__c { grid-area: c; }
+  .ani-grid__d { grid-area: d; }
+  .ani-grid__e { grid-area: e; }
+}
+
+.ani-panel {
+  --panel-shadow: var(--ani-accent);
+  position: relative;
+  padding: 1.5rem;
+  color: var(--ani-line);
+  background:
+    radial-gradient(var(--ani-dot) 1.2px, transparent 1.6px) 0 0 / 9px 9px,
+    var(--ani-panel-bg);
+  border: 3px solid var(--ani-line);
+  box-shadow: 7px 7px 0 var(--panel-shadow);
+}
+.ani-grid__a { transform: rotate(-0.6deg); }
+.ani-grid__b { transform: rotate(0.8deg); --panel-shadow: var(--ani-hot); }
+.ani-grid__c { transform: rotate(-0.8deg); --panel-shadow: var(--ani-gold); }
+.ani-grid__d { transform: rotate(0.4deg); }
+.ani-grid__e { transform: rotate(0.6deg); --panel-shadow: var(--ani-hot); }
+
+.ani-panel__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.ani-panel__kicker {
+  padding: 0.15rem 0.5rem;
+  font: 400 0.85rem/1.2 var(--ani-font-sfx);
+  letter-spacing: 0.08em;
+  color: var(--ani-panel-bg);
+  background: var(--ani-line);
+  transform: skewX(-12deg);
+}
+.ani-panel__title {
+  font: 400 1.15rem/1.2 var(--ani-font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.ani-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ---------- Buttons ---------- */
+.ani-btn {
+  --btn-bg: var(--ani-accent);
+  padding: 0.7rem 1.4rem;
+  font: 400 1.25rem/1 var(--ani-font-sfx);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ani-ink);
+  background: var(--btn-bg);
+  border: 3px solid var(--ani-ink);
+  outline: 3px solid var(--ani-line);
+  box-shadow: 5px 5px 0 3px var(--ani-line);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: box-shadow 0.12s ease;
+}
+.ani-btn:hover { box-shadow: 7px 7px 0 3px var(--ani-line); }
+.ani-btn:active { box-shadow: 2px 2px 0 3px var(--ani-line); }
+.ani-btn:focus-visible { outline-color: var(--ani-gold); outline-offset: 0; }
+.ani-btn--hot { --btn-bg: var(--ani-hot); color: var(--ani-paper); }
+.ani-btn--gold { --btn-bg: var(--ani-gold); }
+.ani-btn--ghost { --btn-bg: var(--ani-panel-bg); color: var(--ani-line); }
+
+/* ---------- Toggle ---------- */
+.ani-toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+.ani-toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 64px;
+  height: 34px;
+  padding: 0 2px;
+  border: 3px solid var(--ani-line);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.ani-toggle[data-on="true"] { background: var(--ani-accent); }
+.ani-toggle__knob {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ani-line);
+  border: 3px solid var(--ani-ink);
+  transform: translateX(calc(var(--k, 0) * 30px)) scale(var(--sx, 1), var(--sy, 1));
+  will-change: transform;
+}
+
+/* ---------- Power-level slider ---------- */
+.ani-readout {
+  font: 400 2rem/1 var(--ani-font-sfx);
+  color: var(--ani-accent);
+  font-variant-numeric: tabular-nums;
+}
+.ani-readout[data-max="true"] { color: var(--ani-hot); }
+.ani-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 30px;
+  background: transparent;
+  cursor: pointer;
+}
+.ani-range::-webkit-slider-runnable-track {
+  height: 12px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px var(--ani-line);
+  background: linear-gradient(90deg, var(--ani-accent) var(--fill), transparent var(--fill));
+}
+.ani-range::-moz-range-track {
+  height: 12px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px var(--ani-line);
+  background: transparent;
+}
+.ani-range::-moz-range-progress {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--ani-accent);
+}
+.ani-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--ani-paper);
+  border: 3px solid var(--ani-ink);
+  box-shadow: 0 0 0 3px var(--ani-line);
+  transform: scale(var(--sx, 1), var(--sy, 1));
+}
+.ani-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ani-paper);
+  border: 3px solid var(--ani-ink);
+  box-shadow: 0 0 0 3px var(--ani-line);
+  transform: scale(var(--sx, 1), var(--sy, 1));
+}
+
+/* ---------- Tabs ---------- */
+.ani-tabs__list {
+  position: relative;
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 3px solid var(--ani-line);
+  margin-bottom: 1.25rem;
+}
+.ani-tabs__tab {
+  padding: 0.55rem 1rem;
+  font: 400 1.15rem/1 var(--ani-font-sfx);
+  text-transform: uppercase;
+  color: var(--ani-line);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.ani-tabs__tab[aria-selected="true"],
+.ani-tabs__tab:hover { opacity: 1; }
+.ani-tabs__ink {
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 7px;
+  width: calc(var(--iw, 0) * 1px);
+  background: var(--ani-hot);
+  border: 2px solid var(--ani-ink);
+  transform: translateX(calc(var(--ix, 0) * 1px)) skewX(-20deg);
+  pointer-events: none;
+}
+.ani-tabs__panel { min-height: 7rem; overflow: hidden; }
+.ani-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 2px solid var(--ani-line);
+  box-shadow: 3px 3px 0 var(--ani-accent);
+  background: var(--ani-panel-bg);
+}
+
+@keyframes ani-smear-in {
+  0% {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 70px)) skewX(calc(var(--dir, 1) * -28deg)) scaleX(1.35);
+    filter: blur(6px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(calc(var(--dir, 1) * -8px)) skewX(calc(var(--dir, 1) * 5deg)) scaleX(0.97);
+    filter: blur(0);
+  }
+  100% { transform: none; }
+}
+.ani-smear-in { animation: ani-smear-in 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+
+/* ---------- Heart ---------- */
+.ani-heart {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
+  border: 3px solid var(--ani-line);
+  border-radius: 999px;
+  color: var(--ani-line);
+  font: 400 1.2rem/1 var(--ani-font-sfx);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.ani-heart__icon {
+  display: inline-flex;
+  transform: scale(var(--s, 1)) rotate(calc(var(--r, 0) * 1deg));
+  will-change: transform;
+}
+.ani-heart__icon path {
+  fill: transparent;
+  stroke: var(--ani-line);
+  stroke-width: 2.2;
+  transition: fill 0.15s ease;
+}
+.ani-heart[data-liked="true"] .ani-heart__icon path {
+  fill: var(--ani-hot);
+  stroke: var(--ani-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ani-smear-in { animation: none; }
+}
+
+/* ==========================================================================
+   ANIME MODE: site-wide manga skin
+   Active when <html data-anime="on"> (toggle in the navbar; on by default).
+   Placed last + !important where needed so it beats the light-theme overrides.
+   ========================================================================== */
+
+/* ---------- Page texture & basics ---------- */
+html[data-anime="on"] body {
+  background-image: radial-gradient(var(--ani-dot) 1px, transparent 1.4px);
+  background-size: 8px 8px;
+}
+html[data-anime="on"] ::selection {
+  background: var(--ani-hot);
+  color: #fff;
+}
+html[data-anime="on"] :focus-visible {
+  outline: 3px solid var(--ani-gold);
+  outline-offset: 3px;
+}
+html[data-anime="on"] ::-webkit-scrollbar-thumb {
+  background: var(--ani-hot);
+  border: 2px solid var(--ani-ink);
+  border-radius: 0;
+}
+
+/* ---------- Speed lines (opacity driven by scroll velocity in AnimeLayer) ---------- */
+.ani-speedlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 13px,
+    var(--ani-line) 13px 14px,
+    transparent 14px 31px,
+    var(--ani-line) 31px 33px,
+    transparent 33px 47px,
+    var(--ani-line) 47px 48px,
+    transparent 48px 71px
+  );
+  -webkit-mask-image:
+    linear-gradient(90deg, #000 0, transparent 22%, transparent 78%, #000 100%),
+    linear-gradient(180deg, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, #000 0, transparent 22%, transparent 78%, #000 100%),
+    linear-gradient(180deg, transparent, #000 15%, #000 85%, transparent);
+  mask-composite: intersect;
+}
+
+/* ---------- Section headings (TitleHeader) ---------- */
+html[data-anime="on"] .ani-title-wrap {
+  position: relative;
+  isolation: isolate;
+}
+/* Focus-line burst behind every section title */
+html[data-anime="on"] .ani-title-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -80px -30%;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-conic-gradient(from 0deg at 50% 60%, var(--ani-dot) 0 1.2deg, transparent 1.2deg 5deg);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 60%, transparent 15%, #000 35%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 50% 60%, transparent 15%, #000 35%, transparent 70%);
+}
+html[data-anime="on"] .ani-title {
+  font-family: var(--ani-font-display);
+  font-weight: 400; /* Dela Gothic is already ultra-heavy; avoid faux-bold */
+  font-synthesis: none;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  text-shadow: 3px 3px 0 var(--ani-hot);
+}
+html[data-anime="on"] .ani-title-badge {
+  border-radius: 0 !important;
+  transform: skewX(-12deg);
+  background: var(--ani-line) !important;
+  color: var(--ani-panel-bg) !important;
+  border: 2px solid var(--ani-ink) !important;
+  box-shadow: 4px 4px 0 var(--ani-hot) !important;
+  font-family: var(--ani-font-sfx) !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.06em;
+}
+html[data-anime="on"] .ani-title-badge > * {
+  transform: skewX(12deg);
+  font-weight: 400 !important;
+}
+
+/* ---------- Typography ---------- */
+/* Body copy → soft rounded anime-UI face (Tailwind v4 `font-sans` reads this var). */
+html[data-anime="on"] {
+  --font-sans: var(--ani-font-body);
+}
+html[data-anime="on"] body {
+  font-family: var(--ani-font-body);
+}
+/* Card / sub-section titles → title-card display face */
+html[data-anime="on"] section h3,
+html[data-anime="on"] .app-showcase h2 {
+  font-family: var(--ani-font-display);
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: 0.01em;
+}
+/* Action text → manga SFX lettering */
+html[data-anime="on"] .navbar nav.desktop li,
+html[data-anime="on"] .navbar .contact-btn .inner,
+html[data-anime="on"] .ani-nav-toggle,
+html[data-anime="on"] .cta-button .text {
+  font-family: var(--ani-font-sfx) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em;
+}
+html[data-anime="on"] .navbar nav.desktop li {
+  font-size: 1.05rem;
+}
+html[data-anime="on"] .cta-button .text {
+  font-size: 1.05rem;
+}
+html[data-anime="on"] .navbar .logo span {
+  font-family: var(--ani-font-display);
+  font-weight: 400;
+}
+/* Code / terminal / HUD readouts keep JetBrains Mono on purpose. */
+
+/* ---------- Hero ---------- */
+html[data-anime="on"] #hero h1 {
+  font-family: var(--ani-font-sfx);
+  font-weight: 400;
+  letter-spacing: 0.035em;
+  text-shadow: 3px 3px 0 var(--ani-hot);
+}
+/* The rotating gradient words use transparent text; a shadow would bleed through. */
+html[data-anime="on"] #hero h1 .bg-clip-text {
+  text-shadow: none;
+}
+
+/* ---------- Cards → manga panels ---------- */
+html[data-anime="on"] .ani-card__spin {
+  display: none;
+}
+html[data-anime="on"] .ani-card {
+  padding: 0 !important;
+  border-radius: 4px !important;
+  border: 3px solid var(--ani-line);
+  box-shadow: 6px 6px 0 var(--ani-shadow);
+  transition: transform 0.3s, box-shadow 0.15s ease;
+}
+html[data-anime="on"] .ani-card:hover {
+  box-shadow: 9px 9px 0 var(--ani-shadow-hover);
+}
+html[data-anime="on"] .ani-card__inner {
+  border-radius: 0 !important;
+  background:
+    radial-gradient(var(--ani-card-dot) 1.2px, transparent 1.6px) 0 0 / 9px 9px,
+    var(--ani-panel-bg) !important;
+  box-shadow: none !important;
+}
+
+/* Experience / testimonial cards */
+html[data-anime="on"] .card-border {
+  border: 3px solid var(--ani-line) !important;
+  border-radius: 4px !important;
+  box-shadow: 6px 6px 0 var(--ani-shadow-2);
+}
+
+/* Any other top-level rounded, bordered container inside a section
+   (project showcases use rounded-3xl, most other panels rounded-2xl). */
+html[data-anime="on"] section :is([class*="rounded-2xl"], [class*="rounded-3xl"])[class*="border"]:not(.ani-card):not(img):not([class*="rounded-2xl"] *):not([class*="rounded-3xl"] *) {
+  border-radius: 6px !important;
+  border-width: 2px !important;
+  border-color: var(--ani-line) !important;
+  box-shadow: 5px 5px 0 var(--ani-shadow) !important;
+  transition: box-shadow 0.15s ease, transform 0.3s ease;
+}
+html[data-anime="on"] section :is([class*="rounded-2xl"], [class*="rounded-3xl"])[class*="border"]:not(.ani-card):not(img):not([class*="rounded-2xl"] *):not([class*="rounded-3xl"] *):hover {
+  box-shadow: 7px 7px 0 var(--ani-shadow-hover) !important;
+}
+
+/* Inline link buttons inside cards ("Visit Live Site", "GitHub ↗"):
+   without an outline, white buttons vanish into white light-mode panels. */
+html[data-anime="on"] section a[class*="rounded-xl"][class*="bg-white"] {
+  border: 2px solid var(--ani-line) !important;
+  border-radius: 4px !important;
+  box-shadow: 3px 3px 0 var(--ani-shadow-hover);
+  transition: box-shadow 0.12s ease, background-color 0.2s;
+}
+html[data-anime="on"] section a[class*="rounded-xl"][class*="bg-white"]:hover {
+  box-shadow: 5px 5px 0 var(--ani-shadow-hover);
+}
+
+/* ---------- Light theme tuning for the Anime Lab ---------- */
+html[data-theme="light"] .ani-grid__a,
+html[data-theme="light"] .ani-grid__d {
+  --panel-shadow: var(--ani-ink);
+}
+html[data-theme="light"] .ani-grid__c {
+  --panel-shadow: var(--ani-hot);
+}
+html[data-theme="light"] .ani-panel {
+  background: var(--ani-panel-bg);
+}
+html[data-theme="light"] .ani-chip {
+  box-shadow: 3px 3px 0 var(--ani-ink);
+}
+html[data-theme="light"] .ani-readout {
+  color: #0284c7;
+}
+html[data-theme="light"] .ani-readout[data-max="true"] {
+  color: var(--ani-hot);
+}
+
+/* ---------- CTA buttons (Button.jsx) ---------- */
+html[data-anime="on"] .cta-button {
+  border-radius: 4px !important;
+  border: 3px solid var(--ani-ink) !important;
+  outline: 3px solid var(--ani-line);
+  box-shadow: 5px 5px 0 3px var(--ani-hot) !important;
+  transform: skewX(-6deg);
+  transition: box-shadow 0.12s ease;
+}
+html[data-anime="on"] .cta-button:hover {
+  box-shadow: 7px 7px 0 3px var(--ani-hot) !important;
+}
+html[data-anime="on"] .cta-button .text {
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Navbar ---------- */
+html[data-anime="on"] .navbar.scrolled,
+html[data-anime="on"] .navbar.not-scrolled {
+  border-bottom: 3px solid var(--ani-line) !important;
+}
+html[data-anime="on"] .navbar nav.desktop .underline {
+  height: 5px;
+  bottom: -6px;
+  background: var(--ani-hot);
+  transform: skewX(-20deg);
+}
+html[data-anime="on"] .navbar .contact-btn .inner {
+  border-radius: 3px;
+  border: 2px solid var(--ani-ink);
+  box-shadow: 3px 3px 0 var(--ani-hot);
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+html[data-anime="on"] .ani-nav-toggle {
+  border-radius: 3px !important;
+  background: var(--ani-gold) !important;
+  color: var(--ani-ink) !important;
+  border: 2px solid var(--ani-ink) !important;
+  box-shadow: 3px 3px 0 var(--ani-line) !important;
+  font-style: italic;
+}
+
+html[data-anime="on"] .ani-nav-sound {
+  border-radius: 3px !important;
+  border: 2px solid var(--ani-line) !important;
+  box-shadow: 3px 3px 0 var(--ani-accent) !important;
+}
+html[data-anime="on"] .ani-nav-sound[aria-pressed="true"] {
+  background: var(--ani-accent) !important;
+  border-color: var(--ani-ink) !important;
+  box-shadow: 3px 3px 0 var(--ani-line) !important;
+}
+
+/* ---------- Form fields (Contact etc.) ---------- */
+html[data-anime="on"] section input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+html[data-anime="on"] section textarea {
+  border-radius: 4px !important;
+  border: 2px solid var(--ani-line) !important;
+  transition: box-shadow 0.12s ease;
+}
+html[data-anime="on"] section input:not([type="range"]):focus,
+html[data-anime="on"] section textarea:focus {
+  outline: none;
+  box-shadow: 4px 4px 0 var(--ani-accent) !important;
 }
 
 

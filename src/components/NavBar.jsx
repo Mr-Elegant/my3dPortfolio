@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { navLinks } from "../constants";
-import { audioFX } from "../utils/audioFX";
+import { audioFX, useSoundMuted } from "../utils/audioFX";
+import { useAnimeMode, setAnimeMode } from "../utils/animeMode";
 
 const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => {
+  const animeOn = useAnimeMode();
+  const soundMuted = useSoundMuted();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -116,6 +119,35 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
             </button>
           )}
 
+          {/* Anime Mode Toggle (manga skin + impact FX across the whole site) */}
+          <button
+            onClick={() => {
+              audioFX.playClick();
+              setAnimeMode(!animeOn);
+            }}
+            aria-pressed={animeOn}
+            className="ani-nav-toggle hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black-200/80 hover:bg-white/10 text-white-50 hover:text-white border border-white-50/15 text-xs font-bold transition-all cursor-pointer shadow-md"
+            title={animeOn ? "Turn Anime Mode off" : "Turn Anime Mode on"}
+          >
+            <span aria-hidden="true">{animeOn ? "💥" : "💤"}</span>
+            <span>ANIME</span>
+          </button>
+
+          {/* Sound Toggle (synced with the SFX button in the hero telemetry bar) */}
+          <button
+            onClick={() => audioFX.toggleMute()}
+            aria-pressed={!soundMuted}
+            aria-label={soundMuted ? "Turn sound on" : "Turn sound off"}
+            title={soundMuted ? "Turn sound on" : "Turn sound off"}
+            className={`ani-nav-sound hidden sm:flex items-center justify-center p-2 rounded-lg border text-xs transition-all cursor-pointer shadow-md ${
+              soundMuted
+                ? "bg-black-200/80 hover:bg-white/10 text-white-50 border-white-50/15"
+                : "bg-[#00ff88]/15 text-[#00ff88] border-[#00ff88]/40"
+            }`}
+          >
+            <span aria-hidden="true">{soundMuted ? "🔇" : "🔊"}</span>
+          </button>
+
           {/* HUD Command Terminal Trigger Button (Desktop & Tablet) */}
           <button
             onClick={onOpenCLI}
@@ -201,6 +233,22 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
                 <span>{theme === "light" ? "🌙 Switch to Dark Mode" : "☀️ Switch to Light Mode"}</span>
               </button>
             )}
+
+            <button
+              onClick={() => setAnimeMode(!animeOn)}
+              aria-pressed={animeOn}
+              className="ani-nav-toggle w-full py-2.5 px-4 text-center rounded-lg bg-black-200 text-white font-mono text-sm transition-colors cursor-pointer border border-white-50/10 flex items-center justify-center gap-2"
+            >
+              <span>{animeOn ? "💥 Anime Mode: ON" : "💤 Anime Mode: OFF"}</span>
+            </button>
+
+            <button
+              onClick={() => audioFX.toggleMute()}
+              aria-pressed={!soundMuted}
+              className="w-full py-2.5 px-4 text-center rounded-lg bg-black-200 text-white font-mono text-sm transition-colors cursor-pointer border border-white-50/10 flex items-center justify-center gap-2"
+            >
+              <span>{soundMuted ? "🔇 Sound: OFF" : "🔊 Sound: ON"}</span>
+            </button>
 
             <button
               onClick={() => {

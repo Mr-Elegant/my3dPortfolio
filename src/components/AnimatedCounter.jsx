@@ -94,7 +94,7 @@ const AnimatedCounter = () => {
                     className="w-1.5 h-1.5 rounded-full animate-ping"
                     style={{ backgroundColor: accent }}
                   />
-                  <span className="font-bold tracking-wider" style={{ color: accent }}>
+                  <span className="neon-ink font-bold tracking-wider" style={{ color: accent }}>
                     {item.tag || `METRIC_0${index + 1}`}
                   </span>
                 </div>
@@ -104,7 +104,7 @@ const AnimatedCounter = () => {
               {/* Counter Value */}
               <div className="flex items-baseline gap-1 my-1">
                 <div
-                  className="counter-number text-4xl sm:text-5xl font-black tracking-tight font-mono transition-transform duration-300 group-hover:scale-105"
+                  className="neon-ink counter-number text-4xl sm:text-5xl font-black tracking-tight font-mono transition-transform duration-300 group-hover:scale-105"
                   style={{
                     color: accent,
                     textShadow: `0 0 20px ${accent}60`,

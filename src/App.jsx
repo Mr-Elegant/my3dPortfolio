@@ -7,6 +7,8 @@ import ShowcaseSection from "./sections/ShowcaseSection";
 import TechShowcase from "./sections/TechShowcase";
 import FeatureCards from "./sections/FeatureCards";
 import SystemStandards from "./sections/SystemStandards";
+import AnimeLab from "./sections/AnimeLab";
+import AnimeLayer from "./components/anime/AnimeLayer";
 import Navbar from "./components/NavBar";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
 import AgenticSandbox from "./components/AgenticSandbox";
@@ -62,6 +64,9 @@ const App = () => {
       {/* Custom HUD Cyberpunk Mouse Cursor */}
       <CustomCursor />
 
+      {/* Site-wide anime interactions (press squash, impact FX, speed lines) */}
+      <AnimeLayer />
+
       {/* Cinematic Terminal Boot Sequence on First Visit */}
       {isBooting && <BootLoader onComplete={() => setIsBooting(false)} />}
 
@@ -94,7 +99,10 @@ const App = () => {
 
       <TechShowcase />
       <FeatureCards />
-      
+
+      {/* Anime-style micro-interaction lab (springs, impact frames, slashes) */}
+      <AnimeLab />
+
       {/* Enterprise Architectural & Security Standards */}
       <SystemStandards />
 

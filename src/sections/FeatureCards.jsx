@@ -42,7 +42,7 @@ const FeatureCards = () => {
                     <div>
                       {/* Top HUD Index Tag */}
                       <div className="flex items-center justify-between text-[10px] font-mono text-white-50/50 pb-2 border-b border-white-50/10 mb-4">
-                        <span style={{ color: cardAccent }} className="font-bold">
+                        <span style={{ color: cardAccent }} className="neon-ink font-bold">
                           // ABILITY_0{idx + 1}
                         </span>
                         <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: cardAccent }} />

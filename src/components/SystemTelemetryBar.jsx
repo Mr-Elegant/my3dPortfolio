@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { audioFX } from "../utils/audioFX";
+import { audioFX, useSoundMuted } from "../utils/audioFX";
 
 const SystemTelemetryBar = ({ onOpenCopilot }) => {
-  const [isMuted, setIsMuted] = useState(audioFX.getMuted());
+  // Shared with the navbar sound button.
+  const isMuted = useSoundMuted();
 
   const handleAudioToggle = () => {
-    const nextMuted = audioFX.toggleMute();
-    setIsMuted(nextMuted);
+    audioFX.toggleMute();
   };
 
   return (
