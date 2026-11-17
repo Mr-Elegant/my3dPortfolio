@@ -1,4 +1,4 @@
-import React, { useRef, useState, lazy, Suspense } from "react";
+import React, { useRef, useState, useEffect, lazy, Suspense } from "react";
 import emailjs from "@emailjs/browser";
 
 import TitleHeader from "../components/TitleHeader";
@@ -21,8 +21,11 @@ class ModelErrorBoundary extends React.Component {
           <span className="w-8 h-8 rounded-full border-2 border-[#00f0ff]/40 flex items-center justify-center">⚡</span>
           <span>TERMINAL OFFLINE</span>
           <button
-            onClick={() => this.setState({ hasError: false })}
-            className="px-3.5 py-1.5 rounded-lg border border-[#00f0ff]/40 hover:bg-[#00f0ff]/20 text-[#00f0ff] text-xs font-mono transition-colors"
+            onClick={() => {
+              this.setState({ hasError: false });
+              if (this.props.onReset) this.props.onReset();
+            }}
+            className="px-3.5 py-1.5 rounded-lg border border-[#00f0ff]/40 hover:bg-[#00f0ff]/20 text-[#00f0ff] text-xs font-mono transition-colors cursor-pointer"
           >
             REBOOT WORKSTATION
           </button>
@@ -43,6 +46,23 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  const [modelKey, setModelKey] = useState(0);
+  const [isContextLost, setIsContextLost] = useState(false);
+
+  const handleRebootModel = () => {
+    setIsContextLost(false);
+    setModelKey((k) => k + 1);
+  };
+
+  useEffect(() => {
+    if (isContextLost) {
+      const timer = setTimeout(() => {
+        handleRebootModel();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isContextLost]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -208,8 +228,25 @@ const Contact = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-ping" />
                 <span>3D_TERMINAL // DRAG TO ROTATE</span>
               </div>
-              {isModelInView ? (
-                <ModelErrorBoundary>
+              {isContextLost ? (
+                <div className="w-full h-full min-h-[420px] flex flex-col items-center justify-center gap-4 bg-[#0a0c10] text-[#00f0ff] font-mono text-xs p-6 text-center select-none">
+                  <div className="w-12 h-12 rounded-full border border-[#00f0ff]/40 bg-[#00f0ff]/10 flex items-center justify-center text-xl shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+                    ⚡
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-bold text-sm tracking-wider text-white">WORKSTATION REBOOTING</span>
+                    <span className="text-white-50/60 text-[11px]">GPU WebGL context was interrupted — auto-restoring...</span>
+                  </div>
+                  <button
+                    onClick={handleRebootModel}
+                    className="mt-2 px-4 py-2 rounded-xl bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40 font-mono text-xs font-bold transition-all shadow-[0_0_15px_rgba(0,240,255,0.15)] flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>REBOOT 3D WORKSTATION NOW</span>
+                    <span>↻</span>
+                  </button>
+                </div>
+              ) : isModelInView ? (
+                <ModelErrorBoundary key={modelKey} onReset={handleRebootModel}>
                   <Suspense
                     fallback={
                       <div className="w-full h-full min-h-[420px] flex flex-col items-center justify-center font-mono text-xs text-[#00f0ff] gap-3 bg-[#0a0c10]">
@@ -218,7 +255,7 @@ const Contact = () => {
                       </div>
                     }
                   >
-                    <ContactExperience />
+                    <ContactExperience onContextLost={() => setIsContextLost(true)} />
                   </Suspense>
                 </ModelErrorBoundary>
               ) : (

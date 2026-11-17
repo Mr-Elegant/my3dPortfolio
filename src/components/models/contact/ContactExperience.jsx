@@ -1,9 +1,9 @@
 import { OrbitControls, Float } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useRef } from "react";
 import Computer from "./Computer";
 
-const ContactExperience = () => {
+const ContactExperience = ({ onContextLost }) => {
   const canvasRef = useRef(null);
 
   return (
@@ -11,66 +11,56 @@ const ContactExperience = () => {
       dpr={[1, 1.5]}
       gl={{
         antialias: true,
-        powerPreference: "high-performance",
-        alpha: false,
+        powerPreference: "default",
+        alpha: true,
         stencil: false,
         depth: true,
-        failIfMajorPerformanceCaveat: false,
       }}
       camera={{ position: [0, 2.4, 7.2], fov: 40 }}
       className="w-full h-full"
       style={{
         width: "100%",
         height: "100%",
-        background: "#0a0c10",
+        background: "transparent",
       }}
       onCreated={({ gl }) => {
-        gl.setClearColor("#0a0c10", 1);
         const dom = gl.domElement;
         if (dom) {
           canvasRef.current = dom;
-          // Prevent browser from permanently killing WebGL context on momentary GPU hitches
+          // Gracefully intercept GPU context loss and notify parent for safe auto-recovery
           dom.addEventListener(
             "webglcontextlost",
             (e) => {
               e.preventDefault();
-              console.warn("WebGL Context Lost intercepted: auto-restoration enabled.");
+              console.warn("WebGL Context Lost intercepted: triggering safe state recovery.");
+              if (onContextLost) onContextLost();
             },
-            false
-          );
-          dom.addEventListener(
-            "webglcontextrestored",
-            () => {
-              console.log("WebGL Context Restored successfully.");
-            },
-            false
+            { once: true }
           );
         }
       }}
     >
-      {/* Dark container clear color */}
-      <color attach="background" args={["#0a0c10"]} />
-
-      {/* Robust Studio Lighting (100% self-contained, 0 shadow-map overhead) */}
-      <ambientLight intensity={1.5} />
-      <hemisphereLight skyColor="#00f0ff" groundColor="#0a0c10" intensity={1.1} />
+      {/* Studio Cyberpunk Lighting */}
+      <ambientLight intensity={1.8} />
+      <hemisphereLight skyColor="#00f0ff" groundColor="#0a0c10" intensity={1.2} />
       
-      {/* Key Front Light */}
+      {/* Key Front Directional Light */}
       <directionalLight
-        position={[5, 8, 5]}
-        intensity={2.8}
+        position={[5, 7, 5]}
+        intensity={2.6}
         color="#ffffff"
       />
 
-      {/* Cyber Rim Fill Lights */}
+      {/* Cyber Rim Fill Light */}
       <directionalLight
         position={[-5, 4, -3]}
-        intensity={1.2}
+        intensity={1.6}
         color="#00f0ff"
       />
-      <pointLight position={[-4, 3, 2]} intensity={3.5} color="#00f0ff" />
-      <pointLight position={[4, 2, 2]} intensity={3.0} color="#00ff88" />
-      <pointLight position={[0, 4, -2]} intensity={2.5} color="#9d4edd" />
+
+      {/* Accent Point Lights */}
+      <pointLight position={[3, 2, 2]} intensity={2.0} color="#00ff88" />
+      <pointLight position={[-3, 2, 2]} intensity={2.0} color="#00f0ff" />
 
       {/* Interactive Orbit Controls with smooth damping */}
       <OrbitControls
@@ -84,7 +74,7 @@ const ContactExperience = () => {
 
       {/* High-performance circular soft shadow (0% GPU hitching risk, 0 depth render target) */}
       <mesh position={[0, -1.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0, 4.2, 64]} />
+        <circleGeometry args={[4.2, 64]} />
         <meshBasicMaterial color="#000000" transparent opacity={0.65} depthWrite={false} />
       </mesh>
 
