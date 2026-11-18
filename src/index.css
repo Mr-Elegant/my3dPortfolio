@@ -1676,6 +1676,227 @@ html[data-theme="light"] .ani-mascot {
   .ani-mascot * { animation: none !important; }
 }
 
+/* ---------- Anime boot sequence (AnimeBootLoader.jsx) ---------- */
+/* z-index sits just under the FX canvas (9998) so DON!/slash draw on top. */
+.ani-boot {
+  --ani-boot-bg: #07080c;
+  --ani-boot-line: rgba(255, 255, 255, 0.07);
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  overflow: hidden;
+  color: var(--ani-line);
+  font-family: var(--ani-font-body);
+}
+html[data-theme="light"] .ani-boot {
+  --ani-boot-bg: #ffffff;
+  --ani-boot-line: rgba(0, 0, 0, 0.08);
+}
+
+/* Diagonal halves (slight overlap hides the seam) */
+.ani-boot__half {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(var(--ani-dot) 1.2px, transparent 1.6px) 0 0 / 9px 9px,
+    var(--ani-boot-bg);
+  transition: transform 0.55s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.3s ease;
+}
+.ani-boot__half--a { clip-path: polygon(0 0, 101% 0, 0 101%); }
+.ani-boot__half--b { clip-path: polygon(100% -1%, 100% 100%, -1% 100%); }
+.ani-boot[data-phase="exit"] .ani-boot__half--a { transform: translate(-105%, -105%); }
+.ani-boot[data-phase="exit"] .ani-boot__half--b { transform: translate(105%, 105%); }
+
+.ani-boot__stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.ani-boot[data-phase="exit"] .ani-boot__stage {
+  opacity: 0;
+  transform: scale(1.08);
+}
+
+/* Rotating focus lines */
+.ani-boot__lines {
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  background: repeating-conic-gradient(from 0deg at 50% 50%, var(--ani-boot-line) 0 1.5deg, transparent 1.5deg 6deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 12%, #000 30%);
+  mask-image: radial-gradient(circle at 50% 50%, transparent 12%, #000 30%);
+  animation: ani-boot-spin 18s linear infinite;
+  transition: opacity 0.3s ease;
+}
+/* Focus lines punch harder once the title lands */
+.ani-boot[data-phase="title"] .ani-boot__lines {
+  filter: contrast(2.5);
+}
+@keyframes ani-boot-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Impact flash when the title lands */
+.ani-boot__flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #fff;
+  opacity: 0;
+}
+.ani-boot[data-phase="title"]:not([data-reduced="true"]) .ani-boot__flash {
+  animation: ani-boot-flash 0.45s ease-out both;
+}
+@keyframes ani-boot-flash {
+  0% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+.ani-boot__kicker {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  padding: 0.2rem 0.75rem;
+  font: 400 1rem/1.2 var(--ani-font-sfx);
+  letter-spacing: 0.08em;
+  color: var(--ani-boot-bg);
+  background: var(--ani-line);
+  border: 2px solid var(--ani-ink);
+  box-shadow: 4px 4px 0 var(--ani-hot);
+  transform: skewX(-12deg);
+}
+
+/* Charge phase */
+.ani-boot__charge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.ani-mascot.ani-mascot--inline {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  z-index: auto;
+  height: min(34vh, 260px);
+  opacity: 1;
+}
+.ani-boot__gauge {
+  width: min(440px, 80vw);
+}
+.ani-boot__gauge-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font: 400 1.15rem/1 var(--ani-font-sfx);
+  letter-spacing: 0.08em;
+}
+.ani-boot__pct {
+  font-size: 2.2rem;
+  color: var(--ani-accent);
+  font-variant-numeric: tabular-nums;
+}
+html[data-theme="light"] .ani-boot__pct { color: #0284c7; }
+.ani-boot__bar {
+  height: 22px;
+  border: 3px solid var(--ani-line);
+  background: var(--ani-boot-bg);
+  box-shadow: 5px 5px 0 var(--ani-hot);
+  transform: skewX(-10deg);
+  overflow: hidden;
+}
+.ani-boot__fill {
+  height: 100%;
+  background: repeating-linear-gradient(-45deg, var(--ani-accent) 0 12px, #8af8ff 12px 24px);
+  background-size: 34px 34px;
+  animation: ani-boot-stripes 0.5s linear infinite;
+}
+@keyframes ani-boot-stripes {
+  to { background-position: 34px 0; }
+}
+.ani-boot__tip {
+  margin-top: 0.9rem;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+/* Title card */
+.ani-boot__title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+.ani-boot__title > * {
+  animation: ani-boot-slam 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+.ani-boot__title > :nth-child(2) { animation-delay: 0.06s; }
+.ani-boot__title > :nth-child(3) { animation-delay: 0.22s; }
+.ani-boot__title > :nth-child(4) { animation-delay: 0.32s; }
+@keyframes ani-boot-slam {
+  0% { opacity: 0; transform: scale(2.2) skewX(-12deg); filter: blur(8px); }
+  60% { opacity: 1; transform: scale(0.94) skewX(2deg); filter: blur(0); }
+  100% { transform: none; }
+}
+.ani-boot__ep {
+  padding: 0.15rem 0.9rem;
+  font: 400 1.4rem/1.2 var(--ani-font-sfx);
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: var(--ani-hot);
+  border: 2px solid var(--ani-ink);
+  box-shadow: 4px 4px 0 var(--ani-line);
+}
+.ani-boot__name {
+  margin: 0;
+  font: 400 clamp(2.6rem, 8vw, 6.5rem)/1 var(--ani-font-display);
+  font-synthesis: none;
+  letter-spacing: 0.01em;
+  text-shadow: 5px 5px 0 var(--ani-hot);
+}
+.ani-boot__jp {
+  font: 400 clamp(1rem, 2.2vw, 1.5rem)/1.2 var(--ani-font-display);
+  letter-spacing: 0.35em;
+  color: var(--ani-accent);
+}
+html[data-theme="light"] .ani-boot__jp { color: #0284c7; }
+.ani-boot__role {
+  font: 400 clamp(1.1rem, 2.4vw, 1.5rem)/1.2 var(--ani-font-sfx);
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.ani-boot__skip {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  padding: 0.45rem 1.1rem;
+  font: 400 1.1rem/1 var(--ani-font-sfx);
+  letter-spacing: 0.08em;
+  color: var(--ani-ink);
+  background: var(--ani-gold);
+  border: 3px solid var(--ani-ink);
+  box-shadow: 4px 4px 0 var(--ani-line);
+  transform: skewX(-10deg);
+  cursor: pointer;
+}
+.ani-boot__skip:hover { box-shadow: 6px 6px 0 var(--ani-hot); }
+
+/* Reduced motion: no slam/spin/split, just a short fade */
+.ani-boot[data-reduced="true"] * { animation: none !important; }
+.ani-boot[data-reduced="true"][data-phase="exit"] .ani-boot__half {
+  transform: none;
+  opacity: 0;
+}
+
 /* ---------- Section headings (TitleHeader) ---------- */
 html[data-anime="on"] .ani-title-wrap {
   position: relative;
@@ -1743,7 +1964,57 @@ html[data-anime="on"] .cta-button .text {
   letter-spacing: 0.06em;
 }
 html[data-anime="on"] .navbar nav.desktop li {
-  font-size: 1.05rem;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+/* The wider manga font + extra nav items crowd the bar; keep labels on one line. */
+html[data-anime="on"] .navbar nav.desktop ul {
+  column-gap: 0.9rem;
+}
+html[data-anime="on"] .navbar nav.desktop ul > * + * {
+  margin-left: 0 !important;
+}
+html[data-anime="on"] .navbar .contact-btn .inner,
+html[data-anime="on"] .navbar .logo span {
+  white-space: nowrap;
+}
+html[data-anime="on"] .navbar .logo {
+  margin-right: 1.25rem;
+}
+/* Condense on narrower desktops so nothing collides or gets pushed off-screen. */
+@media (max-width: 1679px) {
+  html[data-anime="on"] .navbar .nav-cli-btn kbd,
+  html[data-anime="on"] .navbar .ani-nav-label {
+    display: none !important;
+  }
+}
+html[data-anime="on"] .navbar nav.desktop {
+  margin-right: 1rem;
+}
+/* 1024–1365px: 7 links + 5 controls don't fit in the manga font, so use
+   the ☰ menu early (it already holds every link and toggle). */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  html[data-anime="on"] .navbar nav.desktop {
+    display: none !important;
+  }
+  html[data-anime="on"] .navbar button.lg\:hidden {
+    display: inline-flex !important;
+  }
+  html[data-anime="on"] .navbar div.lg\:hidden {
+    display: flex !important;
+  }
+}
+@media (max-width: 1379px) {
+  /* Redundant with the floating HUD_CLI button (and Ctrl+K). */
+  html[data-anime="on"] .navbar .nav-cli-btn {
+    display: none !important;
+  }
+  html[data-anime="on"] .navbar nav.desktop ul {
+    column-gap: 0.6rem;
+  }
+  html[data-anime="on"] .navbar nav.desktop li {
+    font-size: 0.95rem;
+  }
 }
 html[data-anime="on"] .cta-button .text {
   font-size: 1.05rem;

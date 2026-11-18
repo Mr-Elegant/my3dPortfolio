@@ -221,7 +221,8 @@ class AnimeFXEngine {
       draw(ctx, t) {
         const head = easeOutExpo(clamp01(t * 2.5));
         const tail = easeOutExpo(clamp01((t - 0.25) * 1.6));
-        const steps = 24;
+        // Sample densely enough that the circles merge into one blade, even screen-wide.
+        const steps = Math.max(24, Math.ceil(len / 4));
         const pass = (w, fill) => {
           ctx.beginPath();
           for (let i = 0; i <= steps; i++) {

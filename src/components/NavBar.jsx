@@ -131,7 +131,7 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
             title={animeOn ? "Turn Anime Mode off" : "Turn Anime Mode on"}
           >
             <span aria-hidden="true">{animeOn ? "💥" : "💤"}</span>
-            <span>ANIME</span>
+            <span className="ani-nav-label">ANIME</span>
           </button>
 
           {/* Sound Toggle (synced with the SFX button in the hero telemetry bar) */}
@@ -169,7 +169,7 @@ const NavBar = ({ onResumeClick, onOpenCLI, theme = "dark", onToggleTheme }) => 
           {/* HUD Command Terminal Trigger Button (Desktop & Tablet) */}
           <button
             onClick={onOpenCLI}
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black-200/80 hover:bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/30 text-xs font-mono transition-all cursor-pointer shadow-[0_0_12px_rgba(0,240,255,0.12)]"
+            className="nav-cli-btn hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black-200/80 hover:bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/30 text-xs font-mono transition-all cursor-pointer shadow-[0_0_12px_rgba(0,240,255,0.12)]"
             title="Open HUD Command Terminal (Ctrl + K)"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-ping inline-block" />

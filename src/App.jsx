@@ -10,6 +10,8 @@ import SystemStandards from "./sections/SystemStandards";
 import AnimeLab from "./sections/AnimeLab";
 import AnimeLayer from "./components/anime/AnimeLayer";
 import DanceBackground from "./components/anime/DanceBackground";
+import AnimeBootLoader from "./components/anime/AnimeBootLoader";
+import { useAnimeMode, getAnimeMode, REPLAY_OPENING_EVENT } from "./utils/animeMode";
 import Navbar from "./components/NavBar";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
 import AgenticSandbox from "./components/AgenticSandbox";
@@ -28,10 +30,27 @@ const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const SystemDesignModal = lazy(() => import("./components/SystemDesignModal"));
 
 const App = () => {
+  const animeOn = useAnimeMode();
   const [theme, setTheme] = useState(getInitialTheme);
-  const [isBooting, setIsBooting] = useState(() => {
-    return typeof window !== "undefined" && !sessionStorage.getItem("preet_os_booted");
+  // Boot screen: "full" on the first visit of a session; in Anime Mode every
+  // later reload gets a short "recap"; null = no boot screen.
+  const [boot, setBoot] = useState(() => {
+    if (typeof window === "undefined") return null;
+    if (!sessionStorage.getItem("preet_os_booted")) return "full";
+    return getAnimeMode() ? "recap" : null;
   });
+  const [bootRun, setBootRun] = useState(0);
+  const endBoot = () => setBoot(null);
+
+  // "▶ Replay opening" (Anime Lab) → play the full opening again.
+  useEffect(() => {
+    const replay = () => {
+      setBootRun((n) => n + 1);
+      setBoot("full");
+    };
+    window.addEventListener(REPLAY_OPENING_EVENT, replay);
+    return () => window.removeEventListener(REPLAY_OPENING_EVENT, replay);
+  }, []);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [isCLIOpen, setIsCLIOpen] = useState(false);
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
@@ -71,8 +90,14 @@ const App = () => {
       {/* Looping transparent dance video behind all content (Anime Mode only) */}
       <DanceBackground />
 
-      {/* Cinematic Terminal Boot Sequence on First Visit */}
-      {isBooting && <BootLoader onComplete={() => setIsBooting(false)} />}
+      {/* Boot screen: Anime Mode gets an "episode opening" (full or recap);
+          otherwise the terminal boot, first visit per session only. */}
+      {boot &&
+        (animeOn ? (
+          <AnimeBootLoader key={bootRun} variant={boot} onComplete={endBoot} />
+        ) : (
+          boot === "full" && <BootLoader onComplete={endBoot} />
+        ))}
 
       <Navbar
         theme={theme}

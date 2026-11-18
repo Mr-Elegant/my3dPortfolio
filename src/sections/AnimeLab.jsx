@@ -5,7 +5,7 @@ import PowerLevelSlider from "../components/anime/PowerLevelSlider";
 import HeartButton from "../components/anime/HeartButton";
 import SlashTabs from "../components/anime/SlashTabs";
 import CopyPuffButton from "../components/anime/CopyPuffButton";
-import { useAnimeMode, setAnimeMode } from "../utils/animeMode";
+import { useAnimeMode, setAnimeMode, replayOpening } from "../utils/animeMode";
 import { techSkillsList } from "../constants";
 
 const SkillChips = ({ items }) => (
@@ -68,6 +68,17 @@ const AnimeLab = () => {
                 onChange={setAnimeMode}
               />
               <AnimeToggle label="Final form" onText="HENSHIN!" color="gold" />
+              {animeMode && (
+                <AnimeButton
+                  sfx="AGAIN!"
+                  variant="gold"
+                  color="gold"
+                  className="self-start"
+                  onClick={() => setTimeout(replayOpening, 350)}
+                >
+                  ▶ Replay opening
+                </AnimeButton>
+              )}
             </div>
           </Panel>
 

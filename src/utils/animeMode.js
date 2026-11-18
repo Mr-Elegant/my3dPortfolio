@@ -40,6 +40,10 @@ const subscribe = (l) => {
 
 export const useAnimeMode = () => useSyncExternalStore(subscribe, getAnimeMode, () => true);
 
+/** Fired by "▶ Replay opening"; App listens and replays the full boot opening. */
+export const REPLAY_OPENING_EVENT = "anime:replay-opening";
+export const replayOpening = () => window.dispatchEvent(new Event(REPLAY_OPENING_EVENT));
+
 /**
  * Background dancer / video layer switch (DanceBackground.jsx). ON by default.
  * Independent of Anime Mode, but only has a visible effect while it's on.
