@@ -29,7 +29,16 @@ const Panel = ({ title, kicker, className = "", children }) => (
   </div>
 );
 
-const AnimeLab = () => {
+// Let the impact frame play before the page moves.
+const ACTION_DELAY = 380;
+const goTo = (id) =>
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
+  }, ACTION_DELAY);
+
+const AnimeLab = ({ onResumeClick }) => {
   // Shared with the navbar toggle; AnimeLayer applies it site-wide.
   const animeMode = useAnimeMode();
 
@@ -49,13 +58,41 @@ const AnimeLab = () => {
 
         <div className="ani-grid">
           <Panel kicker="EP.01" title="Impact frames" className="ani-grid__a">
+            {/* Real actions, each with its own impact effect */}
             <div className="flex flex-wrap gap-4 items-center">
-              <AnimeButton sfx="DON!">Hire me</AnimeButton>
-              <AnimeButton sfx="BAM!" variant="hot" color="hot">
-                Deploy
+              <AnimeButton sfx="DON!" onClick={() => goTo("contact")}>
+                Hire me
               </AnimeButton>
-              <AnimeButton sfx="ZAAN!" variant="gold" color="gold">
-                Ship it
+              <AnimeButton sfx="BAM!" variant="hot" color="hot" effect="slash" onClick={() => goTo("work")}>
+                View projects
+              </AnimeButton>
+              <AnimeButton
+                sfx="ZAAN!"
+                variant="gold"
+                color="gold"
+                effect="smoke"
+                onClick={() => onResumeClick && setTimeout(onResumeClick, ACTION_DELAY)}
+              >
+                Résumé
+              </AnimeButton>
+            </div>
+
+            <p className="ani-lab__hint">
+              Every button gets its own impact frame. The top row takes you somewhere;
+              the toys below just hit back.
+            </p>
+
+            {/* Pure toys: one per effect style */}
+            <div className="flex flex-wrap gap-3 items-center">
+              <span className="ani-lab__toys-label">Just for fun:</span>
+              <AnimeButton size="sm" variant="ghost" sfx="POW!" color="accent">
+                POW
+              </AnimeButton>
+              <AnimeButton size="sm" variant="ghost" sfx="SHING!" color="hot" effect="slash">
+                SHING
+              </AnimeButton>
+              <AnimeButton size="sm" variant="ghost" sfx="POOF!" color="gold" effect="smoke">
+                POOF
               </AnimeButton>
             </div>
           </Panel>

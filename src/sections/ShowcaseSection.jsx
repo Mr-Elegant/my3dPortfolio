@@ -6,7 +6,7 @@ import GlowingBorderCard from "../components/GlowingBorderCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AppShowcase = ({ onOpenADR }) => {
+const AppShowcase = ({ onOpenADR, onOpenManga }) => {
   const sectionRef = useRef(null);
   const interviewLabRef = useRef(null);
   const muhuratRef = useRef(null);
@@ -204,6 +204,12 @@ const AppShowcase = ({ onOpenADR }) => {
                     <span>📐</span>
                   </button>
                 )}
+                {onOpenManga && (
+                  <button type="button" onClick={() => onOpenManga("interview-lab")} className="manga-open-btn">
+                    <span aria-hidden="true">📖</span>
+                    <span>Read as manga</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -321,6 +327,12 @@ const AppShowcase = ({ onOpenADR }) => {
                   >
                     <span>System Architecture &amp; ADR (RFC-03)</span>
                     <span>📐</span>
+                  </button>
+                )}
+                {onOpenManga && (
+                  <button type="button" onClick={() => onOpenManga("muhurat-ai")} className="manga-open-btn">
+                    <span aria-hidden="true">📖</span>
+                    <span>Read as manga</span>
                   </button>
                 )}
               </div>
@@ -525,6 +537,12 @@ const AppShowcase = ({ onOpenADR }) => {
                     className="text-[#00ff88] text-xs font-semibold underline hover:text-white cursor-pointer ml-auto"
                   >
                     Architecture RFC 📐
+                  </button>
+                )}
+                {onOpenManga && (
+                  <button type="button" onClick={() => onOpenManga("devnet-chat")} className="manga-open-btn">
+                    <span aria-hidden="true">📖</span>
+                    <span>Read as manga</span>
                   </button>
                 )}
               </div>

@@ -11,6 +11,9 @@ import AnimeLab from "./sections/AnimeLab";
 import AnimeLayer from "./components/anime/AnimeLayer";
 import DanceBackground from "./components/anime/DanceBackground";
 import AnimeBootLoader from "./components/anime/AnimeBootLoader";
+import KodoGuide from "./components/anime/KodoGuide";
+import AchievementToasts from "./components/anime/AchievementToasts";
+import { unlock } from "./utils/achievements";
 import { useAnimeMode, getAnimeMode, REPLAY_OPENING_EVENT } from "./utils/animeMode";
 import Navbar from "./components/NavBar";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
@@ -28,6 +31,7 @@ const HUDCommandPalette = lazy(() => import("./components/HUDCommandPalette"));
 const PreetAICopilot = lazy(() => import("./components/PreetAICopilot"));
 const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const SystemDesignModal = lazy(() => import("./components/SystemDesignModal"));
+const MangaReader = lazy(() => import("./components/anime/MangaReader"));
 
 const App = () => {
   const animeOn = useAnimeMode();
@@ -45,6 +49,7 @@ const App = () => {
   // "▶ Replay opening" (Anime Lab) → play the full opening again.
   useEffect(() => {
     const replay = () => {
+      unlock("rerun");
       setBootRun((n) => n + 1);
       setBoot("full");
     };
@@ -60,7 +65,18 @@ const App = () => {
     applyTheme(theme);
   }, [theme]);
 
+  const [mangaProjectId, setMangaProjectId] = useState(null);
+
+  // Achievements for using key features (no-ops once unlocked)
+  useEffect(() => {
+    if (isCLIOpen) unlock("hacker");
+  }, [isCLIOpen]);
+  useEffect(() => {
+    if (isResumeOpen) unlock("recruiter");
+  }, [isResumeOpen]);
+
   const handleToggleTheme = () => {
+    unlock("day-night");
     setTheme((prev) => (prev === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT));
   };
 
@@ -90,6 +106,10 @@ const App = () => {
       {/* Looping transparent dance video behind all content (Anime Mode only) */}
       <DanceBackground />
 
+      {/* Kōdo's contextual tips + achievement toasts (Anime Mode only) */}
+      <KodoGuide />
+      <AchievementToasts />
+
       {/* Boot screen: Anime Mode gets an "episode opening" (full or recap);
           otherwise the terminal boot, first visit per session only. */}
       {boot &&
@@ -115,7 +135,7 @@ const App = () => {
       />
       
       {/* Flagship Projects with Architecture RFC Triggers */}
-      <ShowcaseSection onOpenADR={handleOpenADR} />
+      <ShowcaseSection onOpenADR={handleOpenADR} onOpenManga={setMangaProjectId} />
 
       {/* Flagship Interactive Architecture Blueprint Explorer */}
       <ArchitectureExplorer onOpenADR={handleOpenADR} />
@@ -130,7 +150,7 @@ const App = () => {
       <FeatureCards />
 
       {/* Anime-style micro-interaction lab (springs, impact frames, slashes) */}
-      <AnimeLab />
+      <AnimeLab onResumeClick={() => setIsResumeOpen(true)} />
 
       {/* Enterprise Architectural & Security Standards */}
       <SystemStandards />
@@ -219,6 +239,17 @@ const App = () => {
       )}
 
       {/* Lazy-Loaded Architecture Decision Record (ADR) Deep-Dive Modal */}
+      {/* "Read as manga" comic reader for project ADRs */}
+      {mangaProjectId && (
+        <Suspense fallback={null}>
+          <MangaReader
+            projectId={mangaProjectId}
+            onClose={() => setMangaProjectId(null)}
+            onOpenADR={handleOpenADR}
+          />
+        </Suspense>
+      )}
+
       {activeADRSystemId && (
         <Suspense fallback={null}>
           <SystemDesignModal

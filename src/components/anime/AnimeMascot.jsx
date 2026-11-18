@@ -1,4 +1,46 @@
-import { forwardRef } from "react";
+import { forwardRef, useSyncExternalStore } from "react";
+
+/*
+ * Custom mascot image (optional): if you drop an image at one of these paths,
+ * it replaces the SVG Kōdo everywhere (background dancer, guide, manga
+ * narrator, boot screen) and gets a CSS dance animation. Use a transparent
+ * PNG/WebP (or an animated GIF/WebP). Missing file → Kōdo is used.
+ */
+const CUSTOM_SOURCES = ["/mascot/mascot.png", "/mascot/mascot.webp", "/mascot/mascot.gif"];
+let customSrc; // undefined = not checked yet, null = none found, string = found
+let probing = false;
+const listeners = new Set();
+
+const probeCustom = () => {
+  if (probing || customSrc !== undefined || typeof Image === "undefined") return;
+  probing = true;
+  const tryAt = (i) => {
+    if (i >= CUSTOM_SOURCES.length) {
+      customSrc = null;
+      listeners.forEach((l) => l());
+      return;
+    }
+    const img = new Image();
+    img.onload = () => {
+      customSrc = CUSTOM_SOURCES[i];
+      listeners.forEach((l) => l());
+    };
+    img.onerror = () => tryAt(i + 1);
+    img.src = CUSTOM_SOURCES[i];
+  };
+  tryAt(0);
+};
+
+const useCustomMascot = () =>
+  useSyncExternalStore(
+    (l) => {
+      listeners.add(l);
+      probeCustom();
+      return () => listeners.delete(l);
+    },
+    () => customSrc ?? null,
+    () => null
+  );
 
 /**
  * Kōdo (コード, "code"): an original chibi coder-spirit mascot for the site.
@@ -66,6 +108,20 @@ const Eye = ({ cx }) => (
 );
 
 const AnimeMascot = forwardRef(function AnimeMascot({ className = "" }, ref) {
+  const custom = useCustomMascot();
+  if (custom) {
+    return (
+      <img
+        ref={ref}
+        src={custom}
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className={`ani-mascot ani-mascot--img ${className}`}
+      />
+    );
+  }
+
   return (
     <svg
       ref={ref}

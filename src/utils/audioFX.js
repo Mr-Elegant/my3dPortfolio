@@ -165,6 +165,140 @@ class AudioFXEngine {
     }
   }
 
+  // ---- Anime impact sounds (synthesized, no audio files) ----
+
+  // 1s of white noise, generated once and reused by the effects below.
+  _noise() {
+    if (!this.noiseBuffer) {
+      const len = this.ctx.sampleRate;
+      const buf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+      this.noiseBuffer = buf;
+    }
+    const src = this.ctx.createBufferSource();
+    src.buffer = this.noiseBuffer;
+    return src;
+  }
+
+  // Shared guard: respects mute, wakes the audio context, catches failures.
+  _play(name, build) {
+    if (this.isMuted) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      build(this.ctx, this.ctx.currentTime);
+    } catch (err) {
+      console.warn(`AudioFX ${name} failed`, err);
+    }
+  }
+
+  // POW: punchy cartoon impact. Pitch-dropping thump + a short noise crack.
+  playPow() {
+    this._play("pow", (ctx, t) => {
+      const out = ctx.createGain();
+      out.gain.value = 0.55;
+      out.connect(ctx.destination);
+
+      const thump = ctx.createOscillator();
+      const thumpGain = ctx.createGain();
+      thump.type = "sine";
+      thump.frequency.setValueAtTime(160, t);
+      thump.frequency.exponentialRampToValueAtTime(42, t + 0.22);
+      thumpGain.gain.setValueAtTime(0.0001, t);
+      thumpGain.gain.exponentialRampToValueAtTime(0.9, t + 0.006);
+      thumpGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      thump.connect(thumpGain).connect(out);
+      thump.start(t);
+      thump.stop(t + 0.32);
+
+      const crack = this._noise();
+      const crackFilter = ctx.createBiquadFilter();
+      const crackGain = ctx.createGain();
+      crackFilter.type = "lowpass";
+      crackFilter.frequency.setValueAtTime(2200, t);
+      crackFilter.frequency.exponentialRampToValueAtTime(400, t + 0.08);
+      crackGain.gain.setValueAtTime(0.5, t);
+      crackGain.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+      crack.connect(crackFilter).connect(crackGain).connect(out);
+      crack.start(t);
+      crack.stop(t + 0.1);
+    });
+  }
+
+  // SHING: blade whoosh followed by a bright metallic ring.
+  playShing() {
+    this._play("shing", (ctx, t) => {
+      const out = ctx.createGain();
+      out.gain.value = 0.5;
+      out.connect(ctx.destination);
+
+      const whoosh = this._noise();
+      const sweep = ctx.createBiquadFilter();
+      const whooshGain = ctx.createGain();
+      sweep.type = "highpass";
+      sweep.frequency.setValueAtTime(700, t);
+      sweep.frequency.exponentialRampToValueAtTime(6500, t + 0.12);
+      whooshGain.gain.setValueAtTime(0.0001, t);
+      whooshGain.gain.exponentialRampToValueAtTime(0.35, t + 0.05);
+      whooshGain.gain.exponentialRampToValueAtTime(0.001, t + 0.17);
+      whoosh.connect(sweep).connect(whooshGain).connect(out);
+      whoosh.start(t);
+      whoosh.stop(t + 0.18);
+
+      // Slightly inharmonic partials = "metal", with a tiny upward bend.
+      const ringStart = t + 0.06;
+      [2093, 3170, 4720, 6310].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq * 0.97, ringStart);
+        osc.frequency.exponentialRampToValueAtTime(freq, ringStart + 0.05);
+        g.gain.setValueAtTime(0.0001, ringStart);
+        g.gain.exponentialRampToValueAtTime(0.14 / (i + 1), ringStart + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0005, ringStart + 0.75 - i * 0.1);
+        osc.connect(g).connect(out);
+        osc.start(ringStart);
+        osc.stop(ringStart + 0.8);
+      });
+    });
+  }
+
+  // POOF: soft breathy burst whose filter closes down, plus a low "pff".
+  playPoof() {
+    this._play("poof", (ctx, t) => {
+      const out = ctx.createGain();
+      out.gain.value = 0.6;
+      out.connect(ctx.destination);
+
+      const air = this._noise();
+      const lp = ctx.createBiquadFilter();
+      const airGain = ctx.createGain();
+      lp.type = "lowpass";
+      lp.Q.value = 1.2;
+      lp.frequency.setValueAtTime(2600, t);
+      lp.frequency.exponentialRampToValueAtTime(220, t + 0.38);
+      airGain.gain.setValueAtTime(0.0001, t);
+      airGain.gain.exponentialRampToValueAtTime(0.45, t + 0.025);
+      airGain.gain.exponentialRampToValueAtTime(0.001, t + 0.46);
+      air.connect(lp).connect(airGain).connect(out);
+      air.start(t);
+      air.stop(t + 0.5);
+
+      const pff = ctx.createOscillator();
+      const pffGain = ctx.createGain();
+      pff.type = "sine";
+      pff.frequency.setValueAtTime(120, t);
+      pff.frequency.exponentialRampToValueAtTime(70, t + 0.18);
+      pffGain.gain.setValueAtTime(0.0001, t);
+      pffGain.gain.exponentialRampToValueAtTime(0.18, t + 0.015);
+      pffGain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+      pff.connect(pffGain).connect(out);
+      pff.start(t);
+      pff.stop(t + 0.24);
+    });
+  }
+
   // Warp frequency sweep on navigation
   playWarp() {
     if (this.isMuted) return;

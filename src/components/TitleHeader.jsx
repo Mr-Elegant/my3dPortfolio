@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { prefersReducedMotion } from "../utils/animeFX";
+import { animeFX, prefersReducedMotion } from "../utils/animeFX";
 
 // Overshooting "impact" entrance, layered on top of any existing transform.
 const POP = [
@@ -22,6 +22,9 @@ const TitleHeader = ({ title, sub }) => {
         io.disconnect();
         if (document.documentElement.dataset.anime !== "on" || prefersReducedMotion()) return;
         el.classList.add("ani-title--hit");
+        // Section transition: a quick slash across the heading as it lands.
+        const r = el.getBoundingClientRect();
+        animeFX.slash(r.left - 30, r.bottom + 6, r.right + 30, r.top - 6, { width: 14, color: "hot" });
         try {
           el.animate(POP, { duration: 600, easing: "cubic-bezier(.2,.9,.3,1.15)" });
         } catch {

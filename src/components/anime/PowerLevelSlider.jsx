@@ -1,6 +1,7 @@
 import { useId, useRef, useState } from "react";
 import useSpringVars from "../../hooks/useSpringVars";
 import { animeFX } from "../../utils/animeFX";
+import { unlock } from "../../utils/achievements";
 
 /**
  * Native range input (keyboard + screen-reader friendly) dressed up as a
@@ -27,6 +28,7 @@ const PowerLevelSlider = ({ label = "Power level", defaultValue = 40 }) => {
     if (v === 100 && prev.current < 100) {
       const { x, y } = thumbPoint(v);
       animeFX.hit(x, y, { text: "OVER 9000!!", size: 56 });
+      unlock("over-9000");
     } else if (v === 0 && prev.current > 0) {
       const { x, y } = thumbPoint(v);
       animeFX.smoke(x, y, { count: 6 });

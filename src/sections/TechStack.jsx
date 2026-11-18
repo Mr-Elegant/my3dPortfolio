@@ -57,11 +57,11 @@ const CapabilityCard = ({ item, index }) => {
       >
         <div className="cap-card__glare" aria-hidden="true" />
         <div className="cap-card__lines" aria-hidden="true" />
-        <div className="tech-card-content flex flex-col items-center justify-between h-full p-6 text-center">
-          <div className="tech-icon-wrapper cap-card__stage w-full h-48 flex justify-center items-center">
+        <div className="cap-card__content relative z-10 flex flex-col items-center h-full px-5 pt-7 pb-8 text-center">
+          <div className="cap-card__stage w-full flex justify-center items-center">
             {Icon ? <Icon /> : null}
           </div>
-          <div className="padding-x w-full mt-4 flex flex-col gap-2 relative z-20">
+          <div className="cap-card__text w-full flex flex-col gap-2 relative z-20">
             <p className="cap-card__title font-bold text-lg text-white">{item.name}</p>
             {item.desc && (
               <p className="text-sm text-[#839cb5] font-normal leading-relaxed group-hover:text-white/80 transition-colors">

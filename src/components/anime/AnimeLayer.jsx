@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { animeFX, prefersReducedMotion } from "../../utils/animeFX";
 import { useAnimeMode } from "../../utils/animeMode";
 import { audioFX } from "../../utils/audioFX";
+import { unlock } from "../../utils/achievements";
 
 // Drop your clip here: public/sounds/anime-click.mp3
 const CLICK_SOUND_URL = "/sounds/anime-click.mp3";
@@ -60,12 +61,13 @@ const AnimeLayer = () => {
       const hitTarget = e.target.closest?.(INTERACTIVE);
       // Click voice for every interactive component (deduped inside audioFX
       // when the component already called playClick itself).
-      if (hitTarget && !e.target.closest?.("input, textarea, select")) audioFX.playClick();
+      if (hitTarget && !e.target.closest?.("input, textarea, select, [data-sfx-owned]")) audioFX.playClick();
 
       // Keyboard-triggered clicks report 0,0, so skip them; skip our own controls.
       if ((!e.clientX && !e.clientY) || e.target.closest?.(SKIP)) return;
       const { clientX: x, clientY: y } = e;
       if (hitTarget) {
+        unlock("first-impact");
         clicks++;
         animeFX.burst(x, y, { size: 26, spikes: 9, color: clicks % 3 ? "accent" : "hot" });
         if (clicks % 3 === 0) {
