@@ -1,139 +1,167 @@
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 import TitleHeader from "../components/TitleHeader";
+import { ReactAtomIcon, BackendIcon, Cube3DIcon, NeuralNetIcon } from "../components/CapabilityIcons";
 import { techStackIcons } from "../constants";
-// import { techStackImgs } from "../constants";
+import { animeFX, prefersReducedMotion } from "../utils/animeFX";
 
-const TechStack2DFallback = ({ techStackIcon }) => {
-  const name = techStackIcon.name;
+/**
+ * "Core Capabilities & Specializations": four cards, each with its own
+ * animated scene (CapabilityIcons.jsx), a mouse-follow 3D tilt, and a
+ * scroll entrance (manga-panel drop in Anime Mode, smooth rise otherwise).
+ * Animations pause while the section is off-screen.
+ */
 
-  if (name === "React Developer") {
-    return (
-      <div className="relative w-24 h-24 flex items-center justify-center">
-        <svg
-          className="w-20 h-20 animate-[spin_10s_linear_infinite] text-[#4cc9f0] drop-shadow-[0_0_15px_rgba(76,201,240,0.6)]"
-          viewBox="-11.5 -10.23174 23 20.46348"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>React Logo</title>
-          <circle cx="0" cy="0" r="2.05" fill="currentColor" />
-          <g stroke="currentColor" strokeWidth="1" fill="none">
-            <ellipse rx="11" ry="4.2" />
-            <ellipse rx="11" ry="4.2" transform="rotate(60)" />
-            <ellipse rx="11" ry="4.2" transform="rotate(120)" />
-          </g>
-        </svg>
-      </div>
-    );
-  }
+const CAPABILITY_ICONS = {
+  "React Developer": ReactAtomIcon,
+  "Backend Developer": BackendIcon,
+  "Interactive Developer": Cube3DIcon,
+  "AI & Agentic Developer": NeuralNetIcon,
+};
 
-  if (name === "Backend Developer") {
-    return (
-      <div className="relative w-24 h-24 flex items-center justify-center">
-        <img
-          src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
-          alt="Node.js"
-          className="w-20 h-20 object-contain node-pulse-glow"
-        />
-      </div>
-    );
-  }
+const CapabilityCard = ({ item, index }) => {
+  const cardRef = useRef(null);
+  const Icon = CAPABILITY_ICONS[item.name];
 
-  if (name === "Interactive Developer") {
-    return (
-      <div className="relative w-24 h-24 flex items-center justify-center">
-        <img
-          src="/images/logos/three.png"
-          alt="Three.js"
-          className="w-20 h-20 object-contain filter invert opacity-80 hover:opacity-100 transition-opacity duration-300 three-pulse-glow"
-          onError={(e) => {
-            e.target.src = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg";
-          }}
-        />
-      </div>
-    );
-  }
+  // Mouse-follow tilt (writes CSS vars; no re-renders).
+  const onMove = (e) => {
+    const el = cardRef.current;
+    if (!el || prefersReducedMotion()) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.setProperty("--rx", `${(-py * 10).toFixed(2)}deg`);
+    el.style.setProperty("--ry", `${(px * 12).toFixed(2)}deg`);
+    el.style.setProperty("--gx", `${((px + 0.5) * 100).toFixed(1)}%`);
+    el.style.setProperty("--gy", `${((py + 0.5) * 100).toFixed(1)}%`);
+  };
+  const onLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  };
 
   return (
-    <div className="relative w-24 h-24 flex items-center justify-center">
-      <svg
-        className="w-20 h-20 text-[#a259ff] ai-pulse-glow"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        xmlns="http://www.w3.org/2000/svg"
+    // .cap-slot is the GSAP entrance target; the card inside owns the tilt,
+    // so the two transforms never fight.
+    <div className="cap-slot">
+      <div
+        ref={cardRef}
+        className="card-border tech-card cap-card overflow-hidden group xl:rounded-3xl rounded-lg"
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        style={{ "--i": index }}
       >
-        <circle cx="12" cy="12" r="3" fill="#a259ff" fillOpacity="0.4" />
-        <path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" />
-        <circle cx="12" cy="2" r="1" fill="currentColor" />
-        <circle cx="12" cy="22" r="1" fill="currentColor" />
-        <circle cx="2" cy="12" r="1" fill="currentColor" />
-        <circle cx="22" cy="12" r="1" fill="currentColor" />
-        <circle cx="4.22" cy="4.22" r="1" fill="currentColor" />
-        <circle cx="19.78" cy="19.78" r="1" fill="currentColor" />
-        <circle cx="19.78" cy="4.22" r="1" fill="currentColor" />
-        <circle cx="4.22" cy="19.78" r="1" fill="currentColor" />
-      </svg>
+        <div className="cap-card__glare" aria-hidden="true" />
+        <div className="cap-card__lines" aria-hidden="true" />
+        <div className="tech-card-content flex flex-col items-center justify-between h-full p-6 text-center">
+          <div className="tech-icon-wrapper cap-card__stage w-full h-48 flex justify-center items-center">
+            {Icon ? <Icon /> : null}
+          </div>
+          <div className="padding-x w-full mt-4 flex flex-col gap-2 relative z-20">
+            <p className="cap-card__title font-bold text-lg text-white">{item.name}</p>
+            {item.desc && (
+              <p className="text-sm text-[#839cb5] font-normal leading-relaxed group-hover:text-white/80 transition-colors">
+                {item.desc}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 const TechStack = () => {
-  // Animate the tech cards in the skills section
-  useGSAP(() => {
-    gsap.fromTo(
-      ".tech-card",
-      {
-        y: 50,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.inOut",
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: "#skills",
-          start: "top center",
-        },
+  const sectionRef = useRef(null);
+  const [onScreen, setOnScreen] = useState(false);
+
+  // Pause all card animations while the section is off-screen.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), {
+      rootMargin: "100px 0px",
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // CSS pauses the keyframe animations; SMIL path motion (electrons,
+  // packets) needs pausing through the SVG API.
+  useEffect(() => {
+    const run = onScreen && !prefersReducedMotion();
+    sectionRef.current?.querySelectorAll("svg.cap-icon").forEach((svg) => {
+      if (run) svg.unpauseAnimations?.();
+      else svg.pauseAnimations?.();
+    });
+  }, [onScreen]);
+
+  // Scroll entrance
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const anime = document.documentElement.dataset.anime === "on";
+
+      if (anime) {
+        // Manga-panel drop: each card falls in tilted, overshoots, and lands
+        // with an impact burst at the moment it hits.
+        const tl = gsap.timeline({ scrollTrigger: { trigger: "#skills", start: "top 65%" } });
+        gsap.utils.toArray(".cap-slot").forEach((slot, i) => {
+          const at = i * 0.14;
+          tl.fromTo(
+            slot,
+            { y: -90, rotate: i % 2 ? 7 : -7, scale: 1.12, opacity: 0 },
+            { y: 0, rotate: 0, scale: 1, opacity: 1, duration: 0.75, ease: "back.out(2.2)" },
+            at
+          );
+          tl.call(
+            () => {
+              const r = slot.getBoundingClientRect();
+              if (r.bottom > 0 && r.top < window.innerHeight) {
+                animeFX.burst(r.left + r.width / 2, r.top + 8, { size: 26, spikes: 9, color: i % 2 ? "hot" : "accent" });
+              }
+            },
+            null,
+            at + 0.4
+          );
+        });
+      } else {
+        gsap.fromTo(
+          ".cap-slot",
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            stagger: 0.15,
+            scrollTrigger: { trigger: "#skills", start: "top 70%" },
+          }
+        );
       }
-    );
-  });
+    },
+    { scope: sectionRef }
+  );
 
   return (
-    <section id="skills" className="w-full flex-center section-padding relative z-20">
+    <section
+      ref={sectionRef}
+      id="skills"
+      className="cap-section w-full flex-center section-padding relative z-20"
+      data-onscreen={onScreen}
+    >
       <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-10 xl:px-12">
         <TitleHeader
           title="Core Capabilities & Specializations"
           sub="Engineering Architecture & Stack Capabilities"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mt-10 w-full">
-          {techStackIcons.map((techStackIcon) => (
-            <div
-              key={techStackIcon.name}
-              className="card-border tech-card overflow-hidden group xl:rounded-3xl rounded-lg"
-            >
-              <div className="tech-card-animated-bg" />
-              <div className="tech-card-content flex flex-col items-center justify-between h-full p-6 text-center">
-                <div className="tech-icon-wrapper w-full h-48 flex justify-center items-center">
-                  <TechStack2DFallback techStackIcon={techStackIcon} />
-                </div>
-                <div className="padding-x w-full mt-4 flex flex-col gap-2 relative z-20">
-                  <p className="font-bold text-lg text-white group-hover:text-white transition-colors">{techStackIcon.name}</p>
-                  {techStackIcon.desc && (
-                    <p className="text-sm text-[#839cb5] font-normal leading-relaxed group-hover:text-white/80 transition-colors">
-                      {techStackIcon.desc}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
+          {techStackIcons.map((item, i) => (
+            <CapabilityCard key={item.name} item={item} index={i} />
           ))}
         </div>
       </div>
