@@ -45,14 +45,16 @@ export const REPLAY_OPENING_EVENT = "anime:replay-opening";
 export const replayOpening = () => window.dispatchEvent(new Event(REPLAY_OPENING_EVENT));
 
 /**
- * Background dancer / video layer switch (DanceBackground.jsx). ON by default.
+ * Background dancer / video layer switch (DanceBackground.jsx). OFF by default;
+ * visitors opt in with the navbar 🎬 button. (Key is versioned so earlier saved
+ * "on" values from when it defaulted on are ignored.)
  * Independent of Anime Mode, but only has a visible effect while it's on.
  */
-const BG_KEY = "preet_anime_bg";
+const BG_KEY = "preet_anime_bg_v2";
 
 export const getAnimeBg = () => {
-  if (typeof window === "undefined") return true;
-  return localStorage.getItem(BG_KEY) !== "0";
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem(BG_KEY) === "1";
 };
 
 export const setAnimeBg = (on) => {
@@ -60,4 +62,4 @@ export const setAnimeBg = (on) => {
   listeners.forEach((l) => l());
 };
 
-export const useAnimeBg = () => useSyncExternalStore(subscribe, getAnimeBg, () => true);
+export const useAnimeBg = () => useSyncExternalStore(subscribe, getAnimeBg, () => false);
